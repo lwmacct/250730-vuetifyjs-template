@@ -1,42 +1,13 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const navigateTo = (path: string) => {
-  router.push(path)
-}
+// 首页组件
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 </script>
 
 <template>
   <v-app>
-    <!-- 导航栏 -->
-    <v-app-bar app elevation="2" color="primary" dark>
-      <v-app-bar-title class="text-h6">
-        <v-icon class="mr-2">mdi-vuejs</v-icon>
-        Vue + Vuetify 应用
-      </v-app-bar-title>
-
-      <v-spacer></v-spacer>
-
-      <!-- 导航菜单 -->
-      <v-btn @click="navigateTo('/')" variant="elevated" prepend-icon="mdi-home" class="mx-1">
-        首页
-      </v-btn>
-
-      <v-btn
-        @click="navigateTo('/about')"
-        variant="text"
-        prepend-icon="mdi-information"
-        class="mx-1"
-      >
-        关于
-      </v-btn>
-
-      <v-btn @click="navigateTo('/contact')" variant="text" prepend-icon="mdi-email" class="mx-1">
-        联系
-      </v-btn>
-    </v-app-bar>
+    <!-- 使用通用头部组件 -->
+    <AppHeader title="Vue + Vuetify 应用" :show-navigation="true" />
 
     <!-- 主要内容区域 -->
     <v-main>
@@ -71,37 +42,8 @@ const navigateTo = (path: string) => {
       </v-container>
     </v-main>
 
-    <!-- 页脚 -->
-    <v-footer app color="grey-darken-3" class="text-center">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12">
-            <p class="text-body-2 text-grey-lighten-1">
-              © 2024 Vue + Vuetify 演示应用 |
-              <v-btn
-                href="https://vuejs.org/"
-                target="_blank"
-                variant="text"
-                size="small"
-                color="grey-lighten-1"
-              >
-                Vue.js
-              </v-btn>
-              |
-              <v-btn
-                href="https://vuetifyjs.com/"
-                target="_blank"
-                variant="text"
-                size="small"
-                color="grey-lighten-1"
-              >
-                Vuetify
-              </v-btn>
-            </p>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-footer>
+    <!-- 使用通用页脚组件 -->
+    <AppFooter />
   </v-app>
 </template>
 

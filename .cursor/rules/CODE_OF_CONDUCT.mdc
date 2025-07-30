@@ -4,3 +4,4 @@ alwaysApply: true
 
 - 对于 vuetifyjs 框架, 尽可能调用 MCP 工具 vuetify-mcp 来获取使用方法和帮助文档
 - 对于 框架/库类, 尽可能调用 MCP 工具 Context7 来获取使用方法和帮助文档
+- 编码完成以后, 使用 `npm run type-check` 检查类型, 使用 `npm run format` 格式化代码
