@@ -15,9 +15,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "pinia": "^3.0.3",
+    "unplugin-fonts": "^1.4.0",
+    "vite-plugin-vuetify": "^2.1.1",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.9.3"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",
