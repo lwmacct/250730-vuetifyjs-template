@@ -1,24 +1,33 @@
 <script setup lang="ts">
-import { useMenuStore, type MenuItem } from '@/stores/menu'
+import { useMenuStore } from '@/stores/menu'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
 interface Props {
-  onMouseEnter?: (itemId: string) => void
+  onRemoveFromFavorites: (path: string) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  onMouseEnter: () => {},
+  onRemoveFromFavorites: () => {},
 })
 
 const menuStore = useMenuStore()
-const draggedItem = ref<MenuItem | null>(null)
-const dragOverItem = ref<MenuItem | null>(null)
+const router = useRouter()
+const draggedItem = ref<any>(null)
+const dragOverItem = ref<any>(null)
 
-const handleMouseEnter = (itemId: string) => {
-  props.onMouseEnter(itemId)
+// 处理点击事件
+const handleClick = (product: any) => {
+  router.push(product.path)
 }
 
-const handleDragStart = (event: DragEvent, item: MenuItem) => {
+// 移除收藏项
+const removeFromFavorites = (path: string) => {
+  menuStore.removeFromFavorites(path)
+}
+
+// 拖拽开始
+const handleDragStart = (event: DragEvent, item: any) => {
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = 'move'
     event.dataTransfer.setData('text/plain', item.path)
@@ -26,17 +35,21 @@ const handleDragStart = (event: DragEvent, item: MenuItem) => {
   }
 }
 
-const handleDragOver = (event: DragEvent, item: MenuItem) => {
+// 拖拽悬停
+const handleDragOver = (event: DragEvent, item: any) => {
   event.preventDefault()
-  event.dataTransfer!.dropEffect = 'move'
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move'
+  }
   dragOverItem.value = item
 }
 
-const handleDrop = (event: DragEvent, targetItem: MenuItem) => {
+// 拖拽放置
+const handleDrop = (event: DragEvent, targetItem: any) => {
   event.preventDefault()
 
   if (draggedItem.value && draggedItem.value.path !== targetItem.path) {
-    const favoriteItems = menuStore.getFavoriteProducts()
+    const favoriteItems = menuStore.favoriteProducts
     const fromIndex = favoriteItems.findIndex((item) => item.path === draggedItem.value!.path)
     const toIndex = favoriteItems.findIndex((item) => item.path === targetItem.path)
 
@@ -49,51 +62,46 @@ const handleDrop = (event: DragEvent, targetItem: MenuItem) => {
   dragOverItem.value = null
 }
 
+// 拖拽结束
 const handleDragEnd = () => {
   draggedItem.value = null
   dragOverItem.value = null
-}
-
-const removeFromFavorites = (path: string) => {
-  menuStore.removeFromFavorites(path)
 }
 </script>
 
 <template>
   <div class="favorite-menu">
-    <!-- 分割线 -->
-    <v-divider class="my-4" color="grey-lighten-1"></v-divider>
-
-    <!-- 收藏的产品作为独立的一级菜单项 -->
+    <!-- 收藏的产品列表 -->
     <div
-      v-for="(product, index) in menuStore.getFavoriteProducts()"
+      v-for="(product, index) in menuStore.favoriteProducts"
       :key="product.path"
       class="menu-item-container"
-      draggable="true"
       :class="{
         dragging: draggedItem?.path === product.path,
         'drag-over': dragOverItem?.path === product.path,
       }"
-      @mouseenter="handleMouseEnter(product.path)"
+      draggable="true"
       @dragstart="handleDragStart($event, product)"
       @dragover="handleDragOver($event, product)"
       @drop="handleDrop($event, product)"
       @dragend="handleDragEnd"
     >
       <v-list-item
-        :active="false"
-        active-color="transparent"
-        color="white"
-        variant="text"
+        @click="handleClick(product)"
         class="menu-item"
-        link
+        color="transparent"
+        variant="text"
+        hover
       >
         <template v-slot:prepend>
-          <v-icon color="white">{{ product.icon }}</v-icon>
+          <v-icon size="small" color="grey-lighten-1">{{ product.icon }}</v-icon>
         </template>
         <v-list-item-title class="text-white">
           {{ product.title }}
         </v-list-item-title>
+        <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
+          {{ product.category || '收藏项目' }}
+        </v-list-item-subtitle>
         <template v-slot:append>
           <v-btn
             icon
@@ -105,7 +113,6 @@ const removeFromFavorites = (path: string) => {
           >
             <v-icon size="small">mdi-close</v-icon>
           </v-btn>
-          <v-icon color="white" class="chevron-icon">mdi-chevron-right</v-icon>
         </template>
       </v-list-item>
     </div>
@@ -117,10 +124,26 @@ const removeFromFavorites = (path: string) => {
   margin-top: 8px;
 }
 
+.favorites-header {
+  padding: 12px 20px 8px 20px;
+  border-bottom: 1px solid #616161;
+}
+
+.favorites-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #64b5f6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .menu-item-container {
   position: relative;
   cursor: grab;
   transition: all 0.2s ease-in-out;
+  margin: 0;
+  padding: 0;
 }
 
 .menu-item-container:active {
@@ -139,8 +162,9 @@ const removeFromFavorites = (path: string) => {
 
 .menu-item {
   transition: all 0.2s ease-in-out;
-  border-radius: 4px;
-  margin: 2px 8px;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .menu-item:hover {
@@ -157,13 +181,6 @@ const removeFromFavorites = (path: string) => {
   opacity: 1;
 }
 
-/* 右箭头图标对齐 */
-.chevron-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* 修复prepend区域过宽的问题 */
 :deep(.v-list-item__prepend) {
   min-width: auto !important;
@@ -174,5 +191,15 @@ const removeFromFavorites = (path: string) => {
 :deep(.v-list-item__append) {
   min-width: auto !important;
   width: auto !important;
+}
+
+:deep(.v-list-item) {
+  margin: 0;
+  padding: 0;
+  min-height: 48px;
+}
+
+:deep(.v-list-item__content) {
+  padding: 0 16px;
 }
 </style>

@@ -17,25 +17,55 @@ import AppFooter from '@/components/AppFooter.vue'
             <v-card class="mx-auto" max-width="800">
               <v-card-title class="text-h4 text-center pa-6">
                 <v-icon size="large" color="primary" class="mr-3">mdi-home</v-icon>
-                欢迎来到首页
+                欢迎使用
               </v-card-title>
               <v-card-text class="text-body-1">
                 <p class="mb-4">
-                  这是一个使用 Vuetify 和 Vue Router 构建的应用程序。
-                  你可以通过导航菜单访问不同的页面。
+                  这是一个基于 Vue 3、Vuetify 3 和 TypeScript 构建的现代化 Web 应用程序。
+                  它展示了如何使用这些技术构建功能丰富、用户友好的界面。
                 </p>
-                <v-alert type="info" variant="tonal" class="mb-4">
+                <v-divider class="my-4"></v-divider>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-card variant="outlined" class="mb-3">
+                      <v-card-title class="text-h6">
+                        <v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+                        功能特性
+                      </v-card-title>
+                      <v-card-text>
+                        <ul class="text-body-2">
+                          <li>响应式设计</li>
+                          <li>现代化 UI</li>
+                          <li>类型安全</li>
+                          <li>组件化架构</li>
+                        </ul>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-card variant="outlined" class="mb-3">
+                      <v-card-title class="text-h6">
+                        <v-icon color="info" class="mr-2">mdi-information</v-icon>
+                        技术栈
+                      </v-card-title>
+                      <v-card-text>
+                        <ul class="text-body-2">
+                          <li>Vue 3 Composition API</li>
+                          <li>Vuetify 3 Material Design</li>
+                          <li>TypeScript</li>
+                          <li>Vue Router 4</li>
+                        </ul>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-alert type="info" variant="tonal" class="mt-4">
                   <template v-slot:prepend>
                     <v-icon>mdi-information</v-icon>
                   </template>
                   当前页面：首页 (/)
                 </v-alert>
               </v-card-text>
-              <v-card-actions class="justify-center">
-                <v-btn color="primary" variant="elevated" prepend-icon="mdi-arrow-right">
-                  开始探索
-                </v-btn>
-              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>

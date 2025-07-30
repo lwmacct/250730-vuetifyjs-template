@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 // 定义菜单项的类型
 export interface MenuItem {
@@ -8,303 +8,345 @@ export interface MenuItem {
   icon: string
   count?: string
   isFavorite?: boolean
-  children?: MenuItem[] // 新增 children 属性
-}
-
-export interface MenuGroup {
-  id: string
-  title: string
-  icon: string
-  children: MenuItem[]
+  category?: string // 表示产品分类（如：计算、存储等）
+  lastAccessed?: number // 记录最后访问时间
 }
 
 export const useMenuStore = defineStore('menu', () => {
-  // 固定的菜单项
-  const fixedMenuItems = ref<MenuGroup[]>([
-    {
-      id: 'all-products',
-      title: '全部云产品',
-      icon: 'mdi-view-grid',
-      children: [
-        { title: '云服务器', path: '/server', icon: 'mdi-server' },
-        { title: '轻量应用服务器', path: '/lightweight', icon: 'mdi-server-network' },
-        { title: '容器服务', path: '/container', icon: 'mdi-docker' },
-        { title: '数据库', path: '/database', icon: 'mdi-database' },
-        { title: '存储', path: '/storage', icon: 'mdi-harddisk' },
-        { title: '网络', path: '/network', icon: 'mdi-network' },
-        { title: '安全', path: '/security', icon: 'mdi-shield' },
-        { title: '监控', path: '/monitor', icon: 'mdi-chart-line' },
-      ],
-    },
-    {
-      id: 'recent',
-      title: '最近访问页面',
-      icon: 'mdi-clock',
-      children: [
-        { title: '工单系统 / 腾讯云安灯 / 提交工单', path: '/ticket', icon: 'mdi-ticket' },
-        { title: 'ICP备案 / 我的备案', path: '/icp', icon: 'mdi-file-document' },
-        { title: '轻量云 / 云硬盘', path: '/disk', icon: 'mdi-harddisk' },
-        { title: '轻量云 / 数据备份', path: '/backup', icon: 'mdi-backup-restore' },
-        { title: '轻量云 / 镜像', path: '/image', icon: 'mdi-image' },
-        { title: '轻量云 / 服务器', path: '/server', icon: 'mdi-server' },
-        { title: '高性能应用服务 / 应用管理', path: '/app-management', icon: 'mdi-application' },
-        { title: '高性能应用服务 / 算力管理', path: '/computing', icon: 'mdi-calculator' },
-        { title: '消息中心 / 站内信', path: '/messages', icon: 'mdi-message' },
-        { title: '容器镜像服务 / 镜像仓库', path: '/container', icon: 'mdi-docker' },
-      ],
-    },
-  ])
-
-  // 所有可收藏的产品作为独立的一级菜单项
+  // 统一的产品数据源
   const allProducts = ref<MenuItem[]>([
-    {
-      title: '工单系统',
-      path: '/ticket',
-      icon: 'mdi-ticket',
-      isFavorite: true,
-      children: [
-        { title: '提交工单', path: '/ticket/submit', icon: 'mdi-plus' },
-        { title: '我的工单', path: '/ticket/my', icon: 'mdi-format-list-bulleted' },
-        { title: '工单统计', path: '/ticket/stats', icon: 'mdi-chart-bar' },
-      ],
-    },
-    {
-      title: '腾讯云可观测平台',
-      path: '/observability',
-      icon: 'mdi-chart-line',
-      isFavorite: true,
-      children: [
-        { title: '监控大盘', path: '/observability/dashboard', icon: 'mdi-view-dashboard' },
-        { title: '告警规则', path: '/observability/alerts', icon: 'mdi-bell' },
-        { title: '日志查询', path: '/observability/logs', icon: 'mdi-file-document' },
-      ],
-    },
+    // 计算组
     {
       title: '云服务器',
       path: '/server',
       icon: 'mdi-server',
       isFavorite: true,
-      children: [
-        { title: '实例列表', path: '/server/instances', icon: 'mdi-format-list-bulleted' },
-        { title: '镜像管理', path: '/server/images', icon: 'mdi-image' },
-        { title: '安全组', path: '/server/security', icon: 'mdi-shield' },
-      ],
+      category: '计算',
+      lastAccessed: Date.now() - 1000 * 60 * 30, // 30分钟前
     },
     {
       title: '轻量应用服务器',
       path: '/lightweight',
       icon: 'mdi-server-network',
       isFavorite: true,
-      children: [
-        { title: '服务器列表', path: '/lightweight/servers', icon: 'mdi-format-list-bulleted' },
-        { title: '云硬盘', path: '/lightweight/disks', icon: 'mdi-harddisk' },
-        { title: '数据备份', path: '/lightweight/backup', icon: 'mdi-backup-restore' },
-      ],
+      category: '计算',
+      lastAccessed: Date.now() - 1000 * 60 * 60, // 1小时前
     },
     {
-      title: '容器服务',
-      path: '/container',
-      icon: 'mdi-docker',
-      isFavorite: true,
-      children: [
-        { title: '集群管理', path: '/container/clusters', icon: 'mdi-server-network' },
-        { title: '工作负载', path: '/container/workloads', icon: 'mdi-cube' },
-        { title: '镜像仓库', path: '/container/registry', icon: 'mdi-package-variant' },
-      ],
-    },
-    {
-      title: '费用中心',
-      path: '/cost',
-      icon: 'mdi-currency-usd',
+      title: 'GPU 云服务器',
+      path: '/gpu-server',
+      icon: 'mdi-gpu',
       isFavorite: false,
-      children: [
-        { title: '费用概览', path: '/cost/overview', icon: 'mdi-chart-pie' },
-        { title: '账单明细', path: '/cost/bills', icon: 'mdi-receipt' },
-        { title: '成本优化', path: '/cost/optimization', icon: 'mdi-trending-down' },
-      ],
+      category: '计算',
     },
     {
-      title: 'ICP备案',
-      path: '/icp',
-      icon: 'mdi-file-document',
+      title: '裸金属云服务器',
+      path: '/bare-metal',
+      icon: 'mdi-server',
       isFavorite: false,
-      children: [
-        { title: '我的备案', path: '/icp/my', icon: 'mdi-format-list-bulleted' },
-        { title: '备案申请', path: '/icp/apply', icon: 'mdi-plus' },
-        { title: '备案查询', path: '/icp/query', icon: 'mdi-magnify' },
-      ],
+      category: '计算',
+    },
+    {
+      title: '弹性伸缩',
+      path: '/auto-scaling',
+      icon: 'mdi-arrow-expand',
+      isFavorite: false,
+      category: '计算',
+    },
+    // 高性能计算组
+    {
+      title: '批量计算',
+      path: '/batch-compute',
+      icon: 'mdi-cube',
+      isFavorite: false,
+      category: '高性能计算',
+    },
+    {
+      title: '高性能计算平台',
+      path: '/hpc-platform',
+      icon: 'mdi-chart-line',
+      isFavorite: false,
+      category: '高性能计算',
     },
     {
       title: '高性能应用服务',
-      path: '/app-service',
+      path: '/hpc-app',
       icon: 'mdi-application',
       isFavorite: false,
-      children: [
-        { title: '应用管理', path: '/app-service/apps', icon: 'mdi-format-list-bulleted' },
-        { title: '算力管理', path: '/app-service/computing', icon: 'mdi-calculator' },
-        { title: '监控告警', path: '/app-service/monitor', icon: 'mdi-monitor' },
-      ],
+      category: '高性能计算',
+      lastAccessed: Date.now() - 1000 * 60 * 45, // 45分钟前
+    },
+    // 分布式云组
+    {
+      title: '本地专用集群',
+      path: '/local-cluster',
+      icon: 'mdi-server-network',
+      isFavorite: false,
+      category: '分布式云',
     },
     {
-      title: '消息中心',
-      path: '/messages',
-      icon: 'mdi-message',
+      title: '专属可用区',
+      path: '/dedicated-zone',
+      icon: 'mdi-map-marker',
       isFavorite: false,
-      children: [
-        { title: '站内信', path: '/messages/internal', icon: 'mdi-email' },
-        { title: '系统通知', path: '/messages/system', icon: 'mdi-bell' },
-        { title: '消息设置', path: '/messages/settings', icon: 'mdi-cog' },
-      ],
+      category: '分布式云',
     },
+    // 人工智能与机器学习组
+    {
+      title: '图像识别',
+      path: '/image-recognition',
+      icon: 'mdi-image',
+      isFavorite: false,
+      category: '人工智能与机器学习',
+    },
+    {
+      title: '人脸识别',
+      path: '/face-recognition',
+      icon: 'mdi-account',
+      isFavorite: false,
+      category: '人工智能与机器学习',
+    },
+    {
+      title: '人脸融合',
+      path: '/face-fusion',
+      icon: 'mdi-account-multiple',
+      isFavorite: false,
+      category: '人工智能与机器学习',
+    },
+    {
+      title: '语音识别',
+      path: '/speech-recognition',
+      icon: 'mdi-microphone',
+      isFavorite: false,
+      category: '人工智能与机器学习',
+    },
+    // 存储组
     {
       title: '对象存储',
       path: '/object-storage',
       icon: 'mdi-cloud',
       isFavorite: false,
-      children: [
-        { title: '存储桶', path: '/object-storage/buckets', icon: 'mdi-folder' },
-        { title: '文件管理', path: '/object-storage/files', icon: 'mdi-file' },
-        { title: '访问控制', path: '/object-storage/acl', icon: 'mdi-shield' },
-      ],
+      category: '存储',
     },
     {
       title: '文件存储',
       path: '/file-storage',
       icon: 'mdi-folder',
       isFavorite: false,
-      children: [
-        { title: '文件系统', path: '/file-storage/systems', icon: 'mdi-folder-network' },
-        { title: '挂载点', path: '/file-storage/mounts', icon: 'mdi-connection' },
-        { title: '快照管理', path: '/file-storage/snapshots', icon: 'mdi-camera' },
-      ],
+      category: '存储',
     },
+    {
+      title: '归档存储',
+      path: '/archive-storage',
+      icon: 'mdi-archive',
+      isFavorite: false,
+      category: '存储',
+    },
+    {
+      title: '云硬盘',
+      path: '/cloud-disk',
+      icon: 'mdi-harddisk',
+      isFavorite: false,
+      category: '存储',
+      lastAccessed: Date.now() - 1000 * 60 * 20, // 20分钟前
+    },
+    // 网络组
     {
       title: '负载均衡',
       path: '/loadbalancer',
       icon: 'mdi-scale-balance',
       isFavorite: false,
-      children: [
-        { title: '负载均衡器', path: '/loadbalancer/instances', icon: 'mdi-format-list-bulleted' },
-        { title: '监听器', path: '/loadbalancer/listeners', icon: 'mdi-ear' },
-        { title: '后端服务', path: '/loadbalancer/backends', icon: 'mdi-server' },
-      ],
+      category: '网络',
     },
     {
       title: '私有网络',
       path: '/vpc',
       icon: 'mdi-network',
       isFavorite: false,
-      children: [
-        { title: 'VPC列表', path: '/vpc/list', icon: 'mdi-format-list-bulleted' },
-        { title: '子网管理', path: '/vpc/subnets', icon: 'mdi-network' },
-        { title: '路由表', path: '/vpc/routes', icon: 'mdi-routes' },
-      ],
+      category: '网络',
+    },
+    {
+      title: '弹性网卡',
+      path: '/elastic-nic',
+      icon: 'mdi-ethernet',
+      isFavorite: false,
+      category: '网络',
+    },
+    {
+      title: 'NAT 网关',
+      path: '/nat-gateway',
+      icon: 'mdi-gateway',
+      isFavorite: false,
+      category: '网络',
+    },
+    // 容器与中间件组
+    {
+      title: '容器服务',
+      path: '/container',
+      icon: 'mdi-docker',
+      isFavorite: true,
+      category: '容器与中间件',
+      lastAccessed: Date.now() - 1000 * 60 * 15, // 15分钟前
+    },
+    {
+      title: '容器镜像服务',
+      path: '/container-registry',
+      icon: 'mdi-package-variant',
+      isFavorite: false,
+      category: '容器与中间件',
+      lastAccessed: Date.now() - 1000 * 60 * 10, // 10分钟前
     },
     {
       title: '云函数',
       path: '/cloud-function',
       icon: 'mdi-function',
       isFavorite: false,
-      children: [
-        { title: '函数列表', path: '/cloud-function/list', icon: 'mdi-format-list-bulleted' },
-        { title: '触发器', path: '/cloud-function/triggers', icon: 'mdi-lightning-bolt' },
-        { title: '版本管理', path: '/cloud-function/versions', icon: 'mdi-tag' },
-      ],
+      category: '容器与中间件',
     },
     {
-      title: '数据库',
-      path: '/database',
-      icon: 'mdi-database',
+      title: 'Serverless 应用中心',
+      path: '/serverless-app',
+      icon: 'mdi-application',
       isFavorite: false,
-      children: [
-        { title: '实例列表', path: '/database/instances', icon: 'mdi-format-list-bulleted' },
-        { title: '备份管理', path: '/database/backups', icon: 'mdi-backup-restore' },
-        { title: '监控告警', path: '/database/monitor', icon: 'mdi-monitor' },
-      ],
+      category: '容器与中间件',
+    },
+    // 其他常用页面
+    {
+      title: '工单系统 / 腾讯云安灯 / 提交工单',
+      path: '/ticket',
+      icon: 'mdi-ticket',
+      isFavorite: false,
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 5, // 5分钟前
     },
     {
-      title: 'CDN',
-      path: '/cdn',
-      icon: 'mdi-web',
+      title: 'ICP备案 / 我的备案',
+      path: '/icp',
+      icon: 'mdi-file-document',
       isFavorite: false,
-      children: [
-        { title: '域名管理', path: '/cdn/domains', icon: 'mdi-format-list-bulleted' },
-        { title: '缓存配置', path: '/cdn/cache', icon: 'mdi-cached' },
-        { title: '统计分析', path: '/cdn/stats', icon: 'mdi-chart-line' },
-      ],
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 25, // 25分钟前
     },
     {
-      title: '安全组',
-      path: '/security-group',
-      icon: 'mdi-shield',
+      title: '轻量云 / 云硬盘',
+      path: '/disk',
+      icon: 'mdi-harddisk',
       isFavorite: false,
-      children: [
-        { title: '安全组列表', path: '/security-group/list', icon: 'mdi-format-list-bulleted' },
-        { title: '规则配置', path: '/security-group/rules', icon: 'mdi-cog' },
-        { title: '关联实例', path: '/security-group/instances', icon: 'mdi-server' },
-      ],
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 35, // 35分钟前
     },
     {
-      title: '域名注册',
-      path: '/domain',
-      icon: 'mdi-web',
+      title: '轻量云 / 数据备份',
+      path: '/backup',
+      icon: 'mdi-backup-restore',
       isFavorite: false,
-      children: [
-        { title: '我的域名', path: '/domain/my', icon: 'mdi-format-list-bulleted' },
-        { title: '域名注册', path: '/domain/register', icon: 'mdi-plus' },
-        { title: '域名解析', path: '/domain/resolve', icon: 'mdi-dns' },
-      ],
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 40, // 40分钟前
     },
     {
-      title: 'SSL证书',
-      path: '/ssl',
-      icon: 'mdi-certificate',
+      title: '轻量云 / 镜像',
+      path: '/image',
+      icon: 'mdi-image',
       isFavorite: false,
-      children: [
-        { title: '证书列表', path: '/ssl/list', icon: 'mdi-format-list-bulleted' },
-        { title: '证书申请', path: '/ssl/apply', icon: 'mdi-plus' },
-        { title: '证书部署', path: '/ssl/deploy', icon: 'mdi-download' },
-      ],
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 50, // 50分钟前
     },
     {
-      title: '云监控',
-      path: '/monitor',
-      icon: 'mdi-monitor',
+      title: '轻量云 / 服务器',
+      path: '/server',
+      icon: 'mdi-server',
       isFavorite: false,
-      children: [
-        { title: '监控大盘', path: '/monitor/dashboard', icon: 'mdi-view-dashboard' },
-        { title: '告警规则', path: '/monitor/alerts', icon: 'mdi-bell' },
-        { title: '日志查询', path: '/monitor/logs', icon: 'mdi-file-document' },
-      ],
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 55, // 55分钟前
+    },
+    {
+      title: '高性能应用服务 / 应用管理',
+      path: '/app-management',
+      icon: 'mdi-application',
+      isFavorite: false,
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 65, // 65分钟前
+    },
+    {
+      title: '高性能应用服务 / 算力管理',
+      path: '/computing',
+      icon: 'mdi-calculator',
+      isFavorite: false,
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 70, // 70分钟前
+    },
+    {
+      title: '消息中心 / 站内信',
+      path: '/messages',
+      icon: 'mdi-message',
+      isFavorite: false,
+      category: '其他',
+      lastAccessed: Date.now() - 1000 * 60 * 80, // 80分钟前
     },
   ])
 
-  // 获取收藏的产品
-  const getFavoriteProducts = () => {
-    return allProducts.value.filter((product) => product.isFavorite)
-  }
+  // 计算属性：最近访问的页面（基于 lastAccessed 时间排序）
+  const recentPages = computed(() => {
+    return allProducts.value
+      .filter((item) => item.lastAccessed)
+      .sort((a, b) => (b.lastAccessed || 0) - (a.lastAccessed || 0))
+      .slice(0, 10) // 只显示最近10个
+  })
 
-  // 添加收藏项的方法
-  const addToFavorites = (item: MenuItem) => {
-    const existingItem = allProducts.value.find((product) => product.path === item.path)
-    if (existingItem) {
-      existingItem.isFavorite = true
-    } else {
-      allProducts.value.push({ ...item, isFavorite: true })
-    }
-  }
+  // 计算属性：收藏的产品
+  const favoriteProducts = computed(() => {
+    return allProducts.value.filter((item) => item.isFavorite)
+  })
 
-  // 移除收藏项的方法
-  const removeFromFavorites = (path: string) => {
+  // 计算属性：按分类分组的产品
+  const productsByCategory = computed(() => {
+    const categories: { [key: string]: MenuItem[] } = {}
+    allProducts.value.forEach((item) => {
+      if (item.category) {
+        if (!categories[item.category]) {
+          categories[item.category] = []
+        }
+        categories[item.category].push(item)
+      }
+    })
+    return categories
+  })
+
+  // 统一的收藏状态管理方法
+  const toggleFavorite = (path: string) => {
     const item = allProducts.value.find((product) => product.path === path)
     if (item) {
-      item.isFavorite = false
+      item.isFavorite = !item.isFavorite
     }
+  }
+
+  // 检查是否已收藏的方法
+  const isFavorite = (path: string) => {
+    const item = allProducts.value.find((product) => product.path === path)
+    return item ? item.isFavorite : false
+  }
+
+  // 记录访问时间的方法
+  const recordAccess = (path: string) => {
+    const item = allProducts.value.find((product) => product.path === path)
+    if (item) {
+      item.lastAccessed = Date.now()
+    }
+  }
+
+  // 移除收藏项的方法（保持兼容性）
+  const removeFromFavorites = (path: string) => {
+    toggleFavorite(path)
+  }
+
+  // 添加收藏项的方法（保持兼容性）
+  const addToFavorites = (item: MenuItem) => {
+    toggleFavorite(item.path)
   }
 
   // 移动收藏项顺序的方法
   const moveFavoriteItem = (fromIndex: number, toIndex: number) => {
-    const favoriteItems = getFavoriteProducts()
+    const favoriteItems = favoriteProducts.value
     const [movedItem] = favoriteItems.splice(fromIndex, 1)
     favoriteItems.splice(toIndex, 0, movedItem)
 
@@ -313,12 +355,22 @@ export const useMenuStore = defineStore('menu', () => {
     allProducts.value = [...favoriteItems, ...nonFavoriteItems]
   }
 
+  // 根据分类获取产品
+  const getProductsByCategory = (categoryName: string) => {
+    return allProducts.value.filter((product) => product.category === categoryName)
+  }
+
   return {
-    fixedMenuItems,
     allProducts,
-    getFavoriteProducts,
+    recentPages,
+    favoriteProducts,
+    productsByCategory,
     addToFavorites,
     removeFromFavorites,
+    toggleFavorite,
+    isFavorite,
+    recordAccess,
     moveFavoriteItem,
+    getProductsByCategory,
   }
 })

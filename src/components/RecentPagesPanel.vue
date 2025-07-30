@@ -14,77 +14,54 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const menuStore = useMenuStore()
+
+// 处理收藏按钮点击
+const handleFavoriteClick = (item: any) => {
+  menuStore.toggleFavorite(item.path)
+}
+
+// 检查是否已收藏
+const isItemFavorite = (path: string) => {
+  return menuStore.isFavorite(path)
+}
 </script>
 
 <template>
   <div class="recent-pages-panel">
     <!-- 最近访问页面列表 -->
     <v-list-item
-      v-for="child in menuStore.fixedMenuItems.find((item) => item.id === 'recent')?.children"
-      :key="child.path"
-      @click="props.onNavigate(child.path)"
-      class="panel-item"
-      color="blue-lighten-5"
+      v-for="page in menuStore.recentPages"
+      :key="page.path"
+      @click="props.onNavigate(page.path)"
+      class="page-item"
+      color="transparent"
       variant="text"
       hover
     >
       <template v-slot:prepend>
-        <v-icon size="small" color="grey-darken-2">{{ child.icon }}</v-icon>
+        <v-icon size="small" color="grey-lighten-1">{{ page.icon }}</v-icon>
       </template>
-      <v-list-item-title class="text-grey-darken-1">
-        {{ child.title }}
-        <span v-if="child.count" class="text-grey-darken-2 ml-2 font-weight-medium">
-          {{ child.count }}
+      <v-list-item-title class="text-white">
+        {{ page.title }}
+        <span v-if="page.count" class="text-grey-lighten-2 ml-2 font-weight-medium">
+          {{ page.count }}
         </span>
       </v-list-item-title>
+      <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
+        {{ page.category || '最近访问' }}
+      </v-list-item-subtitle>
       <template v-slot:append>
         <v-btn
           icon
           size="small"
-          @click.stop="props.onAddToFavorites(child)"
+          @click.stop="handleFavoriteClick(page)"
           class="ml-2"
-          color="amber-darken-2"
+          :color="isItemFavorite(page.path) ? 'amber' : 'amber-lighten-1'"
           variant="text"
         >
-          <v-icon size="small">mdi-star-outline</v-icon>
-        </v-btn>
-      </template>
-    </v-list-item>
-
-    <!-- 分割线 -->
-    <v-divider class="my-4"></v-divider>
-
-    <!-- 我的收藏标题 -->
-    <div class="favorites-header">
-      <h4 class="favorites-title">我的收藏</h4>
-    </div>
-
-    <!-- 收藏的产品列表 -->
-    <v-list-item
-      v-for="product in menuStore.getFavoriteProducts()"
-      :key="product.path"
-      @click="props.onNavigate(product.path)"
-      class="panel-item"
-      color="blue-lighten-5"
-      variant="text"
-      hover
-    >
-      <template v-slot:prepend>
-        <v-icon size="small" color="grey-darken-2">{{ product.icon }}</v-icon>
-      </template>
-      <v-list-item-title class="text-grey-darken-1">
-        {{ product.title }}
-      </v-list-item-title>
-      <template v-slot:append>
-        <v-btn
-          icon
-          size="small"
-          @click.stop="props.onRemoveFromFavorites(product.path)"
-          class="ml-2"
-          color="red-darken-2"
-          variant="text"
-        >
-          <v-icon size="small">mdi-star</v-icon>
+          <v-icon size="small">
+            {{ isItemFavorite(page.path) ? 'mdi-star' : 'mdi-star-outline' }}
+          </v-icon>
         </v-btn>
       </template>
     </v-list-item>
@@ -94,37 +71,78 @@ const menuStore = useMenuStore()
 <style scoped>
 .recent-pages-panel {
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #424242;
+  /* 确保滚动条始终显示 */
+  scrollbar-width: thin;
+  scrollbar-color: #616161 #424242;
 }
 
-.panel-item {
-  border-bottom: 1px solid #f0f0f0;
+/* WebKit 浏览器滚动条样式 */
+.recent-pages-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recent-pages-panel::-webkit-scrollbar-track {
+  background: #424242;
+  border-radius: 4px;
+}
+
+.recent-pages-panel::-webkit-scrollbar-thumb {
+  background: #616161;
+  border-radius: 4px;
+  border: 1px solid #424242;
+}
+
+.recent-pages-panel::-webkit-scrollbar-thumb:hover {
+  background: #757575;
+}
+
+.recent-pages-panel::-webkit-scrollbar-corner {
+  background: #424242;
+}
+
+.page-item {
+  margin: 2px 0;
+  border-radius: 4px;
   transition: all 0.2s ease-in-out;
-  margin: 0;
-  padding: 12px 20px;
 }
 
-.panel-item:hover {
-  background-color: #f8f9fa !important;
+.page-item:hover {
+  background-color: #616161 !important;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.page-item:active {
+  background-color: #757575 !important;
   transform: translateX(2px);
 }
 
-.panel-item:last-child {
-  border-bottom: none;
+/* 增强收藏按钮的悬浮效果 */
+.page-item:hover .v-btn {
+  background-color: rgba(255, 193, 7, 0.2) !important;
 }
 
-/* 我的收藏标题样式 */
-.favorites-header {
-  padding: 12px 20px 8px 20px;
-  border-bottom: 1px solid #f0f0f0;
+.page-item:hover .v-btn:hover {
+  background-color: rgba(255, 193, 7, 0.3) !important;
+  transform: scale(1.1);
 }
 
-.favorites-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* 确保在 Firefox 中滚动条可见 */
+@supports (scrollbar-color: auto) {
+  .recent-pages-panel {
+    scrollbar-color: #616161 #424242;
+  }
+}
+
+/* 确保在 Edge 中滚动条可见 */
+@supports (-ms-ime-align: auto) {
+  .recent-pages-panel {
+    scrollbar-width: thin;
+  }
 }
 
 /* 修复prepend区域过宽的问题 */
