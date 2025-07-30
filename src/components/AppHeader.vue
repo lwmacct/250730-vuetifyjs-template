@@ -86,7 +86,7 @@ const handleMouseEnter = (itemId: string) => {
     color="grey-darken-4"
     dark
     class="drawer-container"
-    width="200"
+    width="240"
   >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 最近访问页面 -->
@@ -218,7 +218,7 @@ const handleMouseEnter = (itemId: string) => {
   position: absolute;
   left: 100%; /* 相对于抽屉的右边缘 */
   top: 0; /* 相对于抽屉的顶部 */
-  width: 250px;
+  width: 300px;
   height: 100%; /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
