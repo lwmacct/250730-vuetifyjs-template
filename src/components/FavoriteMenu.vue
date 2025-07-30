@@ -180,26 +180,4 @@ const handleDragEnd = () => {
 .menu-item:hover .remove-btn {
   opacity: 1;
 }
-
-/* 修复prepend区域过宽的问题 */
-:deep(.v-list-item__prepend) {
-  min-width: auto !important;
-  width: auto !important;
-  margin-right: 8px !important;
-}
-
-:deep(.v-list-item__append) {
-  min-width: auto !important;
-  width: auto !important;
-}
-
-:deep(.v-list-item) {
-  margin: 0;
-  padding: 0;
-  min-height: 48px;
-}
-
-:deep(.v-list-item__content) {
-  padding: 0 16px;
-}
 </style>

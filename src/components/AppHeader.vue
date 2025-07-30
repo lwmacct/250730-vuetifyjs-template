@@ -79,7 +79,15 @@ const handleMouseEnter = (itemId: string) => {
   </v-app-bar>
 
   <!-- 抽屉菜单 -->
-  <v-navigation-drawer v-model="drawer" app temporary color="grey-darken-4" dark>
+  <v-navigation-drawer
+    v-model="drawer"
+    app
+    temporary
+    color="grey-darken-4"
+    dark
+    class="drawer-container"
+    width="200"
+  >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 最近访问页面 -->
       <div class="menu-item-container" @mouseenter="handleMouseEnter('recent')">
@@ -125,38 +133,46 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 收藏菜单组件 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
-  </v-navigation-drawer>
 
-  <!-- 悬停显示的二级菜单面板 -->
-  <div v-if="hoveredItem && drawer" class="hover-panel" @mouseenter="handleMouseEnter(hoveredItem)">
-    <!-- 连接区域 - 确保鼠标可以移动到面板 -->
-    <div class="connection-area"></div>
-    <div class="panel-content">
+    <!-- 悬停显示的二级菜单面板 -->
+    <div
+      v-if="hoveredItem && drawer"
+      class="hover-panel"
+      @mouseenter="handleMouseEnter(hoveredItem)"
+    >
+      <!-- 连接区域 - 确保鼠标可以移动到面板 -->
+      <div class="connection-area"></div>
       <!-- 面板内容 -->
-      <div class="panel-body">
-        <!-- 全部云产品专用组件 -->
-        <template v-if="hoveredItem === 'all-products'">
-          <AllProductsPanel
-            :on-navigate="navigateTo"
-            :on-add-to-favorites="addToFavorites"
-            :on-remove-from-favorites="removeFromFavorites"
-          />
-        </template>
+      <!-- 全部云产品专用组件 -->
+      <template v-if="hoveredItem === 'all-products'">
+        <AllProductsPanel
+          :on-navigate="navigateTo"
+          :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites"
+        />
+      </template>
 
-        <!-- 最近访问页面专用组件 -->
-        <template v-else-if="hoveredItem === 'recent'">
-          <RecentPagesPanel
-            :on-navigate="navigateTo"
-            :on-add-to-favorites="addToFavorites"
-            :on-remove-from-favorites="removeFromFavorites"
-          />
-        </template>
-      </div>
+      <!-- 最近访问页面专用组件 -->
+      <template v-else-if="hoveredItem === 'recent'">
+        <RecentPagesPanel
+          :on-navigate="navigateTo"
+          :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites"
+        />
+      </template>
     </div>
-  </div>
+  </v-navigation-drawer>
 </template>
 
 <style scoped>
+.drawer-container {
+  position: relative;
+}
+
+:deep(.v-list-item__prepend) {
+  width: 30px !important;
+}
+
 .drawer-list {
   padding-top: 0;
 }
@@ -199,29 +215,14 @@ const handleMouseEnter = (itemId: string) => {
 
 /* 悬停面板样式 */
 .hover-panel {
-  position: fixed;
-  left: 255px; /* 抽屉宽度 */
-  top: 50px; /* 头部高度 */
-  width: 320px;
-  height: calc(100vh - 50px);
+  position: absolute;
+  left: 100%; /* 相对于抽屉的右边缘 */
+  top: 0; /* 相对于抽屉的顶部 */
+  width: 250px;
+  height: 100%; /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
-  z-index: 1000;
   box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-}
-
-.panel-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.panel-body {
-  flex: 1;
-  height: 100%;
   overflow: hidden;
 }
 </style>

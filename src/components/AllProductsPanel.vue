@@ -118,13 +118,13 @@ const isItemFavorite = (path: string) => {
 }
 
 .category-section {
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .category-header {
   display: flex;
   align-items: center;
-  padding: 12px 20px 10px 20px;
+  padding: 5px 15px 5px 15px;
   border-top: 1px solid #616161;
   border-bottom: 1px solid #616161;
   background-color: #424242;
