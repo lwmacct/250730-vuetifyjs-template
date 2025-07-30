@@ -72,32 +72,33 @@ const isItemFavorite = (path: string) => {
 .recent-pages-panel {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  min-height: 0;
   overflow-x: hidden;
+  overflow-y: scroll;
   background-color: #424242;
   /* 确保滚动条始终显示 */
   scrollbar-width: thin;
-  scrollbar-color: #616161 #424242;
+  scrollbar-color: #757575 #424242;
 }
 
 /* WebKit 浏览器滚动条样式 */
 .recent-pages-panel::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 .recent-pages-panel::-webkit-scrollbar-track {
   background: #424242;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .recent-pages-panel::-webkit-scrollbar-thumb {
-  background: #616161;
-  border-radius: 4px;
-  border: 1px solid #424242;
+  background: #757575;
+  border-radius: 6px;
+  border: 2px solid #424242;
 }
 
 .recent-pages-panel::-webkit-scrollbar-thumb:hover {
-  background: #757575;
+  background: #9e9e9e;
 }
 
 .recent-pages-panel::-webkit-scrollbar-corner {
@@ -134,7 +135,7 @@ const isItemFavorite = (path: string) => {
 /* 确保在 Firefox 中滚动条可见 */
 @supports (scrollbar-color: auto) {
   .recent-pages-panel {
-    scrollbar-color: #616161 #424242;
+    scrollbar-color: #757575 #424242;
   }
 }
 

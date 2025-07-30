@@ -134,25 +134,23 @@ const handleMouseEnter = (itemId: string) => {
     <div class="panel-content">
       <!-- 面板内容 -->
       <div class="panel-body">
-        <v-list color="transparent" class="panel-list">
-          <!-- 全部云产品专用组件 -->
-          <template v-if="hoveredItem === 'all-products'">
-            <AllProductsPanel
-              :on-navigate="navigateTo"
-              :on-add-to-favorites="addToFavorites"
-              :on-remove-from-favorites="removeFromFavorites"
-            />
-          </template>
+        <!-- 全部云产品专用组件 -->
+        <template v-if="hoveredItem === 'all-products'">
+          <AllProductsPanel
+            :on-navigate="navigateTo"
+            :on-add-to-favorites="addToFavorites"
+            :on-remove-from-favorites="removeFromFavorites"
+          />
+        </template>
 
-          <!-- 最近访问页面专用组件 -->
-          <template v-else-if="hoveredItem === 'recent'">
-            <RecentPagesPanel
-              :on-navigate="navigateTo"
-              :on-add-to-favorites="addToFavorites"
-              :on-remove-from-favorites="removeFromFavorites"
-            />
-          </template>
-        </v-list>
+        <!-- 最近访问页面专用组件 -->
+        <template v-else-if="hoveredItem === 'recent'">
+          <RecentPagesPanel
+            :on-navigate="navigateTo"
+            :on-add-to-favorites="addToFavorites"
+            :on-remove-from-favorites="removeFromFavorites"
+          />
+        </template>
       </div>
     </div>
   </div>
@@ -214,9 +212,16 @@ const handleMouseEnter = (itemId: string) => {
   flex-direction: column;
 }
 
-.panel-list {
+.panel-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-body {
+  flex: 1;
+  height: 100%;
   overflow: hidden;
-  padding: 0;
 }
 </style>
