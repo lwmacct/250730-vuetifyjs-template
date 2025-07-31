@@ -155,21 +155,7 @@ const router = createRouter({
         requireAuth: false,
       },
     },
-    {
-      path: '/header-demo/component',
-      name: 'header-demo-component',
-      component: () => import('@/pages/HeaderDemo/Component.vue'),
-      meta: {
-        title: '组件对象方式演示',
-        icon: 'mdi-cube-outline',
-        description: 'AppHeader组件对象方式的使用演示',
-        keywords: ['组件', '对象', '演示'],
-        category: 'Header Demo',
-        priority: 11,
-        showInMenu: true,
-        requireAuth: false,
-      },
-    },
+
     {
       path: '/header-demo/styles',
       name: 'header-demo-styles',
