@@ -3,7 +3,6 @@ import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useMenuStore } from '@/stores/menu'
 import FavoriteMenu from './AppHeaderFavoriteMenu.vue'
-import AllProductsPanel from './AllProductsPanel.vue'
 import AppHeaderAllPages from './AppHeaderAllPages.vue'
 import AppHeaderRecentPages from './AppHeaderRecentPages.vue'
 
@@ -148,14 +147,13 @@ const handleMouseEnter = (itemId: string) => {
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面 -->
       <AppHeaderAllPages :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
-
-      <!-- 分割线 -->
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
 
-      <!-- 最近访问的页面 -->
+      <!-- 最近访问 -->
       <AppHeaderRecentPages :on-navigate="navigateTo" />
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
-      <!-- 收藏菜单组件 -->
+
+      <!-- 收藏页面 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
 
@@ -167,15 +165,6 @@ const handleMouseEnter = (itemId: string) => {
     >
       <!-- 连接区域 - 确保鼠标可以移动到面板 -->
       <div class="connection-area"></div>
-      <!-- 面板内容 -->
-      <!-- 所有页面专用组件 -->
-      <template v-if="hoveredItem === 'all-products'">
-        <AllProductsPanel
-          :on-navigate="navigateTo"
-          :on-add-to-favorites="addToFavorites"
-          :on-remove-from-favorites="removeFromFavorites"
-        />
-      </template>
     </div>
   </v-navigation-drawer>
 </template>
