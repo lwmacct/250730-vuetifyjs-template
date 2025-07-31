@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
-import { useMenuStore } from '@/stores/menu'
 import { useRouteMenuStore } from '@/stores/routeMenu'
 import FavoriteMenu from './FavoriteMenu.vue'
 import ProductsPanel from './ProductsPanel.vue'
@@ -61,7 +60,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const router = useRouter()
-const menuStore = useMenuStore()
 const routeMenuStore = useRouteMenuStore()
 const drawer = ref(false)
 const hoveredItem = ref<string | null>(null)
@@ -91,12 +89,12 @@ const handleNavIconClick = () => {
 
 // 添加收藏项的方法
 const addToFavorites = (item: any) => {
-  menuStore.addToFavorites(item)
+  routeMenuStore.toggleFavorite(item.path)
 }
 
 // 移除收藏项的方法
 const removeFromFavorites = (path: string) => {
-  menuStore.removeFromFavorites(path)
+  routeMenuStore.toggleFavorite(path)
 }
 
 const handleMouseEnter = (itemId: string) => {
