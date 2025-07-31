@@ -1,16 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
-import About from '@/views/About.vue'
-import Contact from '@/views/Contact.vue'
-import Login from '@/views/Login.vue'
-import Dashboard from '@/views/Dashboard.vue'
-import HeaderDemo from '@/views/HeaderDemo.vue'
-import HeaderDemoDefault from '@/views/HeaderDemoDefault.vue'
-import HeaderDemoCustomTitle from '@/views/HeaderDemoCustomTitle.vue'
-import HeaderDemoCustomActions from '@/views/HeaderDemoCustomActions.vue'
-import HeaderDemoSlot from '@/views/HeaderDemoSlot.vue'
-import HeaderDemoComponent from '@/views/HeaderDemoComponent.vue'
-import HeaderDemoStyles from '@/views/HeaderDemoStyles.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -18,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: () => import('@/views/Home.vue'),
       meta: {
         title: '首页',
       },
@@ -26,7 +14,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: About,
+      component: () => import('@/views/About.vue'),
       meta: {
         title: '关于',
       },
@@ -34,7 +22,7 @@ const router = createRouter({
     {
       path: '/contact',
       name: 'contact',
-      component: Contact,
+      component: () => import('@/views/Contact.vue'),
       meta: {
         title: '联系',
       },
@@ -42,7 +30,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: () => import('@/views/Login.vue'),
       meta: {
         title: '登录',
       },
@@ -50,7 +38,7 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard,
+      component: () => import('@/views/Dashboard.vue'),
       meta: {
         title: '仪表板',
       },
@@ -59,7 +47,7 @@ const router = createRouter({
     {
       path: '/header-demo',
       name: 'header-demo',
-      component: HeaderDemo,
+      component: () => import('@/views/HeaderDemo.vue'),
       meta: {
         title: 'AppHeader 演示',
       },
@@ -67,7 +55,7 @@ const router = createRouter({
     {
       path: '/header-demo/default',
       name: 'header-demo-default',
-      component: HeaderDemoDefault,
+      component: () => import('@/views/HeaderDemoDefault.vue'),
       meta: {
         title: '默认配置演示',
       },
@@ -75,7 +63,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-title',
       name: 'header-demo-custom-title',
-      component: HeaderDemoCustomTitle,
+      component: () => import('@/views/HeaderDemoCustomTitle.vue'),
       meta: {
         title: '自定义标题演示',
       },
@@ -83,7 +71,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-actions',
       name: 'header-demo-custom-actions',
-      component: HeaderDemoCustomActions,
+      component: () => import('@/views/HeaderDemoCustomActions.vue'),
       meta: {
         title: '自定义操作按钮演示',
       },
@@ -91,7 +79,7 @@ const router = createRouter({
     {
       path: '/header-demo/slot',
       name: 'header-demo-slot',
-      component: HeaderDemoSlot,
+      component: () => import('@/views/HeaderDemoSlot.vue'),
       meta: {
         title: '插槽方式演示',
       },
@@ -99,7 +87,7 @@ const router = createRouter({
     {
       path: '/header-demo/component',
       name: 'header-demo-component',
-      component: HeaderDemoComponent,
+      component: () => import('@/views/HeaderDemoComponent.vue'),
       meta: {
         title: '组件对象方式演示',
       },
@@ -107,7 +95,7 @@ const router = createRouter({
     {
       path: '/header-demo/styles',
       name: 'header-demo-styles',
-      component: HeaderDemoStyles,
+      component: () => import('@/views/HeaderDemoStyles.vue'),
       meta: {
         title: '样式控制演示',
       },
