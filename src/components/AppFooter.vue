@@ -14,42 +14,40 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <v-footer
-    :app="false"
+    :app="fixed"
     color="grey-darken-3"
     class="text-center"
     :class="{ 'footer-sticky': fixed, 'footer-normal': !fixed }"
   >
-    <v-container>
-      <v-row justify="center">
-        <v-col cols="12">
-          <p class="text-body-2 text-grey-lighten-1">
-            {{ customText }}
-            <template v-if="showLinks">
-              |
-              <v-btn
-                href="https://vuejs.org/"
-                target="_blank"
-                variant="text"
-                size="small"
-                color="grey-lighten-1"
-              >
-                Vue.js
-              </v-btn>
-              |
-              <v-btn
-                href="https://vuetifyjs.com/"
-                target="_blank"
-                variant="text"
-                size="small"
-                color="grey-lighten-1"
-              >
-                Vuetify
-              </v-btn>
-            </template>
-          </p>
-        </v-col>
-      </v-row>
-    </v-container>
+    <div class="d-flex justify-center align-center py-2">
+      <span class="text-body-2 text-grey-lighten-1">
+        {{ customText }}
+        <template v-if="showLinks">
+          |
+          <v-btn
+            href="https://vuejs.org/"
+            target="_blank"
+            variant="text"
+            size="small"
+            color="grey-lighten-1"
+            density="compact"
+          >
+            Vue.js
+          </v-btn>
+          |
+          <v-btn
+            href="https://vuetifyjs.com/"
+            target="_blank"
+            variant="text"
+            size="small"
+            color="grey-lighten-1"
+            density="compact"
+          >
+            Vuetify
+          </v-btn>
+        </template>
+      </span>
+    </div>
   </v-footer>
 </template>
 
@@ -59,12 +57,13 @@ const props = withDefaults(defineProps<Props>(), {
   /* 当内容不足时，页脚固定在视口底部 */
   /* 当内容超出时，页脚跟随在内容底部 */
   margin-top: auto;
-  min-height: 64px; /* 页脚最小高度 */
+  min-height: 48px; /* 减少页脚最小高度 */
 }
 
 .footer-normal {
   /* 正常文档流页脚样式 */
   margin-top: auto;
+  min-height: 48px; /* 统一最小高度 */
 }
 
 /* 确保父容器支持 flexbox 布局 */
@@ -89,5 +88,15 @@ const props = withDefaults(defineProps<Props>(), {
 /* 确保页脚在 sticky 模式下正确显示 */
 .footer-sticky {
   flex-shrink: 0;
+}
+
+/* 优化页脚内容布局 */
+.v-footer {
+  padding: 0;
+}
+
+/* 减少按钮间距 */
+.v-btn {
+  margin: 0 2px;
 }
 </style>

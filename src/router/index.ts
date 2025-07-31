@@ -100,6 +100,15 @@ const router = createRouter({
         title: '样式控制演示',
       },
     },
+    // AppFooter 演示页面
+    {
+      path: '/footer-demo',
+      name: 'footer-demo',
+      component: () => import('@/views/FooterDemo.vue'),
+      meta: {
+        title: '页脚演示',
+      },
+    },
     // 404 页面重定向到首页
     {
       path: '/:pathMatch(.*)*',
