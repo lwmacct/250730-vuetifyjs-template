@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import CustomHeaderContent from '@/components/CustomHeaderContent.vue'
 
 // 示例：自定义操作按钮
 const customActions = [
