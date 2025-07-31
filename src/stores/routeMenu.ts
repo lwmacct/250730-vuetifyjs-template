@@ -1,7 +1,23 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+
+// 扩展Vue Router的RouteMeta接口
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+    icon?: string
+    // 自定义字段
+    description?: string
+    keywords?: string[]
+    category?: string
+    priority?: number
+    showInMenu?: boolean
+    requireAuth?: boolean
+    [key: string]: any
+  }
+}
 
 // 定义菜单项的类型
 export interface RouteMenuItem {
@@ -131,16 +147,92 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
     return getMenuItemByPath(currentRoute.path)
   }
 
+  // ========== 路由工具函数 ==========
+
+  /**
+   * 获取当前路由的icon
+   * @param defaultIcon 默认icon，如果路由meta中没有配置icon则使用此值
+   * @returns 当前路由的icon
+   */
+  const useRouteIcon = (defaultIcon: string = 'mdi-help') => {
+    const route = useRoute()
+
+    return computed(() => {
+      return (route.meta?.icon as string) || defaultIcon
+    })
+  }
+
+  /**
+   * 获取当前路由的title
+   * @param defaultTitle 默认title，如果路由meta中没有配置title则使用此值
+   * @returns 当前路由的title
+   */
+  const useRouteTitle = (defaultTitle: string = '页面') => {
+    const route = useRoute()
+
+    return computed(() => {
+      return (route.meta?.title as string) || defaultTitle
+    })
+  }
+
+  /**
+   * 获取当前路由的description
+   * @param defaultDescription 默认description，如果路由meta中没有配置description则使用此值
+   * @returns 当前路由的description
+   */
+  const useRouteDescription = (defaultDescription: string = '') => {
+    const route = useRoute()
+
+    return computed(() => {
+      return (route.meta?.description as string) || defaultDescription
+    })
+  }
+
+  /**
+   * 获取当前路由的category
+   * @param defaultCategory 默认category，如果路由meta中没有配置category则使用此值
+   * @returns 当前路由的category
+   */
+  const useRouteCategory = (defaultCategory: string = '') => {
+    const route = useRoute()
+
+    return computed(() => {
+      return (route.meta?.category as string) || defaultCategory
+    })
+  }
+
+  /**
+   * 获取当前路由的所有meta信息
+   * @returns 当前路由的完整meta对象
+   */
+  const useRouteMeta = () => {
+    const route = useRoute()
+
+    return computed(() => {
+      return route.meta
+    })
+  }
+
   return {
+    // 菜单数据
     allMenuItems,
     menuItemsByCategory,
     favoriteItems,
     recentItems,
+
+    // 菜单操作方法
     toggleFavorite,
     isFavorite,
     recordAccess,
     getMenuItemByPath,
     getMenuItemsByCategory,
     getCurrentMenuItem,
+
+    // 路由工具函数
+    useRouteIcon,
+    useRouteTitle,
+    useRouteDescription,
+    useRouteCategory,
+    useRouteMeta,
   }
 })

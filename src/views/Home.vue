@@ -2,11 +2,13 @@
 // 首页组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import { useRouteIcon, useRouteTitle } from '@/utils/route'
+import { useRouteMenuStore } from '@/stores/routeMenu'
+
+const routeMenuStore = useRouteMenuStore()
 
 // 从路由meta中获取信息
-const pageIcon = useRouteIcon('mdi-home')
-const pageTitle = useRouteTitle('首页')
+const pageIcon = routeMenuStore.useRouteIcon('mdi-home')
+const pageTitle = routeMenuStore.useRouteTitle('首页')
 </script>
 
 <template>

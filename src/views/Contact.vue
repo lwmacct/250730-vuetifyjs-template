@@ -2,12 +2,14 @@
 // 联系页面组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import { useRouteIcon, useRouteTitle, useRouteDescription } from '@/utils/route'
+import { useRouteMenuStore } from '@/stores/routeMenu'
+
+const routeMenuStore = useRouteMenuStore()
 
 // 从路由meta中获取信息
-const pageIcon = useRouteIcon('mdi-email')
-const pageTitle = useRouteTitle('联系我们')
-const pageDescription = useRouteDescription('联系页面，提供联系方式和服务信息')
+const pageIcon = routeMenuStore.useRouteIcon('mdi-email')
+const pageTitle = routeMenuStore.useRouteTitle('联系我们')
+const pageDescription = routeMenuStore.useRouteDescription('联系页面，提供联系方式和服务信息')
 </script>
 
 <template>

@@ -2,20 +2,16 @@
 // 路由Meta演示页面
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import {
-  useRouteIcon,
-  useRouteTitle,
-  useRouteDescription,
-  useRouteCategory,
-  useRouteMeta,
-} from '@/utils/route'
+import { useRouteMenuStore } from '@/stores/routeMenu'
+
+const routeMenuStore = useRouteMenuStore()
 
 // 从路由meta中获取所有信息
-const pageIcon = useRouteIcon('mdi-information')
-const pageTitle = useRouteTitle('Meta演示')
-const pageDescription = useRouteDescription('演示路由meta自定义字段的使用')
-const pageCategory = useRouteCategory('演示页面')
-const routeMeta = useRouteMeta()
+const pageIcon = routeMenuStore.useRouteIcon('mdi-information')
+const pageTitle = routeMenuStore.useRouteTitle('Meta演示')
+const pageDescription = routeMenuStore.useRouteDescription('演示路由meta自定义字段的使用')
+const pageCategory = routeMenuStore.useRouteCategory('演示页面')
+const routeMeta = routeMenuStore.useRouteMeta()
 </script>
 
 <template>
