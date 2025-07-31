@@ -113,7 +113,8 @@ const handleMouseEnter = (itemId: string) => {
     >
       <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
     </v-app-bar-nav-icon>
-
+    <!-- 菜单按钮分割线 -->
+    <v-divider vertical color="white"></v-divider>
     <!-- 自定义内容或默认内容 -->
     <template v-if="useCustomContent">
       <!-- 方式1：插槽：自定义导航栏右侧内容 -->
@@ -125,29 +126,10 @@ const handleMouseEnter = (itemId: string) => {
     </template>
     <template v-else>
       <!-- 默认内容 -->
-      <!-- 标题 -->
       <v-app-bar-title v-if="showTitle" class="text-h6">
         <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
         {{ title }}
       </v-app-bar-title>
-
-      <v-spacer></v-spacer>
-
-      <!-- 操作按钮 -->
-      <v-app-bar-actions>
-        <!-- 自定义操作按钮 -->
-        <template v-for="(action, index) in actions" :key="index">
-          <v-btn
-            @click="action.onClick"
-            :variant="action.variant || 'text'"
-            :prepend-icon="action.icon"
-            :color="action.color || 'white'"
-            class="mx-1"
-          >
-            {{ action.text }}
-          </v-btn>
-        </template>
-      </v-app-bar-actions>
     </template>
   </v-app-bar>
 
@@ -163,7 +145,7 @@ const handleMouseEnter = (itemId: string) => {
     :width="drawerWidth"
   >
     <v-list color="transparent" nav class="drawer-list">
-      <!-- 最近访问页面 -->
+      <!-- 最近访问 -->
       <div class="menu-item-container" @mouseenter="handleMouseEnter('recent')">
         <v-list-item
           :active="hoveredItem === 'recent'"
@@ -175,14 +157,14 @@ const handleMouseEnter = (itemId: string) => {
           <template v-slot:prepend>
             <v-icon color="white">mdi-clock</v-icon>
           </template>
-          <v-list-item-title class="text-white"> 最近访问页面 </v-list-item-title>
+          <v-list-item-title class="text-white"> 最近访问 </v-list-item-title>
           <template v-slot:append>
             <v-icon color="white" class="chevron-icon">mdi-chevron-right</v-icon>
           </template>
         </v-list-item>
       </div>
 
-      <!-- 全部云产品 -->
+      <!-- 所有页面 -->
       <div class="menu-item-container" @mouseenter="handleMouseEnter('all-products')">
         <v-list-item
           :active="hoveredItem === 'all-products'"
@@ -194,7 +176,7 @@ const handleMouseEnter = (itemId: string) => {
           <template v-slot:prepend>
             <v-icon color="white">mdi-view-grid</v-icon>
           </template>
-          <v-list-item-title class="text-white"> 全部云产品 </v-list-item-title>
+          <v-list-item-title class="text-white"> 所有页面 </v-list-item-title>
           <template v-slot:append>
             <v-icon color="white" class="chevron-icon">mdi-chevron-right</v-icon>
           </template>
@@ -206,6 +188,41 @@ const handleMouseEnter = (itemId: string) => {
 
       <!-- 收藏菜单组件 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
+
+      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
+
+      <!-- 最近访问的页面 -->
+      <div class="recent-pages-section">
+        <v-list-subheader class="text-white text-caption px-4 py-2"> 最近访问 </v-list-subheader>
+        <div v-if="menuStore.recentPages.length > 0">
+          <v-list-item
+            v-for="page in menuStore.recentPages.slice(0, 5)"
+            :key="page.path"
+            :title="page.title"
+            :subtitle="page.category"
+            prepend-icon="mdi-clock-outline"
+            color="white"
+            variant="text"
+            class="recent-page-item"
+            @click="navigateTo(page.path)"
+            link
+          >
+            <template v-slot:append>
+              <v-btn
+                icon="mdi-star"
+                variant="text"
+                size="small"
+                color="white"
+                :class="{ 'favorite-active': page.isFavorite }"
+                @click.stop="menuStore.toggleFavorite(page.path)"
+              ></v-btn>
+            </template>
+          </v-list-item>
+        </div>
+        <div v-else class="px-4 py-2">
+          <v-chip color="grey" variant="outlined" size="small"> 暂无最近访问记录 </v-chip>
+        </div>
+      </div>
     </v-list>
 
     <!-- 悬停显示的二级菜单面板 -->
@@ -217,7 +234,7 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 连接区域 - 确保鼠标可以移动到面板 -->
       <div class="connection-area"></div>
       <!-- 面板内容 -->
-      <!-- 全部云产品专用组件 -->
+      <!-- 所有页面专用组件 -->
       <template v-if="hoveredItem === 'all-products'">
         <AllProductsPanel
           :on-navigate="navigateTo"
@@ -226,7 +243,7 @@ const handleMouseEnter = (itemId: string) => {
         />
       </template>
 
-      <!-- 最近访问页面专用组件 -->
+      <!-- 最近访问专用组件 -->
       <template v-else-if="hoveredItem === 'recent'">
         <RecentPagesPanel
           :on-navigate="navigateTo"
@@ -285,6 +302,25 @@ const handleMouseEnter = (itemId: string) => {
 
 .menu-item:hover .chevron-icon {
   transform: translateX(4px);
+}
+
+/* 最近访问页面样式 */
+.recent-pages-section {
+  margin-top: 8px;
+}
+
+.recent-page-item {
+  border-radius: 4px;
+  margin: 2px 8px;
+  transition: all 0.3s ease;
+}
+
+.recent-page-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.favorite-active {
+  color: #ffd700 !important;
 }
 
 /* 悬停面板样式 */
