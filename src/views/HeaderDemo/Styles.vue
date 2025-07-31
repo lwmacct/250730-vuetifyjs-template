@@ -419,7 +419,7 @@ const switchTheme = (theme: any) => {
     </v-main>
 
     <!-- 页脚使用 sticky footer 模式进行测试 -->
-    <AppFooter :fixed="true" />
+    <AppFooter />
   </v-app>
 </template>
 

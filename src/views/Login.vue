@@ -93,7 +93,7 @@ const handleLogin = () => {
     </v-main>
 
     <!-- 登录页面使用简化的页脚 -->
-    <AppFooter :show-links="false" custom-text="© 2024 登录系统" :fixed="true" />
+    <AppFooter :show-links="false" custom-text="© 2024 登录系统" />
   </v-app>
 </template>
 

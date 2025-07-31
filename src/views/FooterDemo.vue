@@ -4,7 +4,6 @@ import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { ref } from 'vue'
 
-const footerFixed = ref(false)
 const showLongContent = ref(false)
 </script>
 
@@ -38,19 +37,12 @@ const showLongContent = ref(false)
                   <v-card-text>
                     <v-row>
                       <v-col cols="12" sm="6">
-                        <v-switch
-                          v-model="footerFixed"
-                          label="固定页脚模式"
-                          color="primary"
-                          hide-details
-                        ></v-switch>
-                        <v-chip
-                          :color="footerFixed ? 'success' : 'default'"
-                          class="mt-2"
-                          size="small"
-                        >
-                          {{ footerFixed ? '固定模式' : '正常模式' }}
-                        </v-chip>
+                        <v-alert type="info" variant="tonal" class="mb-0">
+                          <template v-slot:prepend>
+                            <v-icon>mdi-information</v-icon>
+                          </template>
+                          页脚现在统一使用 app 模式，始终在页面底部
+                        </v-alert>
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-switch
@@ -73,37 +65,22 @@ const showLongContent = ref(false)
 
                 <!-- 模式说明 -->
                 <v-card variant="outlined" class="mb-6">
-                  <v-card-title>模式说明</v-card-title>
+                  <v-card-title>页脚说明</v-card-title>
                   <v-card-text>
                     <v-row>
-                      <v-col cols="12" md="6">
-                        <v-card variant="tonal" color="info">
-                          <v-card-title class="text-h6">
-                            <v-icon color="info" class="mr-2">mdi-arrow-down</v-icon>
-                            正常模式 (fixed: false)
-                          </v-card-title>
-                          <v-card-text class="text-body-2">
-                            <ul>
-                              <li>页脚跟随内容自然流动</li>
-                              <li>内容少时页脚在底部</li>
-                              <li>内容多时需要滚动才能看到页脚</li>
-                              <li>适合大多数页面布局</li>
-                            </ul>
-                          </v-card-text>
-                        </v-card>
-                      </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col cols="12">
                         <v-card variant="tonal" color="success">
                           <v-card-title class="text-h6">
                             <v-icon color="success" class="mr-2">mdi-pin</v-icon>
-                            固定模式 (fixed: true)
+                            统一页脚模式
                           </v-card-title>
                           <v-card-text class="text-body-2">
                             <ul>
-                              <li>页脚始终固定在视口底部</li>
-                              <li>内容少时页脚在视口底部</li>
-                              <li>内容多时页脚在内容底部</li>
-                              <li>适合需要始终可见页脚的场景</li>
+                              <li>页脚始终固定在页面底部</li>
+                              <li>使用 Vuetify 的 app 属性</li>
+                              <li>高度统一为 48px</li>
+                              <li>无论内容多少，页脚都在底部</li>
+                              <li>适合所有页面布局</li>
                             </ul>
                           </v-card-text>
                         </v-card>
@@ -145,7 +122,7 @@ const showLongContent = ref(false)
     </v-main>
 
     <!-- 使用通用页脚组件 -->
-    <AppFooter :fixed="footerFixed" />
+    <AppFooter />
   </v-app>
 </template>
 
