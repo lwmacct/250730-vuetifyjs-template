@@ -15,6 +15,50 @@ export interface MenuItem {
 export const useMenuStore = defineStore('menu', () => {
   // 统一的产品数据源
   const allProducts = ref<MenuItem[]>([
+    // Header Demo 组
+    {
+      title: 'AppHeader 演示',
+      path: '/header-demo',
+      icon: 'mdi-view-dashboard',
+      isFavorite: true,
+      category: 'Header Demo',
+      lastAccessed: Date.now() - 1000 * 60 * 5, // 5分钟前
+    },
+    {
+      title: '默认配置演示',
+      path: '/header-demo/default',
+      icon: 'mdi-cog',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
+    {
+      title: '自定义标题演示',
+      path: '/header-demo/custom-title',
+      icon: 'mdi-format-title',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
+    {
+      title: '自定义操作按钮演示',
+      path: '/header-demo/custom-actions',
+      icon: 'mdi-button-cursor',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
+    {
+      title: '插槽方式演示',
+      path: '/header-demo/slot',
+      icon: 'mdi-puzzle',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
+    {
+      title: '组件对象方式演示',
+      path: '/header-demo/component',
+      icon: 'mdi-cube-outline',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
     // 计算组
     {
       title: '云服务器',
