@@ -15,6 +15,44 @@ export interface MenuItem {
 export const useMenuStore = defineStore('menu', () => {
   // 统一的产品数据源
   const allProducts = ref<MenuItem[]>([
+    // 基础页面组
+    {
+      title: '首页',
+      path: '/',
+      icon: 'mdi-home',
+      isFavorite: true,
+      category: '基础页面',
+      lastAccessed: Date.now() - 1000 * 60 * 1, // 1分钟前
+    },
+    {
+      title: '仪表板',
+      path: '/dashboard',
+      icon: 'mdi-view-dashboard',
+      isFavorite: true,
+      category: '基础页面',
+      lastAccessed: Date.now() - 1000 * 60 * 3, // 3分钟前
+    },
+    {
+      title: '关于',
+      path: '/about',
+      icon: 'mdi-information',
+      isFavorite: false,
+      category: '基础页面',
+    },
+    {
+      title: '联系',
+      path: '/contact',
+      icon: 'mdi-email',
+      isFavorite: false,
+      category: '基础页面',
+    },
+    {
+      title: '登录',
+      path: '/login',
+      icon: 'mdi-login',
+      isFavorite: false,
+      category: '基础页面',
+    },
     // Header Demo 组
     {
       title: 'AppHeader 演示',
@@ -23,36 +61,6 @@ export const useMenuStore = defineStore('menu', () => {
       isFavorite: true,
       category: 'Header Demo',
       lastAccessed: Date.now() - 1000 * 60 * 5, // 5分钟前
-    },
-    // Footer Demo 组
-    {
-      title: 'AppFooter 演示',
-      path: '/footer-demo',
-      icon: 'mdi-foot-print',
-      isFavorite: true,
-      category: 'Footer Demo',
-      lastAccessed: Date.now() - 1000 * 60 * 2, // 2分钟前
-    },
-    {
-      title: '默认页脚演示',
-      path: '/footer-demo/default',
-      icon: 'mdi-arrow-down',
-      isFavorite: false,
-      category: 'Footer Demo',
-    },
-    {
-      title: '固定页脚演示',
-      path: '/footer-demo/fixed',
-      icon: 'mdi-pin',
-      isFavorite: false,
-      category: 'Footer Demo',
-    },
-    {
-      title: '自定义页脚演示',
-      path: '/footer-demo/custom',
-      icon: 'mdi-cog',
-      isFavorite: false,
-      category: 'Footer Demo',
     },
     {
       title: '默认配置演示',
@@ -96,200 +104,35 @@ export const useMenuStore = defineStore('menu', () => {
       isFavorite: false,
       category: 'Header Demo',
     },
-    // 计算组
+    // Footer Demo 组
     {
-      title: '云服务器',
-      path: '/server',
-      icon: 'mdi-server',
+      title: 'AppFooter 演示',
+      path: '/footer-demo',
+      icon: 'mdi-foot-print',
       isFavorite: true,
-      category: '计算',
-      lastAccessed: Date.now() - 1000 * 60 * 30, // 30分钟前
+      category: 'Footer Demo',
+      lastAccessed: Date.now() - 1000 * 60 * 2, // 2分钟前
     },
     {
-      title: '轻量应用服务器',
-      path: '/lightweight',
-      icon: 'mdi-server-network',
-      isFavorite: true,
-      category: '计算',
-      lastAccessed: Date.now() - 1000 * 60 * 60, // 1小时前
-    },
-    {
-      title: 'GPU 云服务器',
-      path: '/gpu-server',
-      icon: 'mdi-gpu',
+      title: '默认页脚演示',
+      path: '/footer-demo/default',
+      icon: 'mdi-arrow-down',
       isFavorite: false,
-      category: '计算',
+      category: 'Footer Demo',
     },
     {
-      title: '裸金属云服务器',
-      path: '/bare-metal',
-      icon: 'mdi-server',
+      title: '固定页脚演示',
+      path: '/footer-demo/fixed',
+      icon: 'mdi-pin',
       isFavorite: false,
-      category: '计算',
+      category: 'Footer Demo',
     },
     {
-      title: '弹性伸缩',
-      path: '/auto-scaling',
-      icon: 'mdi-arrow-expand',
+      title: '自定义页脚演示',
+      path: '/footer-demo/custom',
+      icon: 'mdi-cog',
       isFavorite: false,
-      category: '计算',
-    },
-    // 高性能计算组
-    {
-      title: '批量计算',
-      path: '/batch-compute',
-      icon: 'mdi-cube',
-      isFavorite: false,
-      category: '高性能计算',
-    },
-    {
-      title: '高性能计算平台',
-      path: '/hpc-platform',
-      icon: 'mdi-chart-line',
-      isFavorite: false,
-      category: '高性能计算',
-    },
-    {
-      title: '高性能应用服务',
-      path: '/hpc-app',
-      icon: 'mdi-application',
-      isFavorite: false,
-      category: '高性能计算',
-      lastAccessed: Date.now() - 1000 * 60 * 45, // 45分钟前
-    },
-    // 分布式云组
-    {
-      title: '本地专用集群',
-      path: '/local-cluster',
-      icon: 'mdi-server-network',
-      isFavorite: false,
-      category: '分布式云',
-    },
-    {
-      title: '专属可用区',
-      path: '/dedicated-zone',
-      icon: 'mdi-map-marker',
-      isFavorite: false,
-      category: '分布式云',
-    },
-    // 人工智能与机器学习组
-    {
-      title: '图像识别',
-      path: '/image-recognition',
-      icon: 'mdi-image',
-      isFavorite: false,
-      category: '人工智能与机器学习',
-    },
-    {
-      title: '人脸识别',
-      path: '/face-recognition',
-      icon: 'mdi-account',
-      isFavorite: false,
-      category: '人工智能与机器学习',
-    },
-    {
-      title: '人脸融合',
-      path: '/face-fusion',
-      icon: 'mdi-account-multiple',
-      isFavorite: false,
-      category: '人工智能与机器学习',
-    },
-    {
-      title: '语音识别',
-      path: '/speech-recognition',
-      icon: 'mdi-microphone',
-      isFavorite: false,
-      category: '人工智能与机器学习',
-    },
-    // 存储组
-    {
-      title: '对象存储',
-      path: '/object-storage',
-      icon: 'mdi-cloud',
-      isFavorite: false,
-      category: '存储',
-    },
-    {
-      title: '文件存储',
-      path: '/file-storage',
-      icon: 'mdi-folder',
-      isFavorite: false,
-      category: '存储',
-    },
-    {
-      title: '归档存储',
-      path: '/archive-storage',
-      icon: 'mdi-archive',
-      isFavorite: false,
-      category: '存储',
-    },
-    {
-      title: '云硬盘',
-      path: '/cloud-disk',
-      icon: 'mdi-harddisk',
-      isFavorite: false,
-      category: '存储',
-      lastAccessed: Date.now() - 1000 * 60 * 20, // 20分钟前
-    },
-    // 网络组
-    {
-      title: '负载均衡',
-      path: '/loadbalancer',
-      icon: 'mdi-scale-balance',
-      isFavorite: false,
-      category: '网络',
-    },
-    {
-      title: '私有网络',
-      path: '/vpc',
-      icon: 'mdi-network',
-      isFavorite: false,
-      category: '网络',
-    },
-    {
-      title: '弹性网卡',
-      path: '/elastic-nic',
-      icon: 'mdi-ethernet',
-      isFavorite: false,
-      category: '网络',
-    },
-    {
-      title: 'NAT 网关',
-      path: '/nat-gateway',
-      icon: 'mdi-gateway',
-      isFavorite: false,
-      category: '网络',
-    },
-    // 容器与中间件组
-    {
-      title: '容器服务',
-      path: '/container',
-      icon: 'mdi-docker',
-      isFavorite: true,
-      category: '容器与中间件',
-      lastAccessed: Date.now() - 1000 * 60 * 15, // 15分钟前
-    },
-    {
-      title: '容器镜像服务',
-      path: '/container-registry',
-      icon: 'mdi-package-variant',
-      isFavorite: false,
-      category: '容器与中间件',
-      lastAccessed: Date.now() - 1000 * 60 * 10, // 10分钟前
-    },
-    {
-      title: '云函数',
-      path: '/cloud-function',
-      icon: 'mdi-function',
-      isFavorite: false,
-      category: '容器与中间件',
-    },
-    {
-      title: 'Serverless 应用中心',
-      path: '/serverless-app',
-      icon: 'mdi-application',
-      isFavorite: false,
-      category: '容器与中间件',
+      category: 'Footer Demo',
     },
   ])
 
