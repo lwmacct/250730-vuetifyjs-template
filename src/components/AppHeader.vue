@@ -200,7 +200,7 @@ const handleMouseEnter = (itemId: string) => {
             :key="page.path"
             :title="page.title"
             :subtitle="page.category"
-            prepend-icon="mdi-clock-outline"
+            :prepend-icon="page.icon"
             color="white"
             variant="text"
             class="recent-page-item"
