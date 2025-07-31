@@ -2,16 +2,23 @@
 interface Props {
   showLinks?: boolean
   customText?: string
+  fixed?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showLinks: true,
   customText: '© 2024 Vue + Vuetify 演示应用',
+  fixed: false, // 默认使用正常文档流模式
 })
 </script>
 
 <template>
-  <v-footer app color="grey-darken-3" class="text-center">
+  <v-footer
+    :app="fixed"
+    color="grey-darken-3"
+    class="text-center"
+    :class="{ 'footer-sticky': fixed, 'footer-normal': !fixed }"
+  >
     <div class="d-flex justify-center align-center py-2">
       <span class="text-body-2 text-grey-lighten-1">
         {{ customText }}
@@ -45,6 +52,20 @@ const props = withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped>
+.footer-sticky {
+  /* Sticky footer 样式 */
+  /* 当内容不足时，页脚固定在视口底部 */
+  /* 当内容超出时，页脚跟随在内容底部 */
+  margin-top: auto;
+  min-height: 48px;
+}
+
+.footer-normal {
+  /* 正常文档流页脚样式 */
+  margin-top: auto;
+  min-height: 48px;
+}
+
 /* 确保页脚高度设置生效 */
 :deep(.v-footer) {
   height: 48px !important;
