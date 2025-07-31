@@ -37,6 +37,19 @@ export interface RouteMenuItem {
 export const useRouteMenuStore = defineStore('routeMenu', () => {
   const router = useRouter()
 
+  // 用户状态存储（持久化）
+  const userFavorites = ref<Set<string>>(
+    new Set(['/', '/dashboard', '/header-demo', '/footer-demo']),
+  )
+  const userAccessHistory = ref<Map<string, number>>(
+    new Map([
+      ['/', Date.now() - 1000 * 60 * 1], // 1分钟前
+      ['/dashboard', Date.now() - 1000 * 60 * 3], // 3分钟前
+      ['/header-demo', Date.now() - 1000 * 60 * 5], // 5分钟前
+      ['/footer-demo', Date.now() - 1000 * 60 * 2], // 2分钟前
+    ]),
+  )
+
   // 从路由配置生成菜单项
   const generateMenuFromRoutes = (routes: RouteRecordRaw[]): RouteMenuItem[] => {
     const menuItems: RouteMenuItem[] = []
@@ -57,8 +70,8 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
         priority: (meta.priority as number) || 999,
         showInMenu: (meta.showInMenu as boolean) !== false, // 默认显示
         requireAuth: (meta.requireAuth as boolean) === true,
-        isFavorite: false, // 默认不收藏
-        lastAccessed: undefined,
+        isFavorite: userFavorites.value.has(route.path), // 从用户状态获取
+        lastAccessed: userAccessHistory.value.get(route.path), // 从用户状态获取
       }
 
       // 如果有子路由，递归处理
@@ -111,24 +124,21 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
 
   // 切换收藏状态
   const toggleFavorite = (path: string) => {
-    const item = allMenuItems.value.find((menuItem) => menuItem.path === path)
-    if (item) {
-      item.isFavorite = !item.isFavorite
+    if (userFavorites.value.has(path)) {
+      userFavorites.value.delete(path)
+    } else {
+      userFavorites.value.add(path)
     }
   }
 
   // 检查是否已收藏
   const isFavorite = (path: string) => {
-    const item = allMenuItems.value.find((menuItem) => menuItem.path === path)
-    return item ? item.isFavorite : false
+    return userFavorites.value.has(path)
   }
 
   // 记录访问时间
   const recordAccess = (path: string) => {
-    const item = allMenuItems.value.find((menuItem) => menuItem.path === path)
-    if (item) {
-      item.lastAccessed = Date.now()
-    }
+    userAccessHistory.value.set(path, Date.now())
   }
 
   // 根据路径获取菜单项
