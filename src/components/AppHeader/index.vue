@@ -30,7 +30,6 @@ interface Props {
 
   // 自定义内容相关
   useCustomContent?: boolean
-  customContent?: any // 直接传入的组件对象
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -109,12 +108,8 @@ const handleMouseEnter = (itemId: string) => {
     <v-divider vertical color="white"></v-divider>
 
     <!-- 自定义内容或默认内容 -->
-    <template v-if="customContent">
-      <!-- 方式2：直接传入组件对象 -->
-      <component :is="customContent" />
-    </template>
-    <template v-else-if="useCustomContent">
-      <!-- 方式1：插槽：自定义导航栏右侧内容 -->
+    <template v-if="useCustomContent">
+      <!-- 插槽：自定义导航栏右侧内容 -->
       <slot name="custom-content"></slot>
     </template>
     <template v-else>
