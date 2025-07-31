@@ -162,16 +162,6 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 收藏页面 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
-
-    <!-- 悬停显示的二级菜单面板 -->
-    <div
-      v-if="hoveredItem && drawer"
-      class="hover-panel"
-      @mouseenter="handleMouseEnter(hoveredItem)"
-    >
-      <!-- 连接区域 - 确保鼠标可以移动到面板 -->
-      <div class="connection-area"></div>
-    </div>
   </v-navigation-drawer>
 </template>
 
@@ -226,18 +216,5 @@ const handleMouseEnter = (itemId: string) => {
 
 .favorite-active {
   color: #ffd700 !important;
-}
-
-/* 悬停面板样式 */
-.hover-panel {
-  position: absolute;
-  left: 100%; /* 相对于抽屉的右边缘 */
-  top: 0; /* 相对于抽屉的顶部 */
-  width: 300px;
-  height: 100%; /* 相对于抽屉的高度 */
-  background-color: #424242;
-  border-left: 1px solid #616161;
-  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
 }
 </style>
