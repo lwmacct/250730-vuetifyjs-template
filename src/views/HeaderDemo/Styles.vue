@@ -293,11 +293,133 @@ const switchTheme = (theme: any) => {
           </template>
           当前页面：样式控制演示 (/header-demo/styles) - 点击上方主题卡片实时切换样式！
         </v-alert>
+
+        <!-- 添加更多内容来测试滚动条 -->
+        <v-row class="mt-6">
+          <v-col cols="12">
+            <h2 class="text-h4 mb-4">测试滚动条效果</h2>
+            <p class="text-body-1 mb-4">
+              这个页面使用 sticky footer 模式，当内容超出视口高度时，页脚会跟随在内容底部。
+              当内容不足时，页脚会固定在视口底部。
+            </p>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-card>
+              <v-card-title>Sticky Footer 测试</v-card-title>
+              <v-card-text>
+                <p class="mb-4">
+                  当前页面使用 <code>:fixed="true"</code> 模式，实现了真正的 sticky footer 效果。
+                </p>
+                <v-list>
+                  <v-list-item>
+                    <template v-slot:prepend>
+                      <v-icon color="success">mdi-check-circle</v-icon>
+                    </template>
+                    <v-list-item-title>内容不足时</v-list-item-title>
+                    <v-list-item-subtitle>页脚固定在视口底部</v-list-item-subtitle>
+                  </v-list-item>
+                  <v-list-item>
+                    <template v-slot:prepend>
+                      <v-icon color="success">mdi-check-circle</v-icon>
+                    </template>
+                    <v-list-item-title>内容超出时</v-list-item-title>
+                    <v-list-item-subtitle>页脚跟随在内容底部</v-list-item-subtitle>
+                  </v-list-item>
+                  <v-list-item>
+                    <template v-slot:prepend>
+                      <v-icon color="success">mdi-check-circle</v-icon>
+                    </template>
+                    <v-list-item-title>响应式布局</v-list-item-title>
+                    <v-list-item-subtitle>自动适应不同屏幕高度</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-card>
+              <v-card-title>技术实现</v-card-title>
+              <v-card-text>
+                <pre
+                  class="bg-grey-lighten-4 pa-4 rounded text-caption"
+                ><code>/* Sticky Footer CSS */
+.footer-sticky {
+  margin-top: auto;
+  min-height: 64px;
+  flex-shrink: 0;
+}
+
+:deep(.v-application) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:deep(.v-main) {
+  flex: 1 0 auto;
+}</code></pre>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <!-- 添加更多测试内容 -->
+        <v-row class="mt-6">
+          <v-col cols="12">
+            <v-card>
+              <v-card-title>额外测试内容</v-card-title>
+              <v-card-text>
+                <p class="mb-4">
+                  这些内容用于测试当页面内容超出视口高度时，sticky footer 的行为。
+                  你可以调整浏览器窗口大小来观察效果。
+                </p>
+                <v-row>
+                  <v-col cols="12" md="4" v-for="i in 3" :key="i">
+                    <v-card variant="outlined" class="mb-4">
+                      <v-card-title class="text-h6">测试卡片 {{ i }}</v-card-title>
+                      <v-card-text>
+                        <p>这是第 {{ i }} 个测试卡片，用于增加页面内容高度。</p>
+                        <v-progress-linear
+                          :model-value="i * 30"
+                          color="primary"
+                          class="mt-2"
+                        ></v-progress-linear>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-6">
+          <v-col cols="12">
+            <v-card>
+              <v-card-title>滚动测试区域</v-card-title>
+              <v-card-text>
+                <p class="mb-4">
+                  向下滚动查看 sticky footer 的效果。当内容超出视口时，页脚会跟随在内容底部。
+                </p>
+                <div v-for="i in 5" :key="i" class="mb-4">
+                  <v-divider class="mb-2"></v-divider>
+                  <p class="text-body-2">
+                    <strong>测试段落 {{ i }}</strong> - 这是用于测试滚动效果的额外内容。
+                    当页面内容足够多时，你可以观察到 sticky footer 的行为变化。
+                  </p>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
 
-    <!-- 页脚在正常文档流中 -->
-    <AppFooter />
+    <!-- 页脚使用 sticky footer 模式进行测试 -->
+    <AppFooter :fixed="true" />
   </v-app>
 </template>
 
