@@ -11,6 +11,9 @@ const currentStyle = ref({
   navIconColor: 'white',
 })
 
+// 是否使用插槽内容
+const useSlotContent = ref(false)
+
 // 预设的样式主题
 const styleThemes = [
   {
@@ -105,7 +108,146 @@ const switchTheme = (theme: any) => {
     :elevation="currentStyle.elevation"
     :height="currentStyle.height"
     :navIconColor="currentStyle.navIconColor"
-  />
+    :use-custom-content="useSlotContent"
+  >
+    <template #custom-content v-if="useSlotContent">
+      <!-- 默认主题插槽 -->
+      <template v-if="currentStyle.color === 'primary'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-bell" variant="text" color="white" class="mr-2">
+            <v-badge content="3" color="error" offset-x="8" offset-y="-8">
+              <v-icon>mdi-bell</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-btn icon="mdi-account" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-check-circle</v-icon>
+            在线
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 深色主题插槽 -->
+      <template v-else-if="currentStyle.color === 'grey-darken-4'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-moon" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-moon</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-cog" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-cog</v-icon>
+          </v-btn>
+          <v-chip color="grey-lighten-1" variant="outlined" size="small">
+            <v-icon start>mdi-account-circle</v-icon>
+            夜间模式
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 成功主题插槽 -->
+      <template v-else-if="currentStyle.color === 'success'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-check-circle" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-check-circle</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-chart-line" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-chart-line</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-trending-up</v-icon>
+            运行正常
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 警告主题插槽 -->
+      <template v-else-if="currentStyle.color === 'warning'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-alert" variant="text" color="white" class="mr-2">
+            <v-badge content="!" color="error" offset-x="8" offset-y="-8">
+              <v-icon>mdi-alert</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-btn icon="mdi-shield" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-shield</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-alert-circle</v-icon>
+            需要关注
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 错误主题插槽 -->
+      <template v-else-if="currentStyle.color === 'error'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-close-circle" variant="text" color="white" class="mr-2">
+            <v-badge content="5" color="white" offset-x="8" offset-y="-8">
+              <v-icon>mdi-close-circle</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-btn icon="mdi-exclamation" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-exclamation</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-alert-octagon</v-icon>
+            紧急状态
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 信息主题插槽 -->
+      <template v-else-if="currentStyle.color === 'info'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-information" variant="text" color="white" class="mr-2">
+            <v-badge content="i" color="white" offset-x="8" offset-y="-8">
+              <v-icon>mdi-information</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-btn icon="mdi-help-circle" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-help-circle</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-information-outline</v-icon>
+            信息中心
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 紫色主题插槽 -->
+      <template v-else-if="currentStyle.color === 'purple'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-star" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-star</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-heart" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-heart</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-crown</v-icon>
+            高级用户
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 蓝色主题插槽 -->
+      <template v-else-if="currentStyle.color === 'blue'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-weather-cloudy" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-weather-cloudy</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-water" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-water</v-icon>
+          </v-btn>
+          <v-chip color="white" variant="outlined" size="small">
+            <v-icon start>mdi-weather-partly-cloudy</v-icon>
+            多云
+          </v-chip>
+        </div>
+      </template>
+    </template>
+  </AppHeader>
 
   <v-main>
     <v-container>
@@ -116,6 +258,26 @@ const switchTheme = (theme: any) => {
             AppHeader 组件提供了丰富的颜色和样式控制选项，可以完全自定义外观。
             <strong>点击下方的主题卡片来实时切换样式！</strong>
           </p>
+
+          <!-- 插槽控制按钮 -->
+          <v-card class="mb-6">
+            <v-card-text>
+              <div class="d-flex align-center justify-space-between">
+                <div>
+                  <h3 class="text-h6 mb-2">插槽内容控制</h3>
+                  <p class="text-body-2 text-grey">
+                    切换是否显示自定义插槽内容，每个主题都有对应的插槽模板
+                  </p>
+                </div>
+                <v-switch
+                  v-model="useSlotContent"
+                  :label="useSlotContent ? '显示插槽内容' : '隐藏插槽内容'"
+                  color="primary"
+                  hide-details
+                ></v-switch>
+              </div>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
 
