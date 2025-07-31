@@ -34,42 +34,14 @@ const styleThemes = [
     name: '成功主题',
     color: 'success',
     elevation: 8,
-    height: 70,
+    height: 60,
     navIconColor: 'white',
   },
   {
     name: '警告主题',
     color: 'warning',
     elevation: 6,
-    height: 65,
-    navIconColor: 'white',
-  },
-  {
-    name: '错误主题',
-    color: 'error',
-    elevation: 12,
-    height: 80,
-    navIconColor: 'white',
-  },
-  {
-    name: '信息主题',
-    color: 'info',
-    elevation: 4,
-    height: 60,
-    navIconColor: 'white',
-  },
-  {
-    name: '紫色主题',
-    color: 'purple',
-    elevation: 10,
-    height: 75,
-    navIconColor: 'white',
-  },
-  {
-    name: '蓝色主题',
-    color: 'blue',
-    elevation: 6,
-    height: 65,
+    height: 30,
     navIconColor: 'white',
   },
 ]
@@ -144,108 +116,6 @@ const switchTheme = (theme: any) => {
           </v-chip>
         </div>
       </template>
-
-      <!-- 成功主题插槽 -->
-      <template v-else-if="currentStyle.color === 'success'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-check-circle" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-check-circle</v-icon>
-          </v-btn>
-          <v-btn icon="mdi-chart-line" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-chart-line</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-trending-up</v-icon>
-            运行正常
-          </v-chip>
-        </div>
-      </template>
-
-      <!-- 警告主题插槽 -->
-      <template v-else-if="currentStyle.color === 'warning'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-alert" variant="text" color="white" class="mr-2">
-            <v-badge content="!" color="error" offset-x="8" offset-y="-8">
-              <v-icon>mdi-alert</v-icon>
-            </v-badge>
-          </v-btn>
-          <v-btn icon="mdi-shield" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-shield</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-alert-circle</v-icon>
-            需要关注
-          </v-chip>
-        </div>
-      </template>
-
-      <!-- 错误主题插槽 -->
-      <template v-else-if="currentStyle.color === 'error'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-close-circle" variant="text" color="white" class="mr-2">
-            <v-badge content="5" color="white" offset-x="8" offset-y="-8">
-              <v-icon>mdi-close-circle</v-icon>
-            </v-badge>
-          </v-btn>
-          <v-btn icon="mdi-exclamation" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-exclamation</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-alert-octagon</v-icon>
-            紧急状态
-          </v-chip>
-        </div>
-      </template>
-
-      <!-- 信息主题插槽 -->
-      <template v-else-if="currentStyle.color === 'info'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-information" variant="text" color="white" class="mr-2">
-            <v-badge content="i" color="white" offset-x="8" offset-y="-8">
-              <v-icon>mdi-information</v-icon>
-            </v-badge>
-          </v-btn>
-          <v-btn icon="mdi-help-circle" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-help-circle</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-information-outline</v-icon>
-            信息中心
-          </v-chip>
-        </div>
-      </template>
-
-      <!-- 紫色主题插槽 -->
-      <template v-else-if="currentStyle.color === 'purple'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-star" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-star</v-icon>
-          </v-btn>
-          <v-btn icon="mdi-heart" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-crown</v-icon>
-            高级用户
-          </v-chip>
-        </div>
-      </template>
-
-      <!-- 蓝色主题插槽 -->
-      <template v-else-if="currentStyle.color === 'blue'">
-        <div class="d-flex align-center">
-          <v-btn icon="mdi-weather-cloudy" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-weather-cloudy</v-icon>
-          </v-btn>
-          <v-btn icon="mdi-water" variant="text" color="white" class="mr-2">
-            <v-icon>mdi-water</v-icon>
-          </v-btn>
-          <v-chip color="white" variant="outlined" size="small">
-            <v-icon start>mdi-weather-partly-cloudy</v-icon>
-            多云
-          </v-chip>
-        </div>
-      </template>
     </template>
   </AppHeader>
 
@@ -303,6 +173,7 @@ const switchTheme = (theme: any) => {
                     :class="{ 'border-primary': currentStyle.color === theme.color }"
                     class="theme-card cursor-pointer"
                     variant="outlined"
+                    style="height: 200px"
                     @click="switchTheme(theme)"
                   >
                     <v-card-text class="text-center pa-4">
@@ -310,7 +181,7 @@ const switchTheme = (theme: any) => {
                         class="theme-preview mb-3"
                         :style="{
                           backgroundColor: `var(--v-${theme.color}-base)`,
-                          height: `${theme.height || 50}px`,
+                          height: '60px',
                           borderRadius: '8px',
                           display: 'flex',
                           alignItems: 'center',
@@ -332,51 +203,6 @@ const switchTheme = (theme: any) => {
                   </v-card>
                 </v-col>
               </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row class="mt-6">
-        <v-col cols="12">
-          <v-card>
-            <v-card-title>可控制的样式属性</v-card-title>
-            <v-card-text>
-              <v-list>
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="primary">mdi-palette</v-icon>
-                  </template>
-                  <v-list-item-title>color</v-list-item-title>
-                  <v-list-item-subtitle
-                    >应用栏背景颜色（支持 Vuetify 所有颜色）</v-list-item-subtitle
-                  >
-                </v-list-item>
-
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="secondary">mdi-elevation</v-icon>
-                  </template>
-                  <v-list-item-title>elevation</v-list-item-title>
-                  <v-list-item-subtitle>阴影深度（0-24）</v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="success">mdi-arrow-expand-vertical</v-icon>
-                  </template>
-                  <v-list-item-title>height</v-list-item-title>
-                  <v-list-item-subtitle>应用栏高度（数字或字符串）</v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="warning">mdi-format-color-fill</v-icon>
-                  </template>
-                  <v-list-item-title>navIconColor</v-list-item-title>
-                  <v-list-item-subtitle>导航图标颜色</v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
             </v-card-text>
           </v-card>
         </v-col>
@@ -454,126 +280,6 @@ const switchTheme = (theme: any) => {
         </template>
         当前页面：样式控制演示 (/header-demo/styles) - 点击上方主题卡片实时切换样式！
       </v-alert>
-
-      <!-- 添加更多内容来测试滚动条 -->
-      <v-row class="mt-6">
-        <v-col cols="12">
-          <h2 class="text-h4 mb-4">测试滚动条效果</h2>
-          <p class="text-body-1 mb-4">
-            这个页面使用 sticky footer 模式，当内容超出视口高度时，页脚会跟随在内容底部。
-            当内容不足时，页脚会固定在视口底部。
-          </p>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-card>
-            <v-card-title>Sticky Footer 测试</v-card-title>
-            <v-card-text>
-              <p class="mb-4">
-                当前页面使用 <code>:fixed="true"</code> 模式，实现了真正的 sticky footer 效果。
-              </p>
-              <v-list>
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="success">mdi-check-circle</v-icon>
-                  </template>
-                  <v-list-item-title>内容不足时</v-list-item-title>
-                  <v-list-item-subtitle>页脚固定在视口底部</v-list-item-subtitle>
-                </v-list-item>
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="success">mdi-check-circle</v-icon>
-                  </template>
-                  <v-list-item-title>内容超出时</v-list-item-title>
-                  <v-list-item-subtitle>页脚跟随在内容底部</v-list-item-subtitle>
-                </v-list-item>
-                <v-list-item>
-                  <template v-slot:prepend>
-                    <v-icon color="success">mdi-check-circle</v-icon>
-                  </template>
-                  <v-list-item-title>响应式布局</v-list-item-title>
-                  <v-list-item-subtitle>自动适应不同屏幕高度</v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-card>
-            <v-card-title>技术实现</v-card-title>
-            <v-card-text>
-              <pre class="bg-grey-lighten-4 pa-4 rounded text-caption"><code>/* Sticky Footer CSS */
-.footer-sticky {
-  margin-top: auto;
-  min-height: 64px;
-  flex-shrink: 0;
-}
-
-:deep(.v-application) {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-:deep(.v-main) {
-  flex: 1 0 auto;
-}</code></pre>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <!-- 添加更多测试内容 -->
-      <v-row class="mt-6">
-        <v-col cols="12">
-          <v-card>
-            <v-card-title>额外测试内容</v-card-title>
-            <v-card-text>
-              <p class="mb-4">
-                这些内容用于测试当页面内容超出视口高度时，sticky footer 的行为。
-                你可以调整浏览器窗口大小来观察效果。
-              </p>
-              <v-row>
-                <v-col cols="12" md="4" v-for="i in 3" :key="i">
-                  <v-card variant="outlined" class="mb-4">
-                    <v-card-title class="text-h6">测试卡片 {{ i }}</v-card-title>
-                    <v-card-text>
-                      <p>这是第 {{ i }} 个测试卡片，用于增加页面内容高度。</p>
-                      <v-progress-linear
-                        :model-value="i * 30"
-                        color="primary"
-                        class="mt-2"
-                      ></v-progress-linear>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row class="mt-6">
-        <v-col cols="12">
-          <v-card>
-            <v-card-title>滚动测试区域</v-card-title>
-            <v-card-text>
-              <p class="mb-4">
-                向下滚动查看 sticky footer 的效果。当内容超出视口时，页脚会跟随在内容底部。
-              </p>
-              <div v-for="i in 5" :key="i" class="mb-4">
-                <v-divider class="mb-2"></v-divider>
-                <p class="text-body-2">
-                  <strong>测试段落 {{ i }}</strong> - 这是用于测试滚动效果的额外内容。
-                  当页面内容足够多时，你可以观察到 sticky footer 的行为变化。
-                </p>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
     </v-container>
   </v-main>
 
