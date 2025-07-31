@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
+import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
 // 定义自定义内容组件

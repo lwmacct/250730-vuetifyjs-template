@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // 默认页脚演示页面
-import AppHeader from '@/components/AppHeader.vue'
+import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
 </script>
 

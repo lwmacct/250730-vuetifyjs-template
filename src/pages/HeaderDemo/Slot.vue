@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
+import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import SlotTemplate from './SlotTemplate.vue'
 </script>
