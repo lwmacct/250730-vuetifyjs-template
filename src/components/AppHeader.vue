@@ -159,7 +159,13 @@ const handleMouseEnter = (itemId: string) => {
           </template>
           <v-list-item-title class="text-white"> 所有页面 </v-list-item-title>
           <template v-slot:append>
-            <v-icon color="white" class="chevron-icon">mdi-chevron-right</v-icon>
+            <v-btn
+              icon="mdi-chevron-right"
+              variant="text"
+              size="small"
+              color="white"
+              class="chevron-icon"
+            ></v-btn>
           </template>
         </v-list-item>
       </div>
