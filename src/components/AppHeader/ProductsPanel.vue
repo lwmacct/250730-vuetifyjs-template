@@ -24,6 +24,20 @@ const handleFavoriteClick = (item: any) => {
 const isItemFavorite = (path: string) => {
   return routeMenuStore.isFavorite(path)
 }
+
+// 根据图标类型返回颜色
+const getIconColor = (icon: string) => {
+  if (icon.includes('home')) return 'green-lighten-2'
+  if (icon.includes('contact') || icon.includes('envelope')) return 'blue-lighten-2'
+  if (icon.includes('dashboard') || icon.includes('view-grid')) return 'purple-lighten-2'
+  if (icon.includes('about') || icon.includes('info')) return 'orange-lighten-2'
+  if (icon.includes('login') || icon.includes('account')) return 'red-lighten-2'
+  if (icon.includes('demo') || icon.includes('puzzle')) return 'cyan-lighten-2'
+  if (icon.includes('header') || icon.includes('title')) return 'indigo-lighten-2'
+  if (icon.includes('footer')) return 'teal-lighten-2'
+  if (icon.includes('meta')) return 'pink-lighten-2'
+  return 'grey-lighten-1' // 默认颜色
+}
 </script>
 
 <template>
@@ -36,7 +50,7 @@ const isItemFavorite = (path: string) => {
     >
       <!-- 分类标题 -->
       <div class="category-header">
-        <v-icon size="small" color="white" class="mr-2">
+        <v-icon size="small" color="blue-lighten-2" class="mr-2">
           {{ items[0]?.icon || 'mdi-folder' }}
         </v-icon>
         <span class="category-title">{{ category }}</span>
@@ -50,7 +64,7 @@ const isItemFavorite = (path: string) => {
         class="product-item"
       >
         <div class="product-item-content">
-          <v-icon size="small" color="white" class="product-icon">
+          <v-icon size="small" :color="getIconColor(item.icon)" class="product-icon">
             {{ item.icon }}
           </v-icon>
           <div class="product-text">
@@ -131,7 +145,7 @@ const isItemFavorite = (path: string) => {
 
 .category-title {
   margin: 0;
-  color: white;
+  color: #64b5f6;
   display: flex;
   align-items: center;
   font-weight: 600;
