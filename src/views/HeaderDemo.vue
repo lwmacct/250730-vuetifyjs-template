@@ -105,6 +105,11 @@ const handleCustomNavClick = () => {
                         path: '/header-demo/component',
                         description: '直接传入组件对象',
                       },
+                      {
+                        title: '样式控制演示',
+                        path: '/header-demo/styles',
+                        description: '展示颜色、阴影、高度等样式控制',
+                      },
                     ]"
                     :key="index"
                     :title="demo.title"

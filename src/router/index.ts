@@ -10,6 +10,7 @@ import HeaderDemoCustomTitle from '@/views/HeaderDemoCustomTitle.vue'
 import HeaderDemoCustomActions from '@/views/HeaderDemoCustomActions.vue'
 import HeaderDemoSlot from '@/views/HeaderDemoSlot.vue'
 import HeaderDemoComponent from '@/views/HeaderDemoComponent.vue'
+import HeaderDemoStyles from '@/views/HeaderDemoStyles.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -101,6 +102,14 @@ const router = createRouter({
       component: HeaderDemoComponent,
       meta: {
         title: '组件对象方式演示',
+      },
+    },
+    {
+      path: '/header-demo/styles',
+      name: 'header-demo-styles',
+      component: HeaderDemoStyles,
+      meta: {
+        title: '样式控制演示',
       },
     },
     // 404 页面重定向到首页

@@ -59,6 +59,13 @@ export const useMenuStore = defineStore('menu', () => {
       isFavorite: false,
       category: 'Header Demo',
     },
+    {
+      title: '样式控制演示',
+      path: '/header-demo/styles',
+      icon: 'mdi-palette',
+      isFavorite: false,
+      category: 'Header Demo',
+    },
     // 计算组
     {
       title: '云服务器',
