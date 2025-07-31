@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AppHeader from './AppHeader.vue'
+import CustomHeaderContent from './CustomHeaderContent.vue'
 
 // 示例：自定义操作按钮
 const customActions = [
@@ -78,6 +79,14 @@ const handleCustomNavClick = () => {
       :elevation="4"
       :height="60"
     />
+
+    <!-- 示例 7: 使用自定义内容插槽 -->
+    <h3>自定义内容插槽</h3>
+    <AppHeader :use-custom-content="true" navIcon="mdi-menu" navIconColor="white" color="primary">
+      <template #custom-content>
+        <CustomHeaderContent />
+      </template>
+    </AppHeader>
   </div>
 </template>
 

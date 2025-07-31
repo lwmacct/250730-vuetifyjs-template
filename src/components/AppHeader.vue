@@ -35,6 +35,9 @@ interface Props {
   elevation?: number | string
   color?: string
   height?: number | string
+
+  // 自定义内容相关
+  useCustomContent?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -50,6 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   color: 'grey-darken-4',
   height: 50,
   actions: () => [],
+  useCustomContent: false,
 })
 
 const router = useRouter()
@@ -108,29 +112,37 @@ const handleMouseEnter = (itemId: string) => {
       <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
     </v-app-bar-nav-icon>
 
-    <!-- 标题 -->
-    <v-app-bar-title v-if="showTitle" class="text-h6">
-      <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
-      {{ title }}
-    </v-app-bar-title>
+    <!-- 自定义内容或默认内容 -->
+    <template v-if="useCustomContent">
+      <!-- 插槽：自定义导航栏右侧内容 -->
+      <slot name="custom-content"></slot>
+    </template>
+    <template v-else>
+      <!-- 默认内容 -->
+      <!-- 标题 -->
+      <v-app-bar-title v-if="showTitle" class="text-h6">
+        <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
+        {{ title }}
+      </v-app-bar-title>
 
-    <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-    <!-- 操作按钮 -->
-    <v-app-bar-actions>
-      <!-- 自定义操作按钮 -->
-      <template v-for="(action, index) in actions" :key="index">
-        <v-btn
-          @click="action.onClick"
-          :variant="action.variant || 'text'"
-          :prepend-icon="action.icon"
-          :color="action.color || 'white'"
-          class="mx-1"
-        >
-          {{ action.text }}
-        </v-btn>
-      </template>
-    </v-app-bar-actions>
+      <!-- 操作按钮 -->
+      <v-app-bar-actions>
+        <!-- 自定义操作按钮 -->
+        <template v-for="(action, index) in actions" :key="index">
+          <v-btn
+            @click="action.onClick"
+            :variant="action.variant || 'text'"
+            :prepend-icon="action.icon"
+            :color="action.color || 'white'"
+            class="mx-1"
+          >
+            {{ action.text }}
+          </v-btn>
+        </template>
+      </v-app-bar-actions>
+    </template>
   </v-app-bar>
 
   <!-- 抽屉菜单 -->

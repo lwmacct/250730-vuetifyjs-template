@@ -38,6 +38,7 @@
 - `elevation?: number | string` - 应用栏阴影，默认值：2
 - `color?: string` - 应用栏颜色，默认值：'grey-darken-4'
 - `height?: number | string` - 应用栏高度，默认值：50
+- `useCustomContent?: boolean` - 是否使用自定义内容插槽，默认值：false
 
 ## 使用示例
 
@@ -109,16 +110,29 @@
 />
 ```
 
+### 7. 使用自定义内容插槽
+
+```vue
+<AppHeader :use-custom-content="true" navIcon="mdi-menu" navIconColor="white" color="primary">
+  <template #custom-content>
+    <CustomHeaderContent />
+  </template>
+</AppHeader>
+```
+
 ## 组件特性
 
 1. **灵活性**：支持通过 props 自定义所有主要元素
-2. **默认值**：提供合理的默认配置，开箱即用
-3. **类型安全**：完整的 TypeScript 类型定义
-4. **向后兼容**：保持原有功能的同时扩展新功能
-5. **Material Design**：遵循 Vuetify 3 的设计规范
+2. **插槽支持**：提供 `custom-content` 插槽，支持完全自定义内容
+3. **默认值**：提供合理的默认配置，开箱即用
+4. **类型安全**：完整的 TypeScript 类型定义
+5. **向后兼容**：保持原有功能的同时扩展新功能
+6. **Material Design**：遵循 Vuetify 3 的设计规范
 
 ## 注意事项
 
 - 当 `showDrawer` 为 false 时，导航图标不会显示抽屉菜单功能
 - 自定义 `onNavIconClick` 会覆盖默认的抽屉菜单切换功能
+- 当 `useCustomContent` 为 true 时，会忽略默认的标题和操作按钮配置
+- 自定义内容插槽占据导航图标右侧的所有空间
 - 所有颜色值都支持 Vuetify 的颜色系统
