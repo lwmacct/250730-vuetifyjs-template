@@ -7,8 +7,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 onMounted(() => {
-  // 重定向到主演示页面
-  router.replace('/header-demo')
+  // 重定向到插槽演示页面
+  router.replace('/header-demo/slot')
 })
 </script>
 

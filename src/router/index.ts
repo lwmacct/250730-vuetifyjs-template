@@ -94,51 +94,6 @@ const router = createRouter({
       },
     },
     // AppHeader 演示页面
-    {
-      path: '/header-demo',
-      name: 'header-demo',
-      component: () => import('@/pages/HeaderDemo/Main.vue'),
-      meta: {
-        title: 'AppHeader 演示',
-        icon: 'mdi-view-dashboard',
-        description: 'AppHeader组件的各种使用方式演示',
-        keywords: ['header', '演示', '组件'],
-        category: 'Header Demo',
-        priority: 6,
-        showInMenu: false, // 主演示页面不显示，只显示具体的子页面
-        requireAuth: false,
-      },
-    },
-    {
-      path: '/header-demo/default',
-      name: 'header-demo-default',
-      component: () => import('@/pages/HeaderDemo/Default.vue'),
-      meta: {
-        title: '默认配置演示',
-        icon: 'mdi-cog',
-        description: 'AppHeader默认配置的使用演示',
-        keywords: ['默认', '配置', '演示'],
-        category: 'Header Demo',
-        priority: 7,
-        showInMenu: true, // 显示在菜单中
-        requireAuth: false,
-      },
-    },
-    {
-      path: '/header-demo/custom-title',
-      name: 'header-demo-custom-title',
-      component: () => import('@/pages/HeaderDemo/CustomTitle.vue'),
-      meta: {
-        title: '自定义标题演示',
-        icon: 'mdi-format-title',
-        description: 'AppHeader自定义标题的使用演示',
-        keywords: ['自定义', '标题', '演示'],
-        category: 'Header Demo',
-        priority: 8,
-        showInMenu: true,
-        requireAuth: false,
-      },
-    },
 
     {
       path: '/header-demo/slot',
