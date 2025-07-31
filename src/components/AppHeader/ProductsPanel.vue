@@ -43,30 +43,29 @@ const isItemFavorite = (path: string) => {
       </div>
 
       <!-- 该分类下的产品列表 -->
-      <v-list-item
+      <div
         v-for="item in items"
         :key="item.path"
         @click="props.onNavigate(item.path)"
         class="product-item"
-        color="transparent"
-        variant="text"
-        hover
       >
-        <template v-slot:prepend>
-          <v-icon size="small" color="grey-lighten-1">{{ item.icon }}</v-icon>
-        </template>
-        <v-list-item-title class="text-white">
-          {{ item.title }}
-        </v-list-item-title>
-        <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
-          {{ item.path }}
-        </v-list-item-subtitle>
-        <template v-slot:append>
+        <div class="product-item-content">
+          <v-icon size="small" color="grey-lighten-1" class="product-icon">
+            {{ item.icon }}
+          </v-icon>
+          <div class="product-text">
+            <div class="product-title text-white">
+              {{ item.title }}
+            </div>
+            <div class="product-subtitle text-grey-lighten-2 text-caption">
+              {{ item.path }}
+            </div>
+          </div>
           <v-btn
             icon
             size="small"
             @click.stop="handleFavoriteClick(item)"
-            class="ml-2"
+            class="product-favorite-btn"
             :color="isItemFavorite(item.path) ? 'amber' : 'amber-lighten-1'"
             variant="text"
           >
@@ -74,8 +73,8 @@ const isItemFavorite = (path: string) => {
               {{ isItemFavorite(item.path) ? 'mdi-star' : 'mdi-star-outline' }}
             </v-icon>
           </v-btn>
-        </template>
-      </v-list-item>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -142,28 +141,52 @@ const isItemFavorite = (path: string) => {
   margin: 2px 0;
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 8px 16px;
   /* 允许内容撑开宽度 */
   min-width: fit-content;
   width: auto;
 }
 
-/* 覆盖 Vuetify 的默认宽度限制 */
-.product-item :deep(.v-list-item__content) {
+.product-item-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
   min-width: 0;
-  flex: 1 1 auto;
+}
+
+.product-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.product-text {
+  flex: 1;
+  min-width: 0;
   overflow: visible;
 }
 
-.product-item :deep(.v-list-item-title) {
+.product-title {
+  font-weight: 500;
+  line-height: 1.4;
   white-space: normal;
   word-wrap: break-word;
   overflow: visible;
+  margin-bottom: 2px;
 }
 
-.product-item :deep(.v-list-item-subtitle) {
+.product-subtitle {
+  line-height: 1.3;
   white-space: normal;
   word-wrap: break-word;
   overflow: visible;
+  opacity: 0.8;
+}
+
+.product-favorite-btn {
+  flex-shrink: 0;
+  margin-left: 8px;
 }
 
 .product-item:hover {
