@@ -71,71 +71,63 @@ const handleDragEnd = () => {
 
 <template>
   <div class="favorite-menu">
+    <!-- 收藏页面标题 -->
+    <v-list-subheader class="text-white text-caption px-4 py-2"> 收藏页面 </v-list-subheader>
+
     <!-- 收藏的产品列表 -->
-    <div
-      v-for="(product, index) in menuStore.favoriteProducts"
-      :key="product.path"
-      class="menu-item-container"
-      :class="{
-        dragging: draggedItem?.path === product.path,
-        'drag-over': dragOverItem?.path === product.path,
-      }"
-      draggable="true"
-      @dragstart="handleDragStart($event, product)"
-      @dragover="handleDragOver($event, product)"
-      @drop="handleDrop($event, product)"
-      @dragend="handleDragEnd"
-    >
-      <v-list-item
-        @click="handleClick(product)"
-        class="menu-item"
-        color="transparent"
-        variant="text"
-        hover
+    <div v-if="menuStore.favoriteProducts.length > 0">
+      <div
+        v-for="(product, index) in menuStore.favoriteProducts"
+        :key="product.path"
+        class="menu-item-container"
+        :class="{
+          dragging: draggedItem?.path === product.path,
+          'drag-over': dragOverItem?.path === product.path,
+        }"
+        draggable="true"
+        @dragstart="handleDragStart($event, product)"
+        @dragover="handleDragOver($event, product)"
+        @drop="handleDrop($event, product)"
+        @dragend="handleDragEnd"
       >
-        <template v-slot:prepend>
-          <v-icon size="small" color="grey-lighten-1">{{ product.icon }}</v-icon>
-        </template>
-        <v-list-item-title class="text-white">
-          {{ product.title }}
-        </v-list-item-title>
-        <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
-          {{ product.category || '收藏项目' }}
-        </v-list-item-subtitle>
-        <template v-slot:append>
-          <v-btn
-            icon
-            size="x-small"
-            @click.stop="removeFromFavorites(product.path)"
-            color="red-lighten-2"
-            variant="text"
-            class="remove-btn"
-          >
-            <v-icon size="small">mdi-close</v-icon>
-          </v-btn>
-        </template>
-      </v-list-item>
+        <v-list-item
+          @click="handleClick(product)"
+          class="menu-item"
+          color="white"
+          variant="text"
+          link
+        >
+          <template v-slot:prepend>
+            <v-icon color="white">{{ product.icon }}</v-icon>
+          </template>
+          <v-list-item-title class="text-white">
+            {{ product.title }}
+          </v-list-item-title>
+          <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
+            {{ product.category || '收藏项目' }}
+          </v-list-item-subtitle>
+          <template v-slot:append>
+            <v-btn
+              icon="mdi-star"
+              variant="text"
+              size="small"
+              color="white"
+              class="favorite-active"
+              @click.stop="removeFromFavorites(product.path)"
+            ></v-btn>
+          </template>
+        </v-list-item>
+      </div>
+    </div>
+    <div v-else class="px-4 py-2">
+      <v-chip color="grey" variant="outlined" size="small"> 暂无收藏页面 </v-chip>
     </div>
   </div>
 </template>
 
 <style scoped>
 .favorite-menu {
-  margin-top: 8px;
-}
-
-.favorites-header {
-  padding: 12px 20px 8px 20px;
-  border-bottom: 1px solid #616161;
-}
-
-.favorites-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-  color: #64b5f6;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-top: 0px;
 }
 
 .menu-item-container {
@@ -162,22 +154,15 @@ const handleDragEnd = () => {
 
 .menu-item {
   transition: all 0.2s ease-in-out;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
+  border-radius: 4px;
+  margin: 2px 8px;
 }
 
 .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.remove-btn {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  margin-right: 4px;
-}
-
-.menu-item:hover .remove-btn {
-  opacity: 1;
+.favorite-active {
+  color: #ffd700 !important;
 }
 </style>

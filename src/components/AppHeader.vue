@@ -306,12 +306,11 @@ const handleMouseEnter = (itemId: string) => {
 
 /* 最近访问页面样式 */
 .recent-pages-section {
-  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .recent-page-item {
   border-radius: 4px;
-  margin: 0px 0px;
   transition: all 0.3s ease;
 }
 
