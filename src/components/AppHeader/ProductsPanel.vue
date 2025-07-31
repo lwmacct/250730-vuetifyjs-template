@@ -142,6 +142,28 @@ const isItemFavorite = (path: string) => {
   margin: 2px 0;
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
+  /* 允许内容撑开宽度 */
+  min-width: fit-content;
+  width: auto;
+}
+
+/* 覆盖 Vuetify 的默认宽度限制 */
+.product-item :deep(.v-list-item__content) {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: visible;
+}
+
+.product-item :deep(.v-list-item-title) {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
+}
+
+.product-item :deep(.v-list-item-subtitle) {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
 }
 
 .product-item:hover {
