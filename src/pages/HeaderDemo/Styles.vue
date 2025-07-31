@@ -17,19 +17,20 @@ const useSlotContent = ref(false)
 // 预设的样式主题
 const styleThemes = [
   {
-    name: '默认主题',
-    color: 'primary',
-    elevation: 4,
-    height: undefined,
-    navIconColor: 'white',
-  },
-  {
     name: '深色主题',
     color: 'grey-darken-4',
     elevation: 2,
     height: 50,
     navIconColor: 'white',
   },
+  {
+    name: '默认主题',
+    color: 'primary',
+    elevation: 4,
+    height: undefined,
+    navIconColor: 'white',
+  },
+
   {
     name: '成功主题',
     color: 'success',
