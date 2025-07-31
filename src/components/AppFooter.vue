@@ -93,6 +93,8 @@ const props = withDefaults(defineProps<Props>(), {
 /* 优化页脚内容布局 */
 .v-footer {
   padding: 0;
+  height: 48px !important;
+  min-height: 48px !important;
 }
 
 /* 减少按钮间距 */
