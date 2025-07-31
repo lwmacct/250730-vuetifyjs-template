@@ -2,16 +2,18 @@
 // 联系页面组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import { useRouteIcon } from '@/utils/route'
+import { useRouteIcon, useRouteTitle, useRouteDescription } from '@/utils/route'
 
-// 从路由meta中获取icon，如果没有则使用默认值
+// 从路由meta中获取信息
 const pageIcon = useRouteIcon('mdi-email')
+const pageTitle = useRouteTitle('联系我们')
+const pageDescription = useRouteDescription('联系页面，提供联系方式和服务信息')
 </script>
 
 <template>
   <v-app>
     <!-- 使用通用头部组件 -->
-    <AppHeader title="Vue + Vuetify 应用" :titleIcon="pageIcon" />
+    <AppHeader :title="pageTitle" :titleIcon="pageIcon" />
 
     <!-- 主要内容区域 -->
     <v-main>

@@ -10,6 +10,12 @@ const router = createRouter({
       meta: {
         title: '首页',
         icon: 'mdi-home',
+        description: '应用首页，展示主要功能',
+        keywords: ['首页', '主页', 'home'],
+        category: '基础页面',
+        priority: 1,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -26,8 +32,14 @@ const router = createRouter({
       name: 'contact',
       component: () => import('@/views/Contact.vue'),
       meta: {
-        title: '联系',
+        title: '联系我们',
         icon: 'mdi-email',
+        description: '联系页面，提供联系方式和服务信息',
+        keywords: ['联系', 'contact', '邮箱', '电话'],
+        category: '基础页面',
+        priority: 2,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -46,6 +58,27 @@ const router = createRouter({
       meta: {
         title: '仪表板',
         icon: 'mdi-view-dashboard',
+        description: '系统仪表板，展示关键指标',
+        keywords: ['仪表板', 'dashboard', '统计'],
+        category: '基础页面',
+        priority: 3,
+        showInMenu: true,
+        requireAuth: true,
+      },
+    },
+    {
+      path: '/meta-demo',
+      name: 'meta-demo',
+      component: () => import('@/views/MetaDemo.vue'),
+      meta: {
+        title: 'Meta演示',
+        icon: 'mdi-information',
+        description: '演示路由meta自定义字段的使用',
+        keywords: ['meta', '演示', '自定义字段'],
+        category: '演示页面',
+        priority: 4,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     // AppHeader 演示页面

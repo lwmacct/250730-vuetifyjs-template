@@ -2,16 +2,17 @@
 // 首页组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import { useRouteIcon } from '@/utils/route'
+import { useRouteIcon, useRouteTitle } from '@/utils/route'
 
-// 从路由meta中获取icon
+// 从路由meta中获取信息
 const pageIcon = useRouteIcon('mdi-home')
+const pageTitle = useRouteTitle('首页')
 </script>
 
 <template>
   <!-- 使用通用头部组件 -->
   <AppHeader
-    title="Vue + Vuetify 应用"
+    :title="pageTitle"
     :titleIcon="pageIcon"
     :actions="[
       {
