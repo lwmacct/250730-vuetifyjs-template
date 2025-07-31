@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useMenuStore } from '@/stores/menu'
 import FavoriteMenu from './AppHeaderFavoriteMenu.vue'
+import AllProductsPanel from './AllProductsPanel.vue'
 import AppHeaderAllPages from './AppHeaderAllPages.vue'
 import AppHeaderRecentPages from './AppHeaderRecentPages.vue'
 
@@ -146,13 +147,7 @@ const handleMouseEnter = (itemId: string) => {
   >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面 -->
-      <AppHeaderAllPages
-        :hovered-item="hoveredItem"
-        :on-mouse-enter="handleMouseEnter"
-        :on-navigate="navigateTo"
-        :on-add-to-favorites="addToFavorites"
-        :on-remove-from-favorites="removeFromFavorites"
-      />
+      <AppHeaderAllPages :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
 
       <!-- 最近访问 -->
@@ -162,6 +157,25 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 收藏页面 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
+
+    <!-- 悬停显示的二级菜单面板 -->
+    <div
+      v-if="hoveredItem && drawer"
+      class="hover-panel"
+      @mouseenter="handleMouseEnter(hoveredItem)"
+    >
+      <!-- 连接区域 - 确保鼠标可以移动到面板 -->
+      <div class="connection-area"></div>
+      <!-- 面板内容 -->
+      <!-- 所有页面专用组件 -->
+      <template v-if="hoveredItem === 'all-products'">
+        <AllProductsPanel
+          :on-navigate="navigateTo"
+          :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites"
+        />
+      </template>
+    </div>
   </v-navigation-drawer>
 </template>
 
@@ -216,5 +230,18 @@ const handleMouseEnter = (itemId: string) => {
 
 .favorite-active {
   color: #ffd700 !important;
+}
+
+/* 悬停面板样式 */
+.hover-panel {
+  position: absolute;
+  left: 100%; /* 相对于抽屉的右边缘 */
+  top: 0; /* 相对于抽屉的顶部 */
+  width: 300px;
+  height: 100%; /* 相对于抽屉的高度 */
+  background-color: #424242;
+  border-left: 1px solid #616161;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 </style>
