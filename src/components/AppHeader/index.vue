@@ -162,25 +162,56 @@ const handleMouseEnter = (itemId: string) => {
     </v-list>
   </v-navigation-drawer>
 
-  <!-- 悬停显示的二级菜单面板 - 移到抽屉外部 -->
-  <div v-if="hoveredItem && drawer" class="hover-panel" @mouseenter="handleMouseEnter(hoveredItem)">
-    <!-- 连接区域 - 确保鼠标可以移动到面板 -->
-    <div class="connection-area"></div>
-    <!-- 面板内容 -->
-    <!-- 所有页面专用组件 -->
-    <template v-if="hoveredItem === 'all-products'">
-      <ProductsPanel
-        :on-navigate="navigateTo"
-        :on-add-to-favorites="addToFavorites"
-        :on-remove-from-favorites="removeFromFavorites"
-      />
-    </template>
-  </div>
+  <!-- 抽屉菜单 -->
+  <v-navigation-drawer
+    v-if="showDrawer"
+    v-model="drawer"
+    app
+    temporary
+    color="grey-darken-4"
+    dark
+    class="drawer-container"
+    :width="drawerWidth"
+  >
+    <v-list color="transparent" nav class="drawer-list">
+      <!-- 所有页面菜单项 -->
+      <AllPagesMenuItem :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
+      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
+
+      <!-- 最近访问菜单项 -->
+      <RecentPagesMenuItem :on-navigate="navigateTo" />
+      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
+
+      <!-- 收藏菜单组件 -->
+      <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
+    </v-list>
+
+    <!-- 悬停显示的二级菜单面板 -->
+    <div
+      v-if="hoveredItem && drawer"
+      class="hover-panel"
+      @mouseenter="handleMouseEnter(hoveredItem)"
+    >
+      <!-- 连接区域 - 确保鼠标可以移动到面板 -->
+      <div class="connection-area"></div>
+      <!-- 面板内容 -->
+      <!-- 所有页面专用组件 -->
+      <template v-if="hoveredItem === 'all-products'">
+        <ProductsPanel
+          :on-navigate="navigateTo"
+          :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites"
+        />
+      </template>
+    </div>
+  </v-navigation-drawer>
 </template>
 
 <style scoped>
 .drawer-container {
   position: relative;
+  /* 允许抽屉容器撑开以容纳悬停面板 */
+  overflow: visible;
 }
 
 :deep(.v-list-item__prepend) {
@@ -189,6 +220,15 @@ const handleMouseEnter = (itemId: string) => {
 
 .drawer-list {
   padding-top: 0;
+}
+
+/* 覆盖 Vuetify 抽屉的默认样式，允许内容撑开 */
+:deep(.v-navigation-drawer) {
+  overflow: visible !important;
+}
+
+:deep(.v-navigation-drawer__content) {
+  overflow: visible !important;
 }
 
 .menu-item-container {
@@ -233,17 +273,16 @@ const handleMouseEnter = (itemId: string) => {
 
 /* 悬停面板样式 */
 .hover-panel {
-  position: fixed; /* 改为 fixed 定位，因为现在在抽屉外部 */
-  left: 240px; /* 抽屉宽度 */
-  top: 50px; /* AppBar 高度 */
+  position: absolute; /* 恢复 absolute 定位 */
+  left: 100%; /* 相对于抽屉的右边缘 */
+  top: 0; /* 相对于抽屉的顶部 */
   min-width: 240px; /* 最小宽度 */
   width: auto; /* 允许自动撑开 */
   max-width: 800px; /* 进一步增加最大宽度限制 */
-  height: calc(100vh - 50px); /* 减去 AppBar 高度 */
+  height: 100%; /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
   box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
   overflow: visible; /* 允许内容撑开 */
-  z-index: 1000; /* 确保在最上层 */
 }
 </style>
