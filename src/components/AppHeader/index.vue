@@ -132,6 +132,23 @@ const handleMouseEnter = (itemId: string) => {
         <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
         {{ title }}
       </v-app-bar-title>
+
+      <!-- 操作按钮 -->
+      <v-spacer></v-spacer>
+      <template v-if="actions && actions.length > 0">
+        <v-btn
+          v-for="(action, index) in actions"
+          :key="index"
+          :icon="!action.text"
+          :color="action.color || 'white'"
+          :variant="action.variant || 'text'"
+          @click="action.onClick"
+          class="ml-2"
+        >
+          <v-icon v-if="action.icon">{{ action.icon }}</v-icon>
+          <span v-if="action.text" class="ml-1">{{ action.text }}</span>
+        </v-btn>
+      </template>
     </template>
   </v-app-bar>
 
