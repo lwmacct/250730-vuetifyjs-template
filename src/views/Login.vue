@@ -27,7 +27,7 @@ const handleLogin = () => {
     <!-- 主要内容区域 -->
     <v-main
       class="d-flex align-center justify-center"
-      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh"
     >
       <v-container>
         <v-row justify="center">

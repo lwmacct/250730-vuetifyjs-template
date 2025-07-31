@@ -14,10 +14,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <v-footer
-    :app="fixed"
+    :app="false"
     color="grey-darken-3"
     class="text-center"
-    :class="{ 'footer-fixed': fixed, 'footer-normal': !fixed }"
+    :class="{ 'footer-sticky': fixed, 'footer-normal': !fixed }"
   >
     <v-container>
       <v-row justify="center">
@@ -54,13 +54,12 @@ const props = withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped>
-.footer-fixed {
-  /* 固定页脚样式 */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+.footer-sticky {
+  /* Sticky footer 样式 */
+  /* 当内容不足时，页脚固定在视口底部 */
+  /* 当内容超出时，页脚跟随在内容底部 */
+  margin-top: auto;
+  min-height: 64px; /* 页脚最小高度 */
 }
 
 .footer-normal {
@@ -68,13 +67,27 @@ const props = withDefaults(defineProps<Props>(), {
   margin-top: auto;
 }
 
-/* 确保主内容区域有足够的下边距，避免被固定页脚遮挡 */
-:deep(.v-main) {
-  padding-bottom: 0;
+/* 确保父容器支持 flexbox 布局 */
+:deep(.v-application) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* 当使用固定页脚时，为主内容添加底部边距 */
-.footer-fixed ~ .v-main {
-  padding-bottom: 64px; /* 页脚高度 */
+/* 主内容区域自动填充剩余空间 */
+:deep(.v-main) {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 当使用 sticky footer 时，确保内容区域正确布局 */
+.footer-sticky ~ .v-main {
+  flex: 1 0 auto;
+}
+
+/* 确保页脚在 sticky 模式下正确显示 */
+.footer-sticky {
+  flex-shrink: 0;
 }
 </style>
