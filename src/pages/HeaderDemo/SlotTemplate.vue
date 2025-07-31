@@ -66,44 +66,55 @@ const handleProfile = () => {
 </script>
 
 <template>
-  <div class="d-flex align-center">
-    <!-- 通知按钮 -->
-    <v-btn icon="mdi-bell" variant="text" color="warning" class="mr-2" @click="handleNotification">
-      <v-badge :content="notificationCount" color="error" offset-x="8" offset-y="-8">
-        <v-icon>mdi-bell</v-icon>
-      </v-badge>
-      <v-tooltip activator="parent" location="bottom"> 通知 ({{ notificationCount }}) </v-tooltip>
-    </v-btn>
+  <div class="header-layout">
+    <!-- 左侧区域：通知和用户按钮 -->
+    <div class="left-section">
+      <!-- 通知按钮 -->
+      <v-btn
+        icon="mdi-bell"
+        variant="text"
+        color="warning"
+        class="mr-2"
+        @click="handleNotification"
+      >
+        <v-badge :content="notificationCount" color="error" offset-x="8" offset-y="-8">
+          <v-icon>mdi-bell</v-icon>
+        </v-badge>
+        <v-tooltip activator="parent" location="bottom"> 通知 ({{ notificationCount }}) </v-tooltip>
+      </v-btn>
 
-    <!-- 用户按钮 -->
-    <v-btn icon="mdi-account" variant="text" color="info" class="mr-2" @click="handleUser">
-      <v-icon>mdi-account</v-icon>
-      <v-tooltip activator="parent" location="bottom"> 用户管理 </v-tooltip>
-    </v-btn>
+      <!-- 用户按钮 -->
+      <v-btn icon="mdi-account" variant="text" color="info" class="mr-2" @click="handleUser">
+        <v-icon>mdi-account</v-icon>
+        <v-tooltip activator="parent" location="bottom"> 用户管理 </v-tooltip>
+      </v-btn>
+    </div>
 
-    <!-- 分割线 -->
-    <v-divider vertical class="mx-2" color="white"></v-divider>
+    <!-- 中间区域：用户状态芯片 -->
+    <div class="center-section">
+      <v-chip color="success" variant="outlined" size="small" @click="handleUserStatus">
+        <v-icon start>mdi-account-circle</v-icon>
+        {{ userStatus }}
+        <v-tooltip activator="parent" location="bottom"> 点击切换状态 </v-tooltip>
+      </v-chip>
+    </div>
 
-    <!-- 用户状态芯片 -->
-    <v-chip color="success" variant="outlined" size="small" class="mr-2" @click="handleUserStatus">
-      <v-icon start>mdi-account-circle</v-icon>
-      {{ userStatus }}
-      <v-tooltip activator="parent" location="bottom"> 点击切换状态 </v-tooltip>
-    </v-chip>
+    <!-- 右侧区域：设置按钮和用户头像 -->
+    <div class="right-section">
+      <!-- 设置按钮 -->
+      <v-btn icon="mdi-cog" variant="text" color="white" class="mr-2" @click="handleSettings">
+        <v-icon>mdi-cog</v-icon>
+        <v-tooltip activator="parent" location="bottom"> 系统设置 </v-tooltip>
+      </v-btn>
 
-    <!-- 设置按钮 -->
-    <v-btn icon="mdi-cog" variant="text" color="white" class="mr-2" @click="handleSettings">
-      <v-icon>mdi-cog</v-icon>
-      <v-tooltip activator="parent" location="bottom"> 系统设置 </v-tooltip>
-    </v-btn>
-
-    <!-- 用户头像 - 最右侧 -->
-    <v-btn icon variant="text" color="white" @click="toggleUserDrawer" class="user-avatar-btn">
-      <v-avatar size="32" class="user-avatar">
-        <v-img :src="userInfo.avatar" alt="用户头像"></v-img>
-      </v-avatar>
-      <v-tooltip activator="parent" location="bottom"> 点击查看用户菜单 </v-tooltip>
-    </v-btn>
+      <!-- 用户头像 -->
+      <v-btn icon variant="text" color="white" @click="toggleUserDrawer" class="user-avatar-btn">
+        <v-avatar size="32" class="user-avatar">
+          <v-img :src="userInfo.avatar" alt="用户头像"></v-img>
+        </v-avatar>
+        <v-tooltip activator="parent" location="bottom"> 点击查看用户菜单 </v-tooltip>
+      </v-btn>
+    </div>
 
     <!-- 用户抽屉 -->
     <v-navigation-drawer
@@ -172,8 +183,35 @@ const handleProfile = () => {
 </template>
 
 <style scoped>
+.header-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.center-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .user-avatar-btn {
-  /* 移除 margin-left: auto，现在由父容器控制右对齐 */
+  /* 用户头像按钮样式 */
 }
 
 .user-avatar {
