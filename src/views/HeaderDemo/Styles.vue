@@ -7,7 +7,7 @@ import AppFooter from '@/components/AppFooter.vue'
 const currentStyle = ref({
   color: 'primary',
   elevation: 4,
-  height: 60,
+  height: undefined,
   navIconColor: 'white',
 })
 
@@ -17,7 +17,7 @@ const styleThemes = [
     name: '默认主题',
     color: 'primary',
     elevation: 4,
-    height: 60,
+    height: undefined,
     navIconColor: 'white',
   },
   {
@@ -149,7 +149,7 @@ const switchTheme = (theme: any) => {
                           class="theme-preview mb-3"
                           :style="{
                             backgroundColor: `var(--v-${theme.color}-base)`,
-                            height: `${theme.height}px`,
+                            height: `${theme.height || 50}px`,
                             borderRadius: '8px',
                             display: 'flex',
                             alignItems: 'center',
@@ -165,7 +165,7 @@ const switchTheme = (theme: any) => {
                         <div class="text-caption text-grey">
                           color: {{ theme.color }}<br />
                           elevation: {{ theme.elevation }}<br />
-                          height: {{ theme.height }}
+                          height: {{ theme.height || '默认' }}
                         </div>
                       </v-card-text>
                     </v-card>
@@ -236,10 +236,10 @@ const switchTheme = (theme: any) => {
   title="样式控制演示"
   titleIcon="mdi-palette"
   :actions="customActions"
-  color="{{ currentStyle.color }}"
-  :elevation="{{ currentStyle.elevation }}"
-  :height="{{ currentStyle.height }}"
-  navIconColor="{{ currentStyle.navIconColor }}"
+     color="{{ currentStyle.color }}"
+   :elevation="{{ currentStyle.elevation }}"
+   :height="{{ currentStyle.height || 'undefined' }}"
+   navIconColor="{{ currentStyle.navIconColor }}"
 /&gt;</code></pre>
               </v-card-text>
             </v-card>
@@ -268,7 +268,9 @@ const switchTheme = (theme: any) => {
                   <v-list-item>
                     <v-list-item-title>高度</v-list-item-title>
                     <template v-slot:append>
-                      <v-chip color="grey" variant="outlined"> {{ currentStyle.height }}px </v-chip>
+                      <v-chip color="grey" variant="outlined">
+                        {{ currentStyle.height || '默认' }}
+                      </v-chip>
                     </template>
                   </v-list-item>
                   <v-list-item>
