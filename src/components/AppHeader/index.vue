@@ -108,13 +108,13 @@ const handleMouseEnter = (itemId: string) => {
     <!-- 菜单按钮分割线 -->
     <v-divider vertical color="white"></v-divider>
     <!-- 自定义内容或默认内容 -->
-    <template v-if="useCustomContent">
-      <!-- 方式1：插槽：自定义导航栏右侧内容 -->
-      <slot name="custom-content"></slot>
-    </template>
-    <template v-else-if="customContent">
+    <template v-if="customContent">
       <!-- 方式2：直接传入组件对象 -->
       <component :is="customContent" />
+    </template>
+    <template v-else-if="useCustomContent">
+      <!-- 方式1：插槽：自定义导航栏右侧内容 -->
+      <slot name="custom-content"></slot>
     </template>
     <template v-else>
       <!-- 默认内容 -->
