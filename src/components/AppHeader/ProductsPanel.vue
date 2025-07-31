@@ -57,9 +57,6 @@ const isItemFavorite = (path: string) => {
             <div class="product-title text-white">
               {{ item.title }}
             </div>
-            <div class="product-subtitle text-grey-lighten-2 text-caption">
-              {{ item.path }}
-            </div>
           </div>
           <v-btn
             icon
