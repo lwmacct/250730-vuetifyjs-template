@@ -19,15 +19,6 @@ interface Props {
   navIconColor?: string
   onNavIconClick?: () => void
 
-  // 操作按钮相关
-  actions?: Array<{
-    icon?: string
-    text?: string
-    color?: string
-    variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-    onClick: () => void
-  }>
-
   // 抽屉菜单相关
   showDrawer?: boolean
   drawerWidth?: number | string
@@ -54,7 +45,6 @@ const props = withDefaults(defineProps<Props>(), {
   elevation: 2,
   color: 'grey-darken-4',
   height: 50,
-  actions: () => [],
   useCustomContent: false,
   customContent: undefined,
 })
@@ -132,23 +122,6 @@ const handleMouseEnter = (itemId: string) => {
         <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
         {{ title }}
       </v-app-bar-title>
-
-      <!-- 操作按钮 -->
-      <v-spacer></v-spacer>
-      <template v-if="actions && actions.length > 0">
-        <v-btn
-          v-for="(action, index) in actions"
-          :key="index"
-          :icon="!action.text"
-          :color="action.color || 'white'"
-          :variant="action.variant || 'text'"
-          @click="action.onClick"
-          class="ml-2"
-        >
-          <v-icon v-if="action.icon">{{ action.icon }}</v-icon>
-          <span v-if="action.text" class="ml-1">{{ action.text }}</span>
-        </v-btn>
-      </template>
     </template>
   </v-app-bar>
 
