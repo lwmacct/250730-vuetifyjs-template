@@ -2,9 +2,11 @@
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useMenuStore } from '@/stores/menu'
-import FavoriteMenu from './FavoriteMenu.vue'
+import FavoriteMenu from './AppHeaderFavoriteMenu.vue'
 import RecentPagesPanel from './RecentPagesPanel.vue'
 import AllProductsPanel from './AllProductsPanel.vue'
+import AppHeaderAllPages from './AppHeaderAllPages.vue'
+import AppHeaderRecentPages from './AppHeaderRecentPages.vue'
 
 interface Props {
   // 标题相关
@@ -146,65 +148,13 @@ const handleMouseEnter = (itemId: string) => {
   >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面 -->
-      <div class="all-pages-section" @mouseenter="handleMouseEnter('all-products')">
-        <v-list-item
-          :active="hoveredItem === 'all-products'"
-          color="white"
-          variant="text"
-          class="all-pages-item"
-          link
-        >
-          <template v-slot:prepend>
-            <v-icon color="white">mdi-view-grid</v-icon>
-          </template>
-          <v-list-item-title class="text-white"> 所有页面 </v-list-item-title>
-          <template v-slot:append>
-            <v-btn
-              icon="mdi-chevron-right"
-              variant="text"
-              size="small"
-              color="white"
-              class="chevron-icon"
-            ></v-btn>
-          </template>
-        </v-list-item>
-      </div>
+      <AppHeaderAllPages :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
 
       <!-- 分割线 -->
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
 
       <!-- 最近访问的页面 -->
-      <div class="recent-pages-section">
-        <v-list-subheader class="text-white text-caption px-4 py-2"> 最近访问 </v-list-subheader>
-        <div v-if="menuStore.recentPages.length > 0">
-          <v-list-item
-            v-for="page in menuStore.recentPages.slice(0, 5)"
-            :key="page.path"
-            :title="page.title"
-            :subtitle="page.category"
-            :prepend-icon="page.icon"
-            color="white"
-            variant="text"
-            class="recent-page-item"
-            @click="navigateTo(page.path)"
-            link
-          >
-            <template v-slot:append>
-              <v-btn
-                icon="mdi-star"
-                variant="text"
-                size="small"
-                color="white"
-                :class="{ 'favorite-active': page.isFavorite }"
-                @click.stop="menuStore.toggleFavorite(page.path)"
-              ></v-btn>
-            </template>
-          </v-list-item>
-        </div>
-        <div v-else class="px-4 py-2">
-          <v-chip color="grey" variant="outlined" size="small"> 暂无最近访问记录 </v-chip>
-        </div>
-      </div>
+      <AppHeaderRecentPages :on-navigate="navigateTo" />
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
       <!-- 收藏菜单组件 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
@@ -287,34 +237,6 @@ const handleMouseEnter = (itemId: string) => {
 
 .menu-item:hover .chevron-icon {
   transform: translateX(4px);
-}
-
-/* 所有页面样式 */
-.all-pages-section {
-  margin-top: 0px;
-}
-
-.all-pages-item {
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.all-pages-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* 最近访问页面样式 */
-.recent-pages-section {
-  margin-top: 0px;
-}
-
-.recent-page-item {
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.recent-page-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .favorite-active {
