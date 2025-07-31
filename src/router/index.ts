@@ -25,6 +25,12 @@ const router = createRouter({
       meta: {
         title: '关于',
         icon: 'mdi-information',
+        description: '关于页面，介绍应用信息',
+        keywords: ['关于', 'about', '介绍'],
+        category: '基础页面',
+        priority: 4,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -49,6 +55,12 @@ const router = createRouter({
       meta: {
         title: '登录',
         icon: 'mdi-login',
+        description: '用户登录页面',
+        keywords: ['登录', 'login', '用户认证'],
+        category: '基础页面',
+        priority: 5,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -88,6 +100,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/Main.vue'),
       meta: {
         title: 'AppHeader 演示',
+        icon: 'mdi-view-dashboard',
+        description: 'AppHeader组件的各种使用方式演示',
+        keywords: ['header', '演示', '组件'],
+        category: 'Header Demo',
+        priority: 6,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -96,6 +115,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/Default.vue'),
       meta: {
         title: '默认配置演示',
+        icon: 'mdi-cog',
+        description: 'AppHeader默认配置的使用演示',
+        keywords: ['默认', '配置', '演示'],
+        category: 'Header Demo',
+        priority: 7,
+        showInMenu: false, // 子页面不显示在菜单中
+        requireAuth: false,
       },
     },
     {
@@ -104,6 +130,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/CustomTitle.vue'),
       meta: {
         title: '自定义标题演示',
+        icon: 'mdi-format-title',
+        description: 'AppHeader自定义标题的使用演示',
+        keywords: ['自定义', '标题', '演示'],
+        category: 'Header Demo',
+        priority: 8,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -112,6 +145,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/CustomActions.vue'),
       meta: {
         title: '自定义操作按钮演示',
+        icon: 'mdi-button-cursor',
+        description: 'AppHeader自定义操作按钮的使用演示',
+        keywords: ['自定义', '操作', '按钮', '演示'],
+        category: 'Header Demo',
+        priority: 9,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -120,6 +160,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/Slot.vue'),
       meta: {
         title: '插槽方式演示',
+        icon: 'mdi-puzzle',
+        description: 'AppHeader插槽方式的使用演示',
+        keywords: ['插槽', 'slot', '演示'],
+        category: 'Header Demo',
+        priority: 10,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -128,6 +175,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/Component.vue'),
       meta: {
         title: '组件对象方式演示',
+        icon: 'mdi-cube-outline',
+        description: 'AppHeader组件对象方式的使用演示',
+        keywords: ['组件', '对象', '演示'],
+        category: 'Header Demo',
+        priority: 11,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -136,6 +190,13 @@ const router = createRouter({
       component: () => import('@/pages/HeaderDemo/Styles.vue'),
       meta: {
         title: '样式控制演示',
+        icon: 'mdi-palette',
+        description: 'AppHeader样式控制的使用演示',
+        keywords: ['样式', '控制', '演示'],
+        category: 'Header Demo',
+        priority: 12,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     // AppFooter 演示页面
@@ -145,6 +206,13 @@ const router = createRouter({
       component: () => import('@/pages/FooterDemo/Main.vue'),
       meta: {
         title: '页脚演示',
+        icon: 'mdi-foot-print',
+        description: 'AppFooter组件的各种使用方式演示',
+        keywords: ['footer', '页脚', '演示', '组件'],
+        category: 'Footer Demo',
+        priority: 13,
+        showInMenu: true,
+        requireAuth: false,
       },
     },
     {
@@ -153,6 +221,13 @@ const router = createRouter({
       component: () => import('@/pages/FooterDemo/Default.vue'),
       meta: {
         title: '默认页脚演示',
+        icon: 'mdi-arrow-down',
+        description: 'AppFooter默认配置的使用演示',
+        keywords: ['默认', '页脚', '演示'],
+        category: 'Footer Demo',
+        priority: 14,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -161,6 +236,13 @@ const router = createRouter({
       component: () => import('@/pages/FooterDemo/Fixed.vue'),
       meta: {
         title: '固定页脚演示',
+        icon: 'mdi-pin',
+        description: 'AppFooter固定定位的使用演示',
+        keywords: ['固定', '页脚', '演示'],
+        category: 'Footer Demo',
+        priority: 15,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     {
@@ -169,6 +251,13 @@ const router = createRouter({
       component: () => import('@/pages/FooterDemo/Custom.vue'),
       meta: {
         title: '自定义页脚演示',
+        icon: 'mdi-cog',
+        description: 'AppFooter自定义内容的使用演示',
+        keywords: ['自定义', '页脚', '演示'],
+        category: 'Footer Demo',
+        priority: 16,
+        showInMenu: false,
+        requireAuth: false,
       },
     },
     // 404 页面重定向到首页
