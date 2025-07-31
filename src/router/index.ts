@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: '/header-demo',
       name: 'header-demo',
-      component: () => import('@/views/HeaderDemo/Main.vue'),
+      component: () => import('@/pages/HeaderDemo/Main.vue'),
       meta: {
         title: 'AppHeader 演示',
       },
@@ -55,7 +55,7 @@ const router = createRouter({
     {
       path: '/header-demo/default',
       name: 'header-demo-default',
-      component: () => import('@/views/HeaderDemo/Default.vue'),
+      component: () => import('@/pages/HeaderDemo/Default.vue'),
       meta: {
         title: '默认配置演示',
       },
@@ -63,7 +63,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-title',
       name: 'header-demo-custom-title',
-      component: () => import('@/views/HeaderDemo/CustomTitle.vue'),
+      component: () => import('@/pages/HeaderDemo/CustomTitle.vue'),
       meta: {
         title: '自定义标题演示',
       },
@@ -71,7 +71,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-actions',
       name: 'header-demo-custom-actions',
-      component: () => import('@/views/HeaderDemo/CustomActions.vue'),
+      component: () => import('@/pages/HeaderDemo/CustomActions.vue'),
       meta: {
         title: '自定义操作按钮演示',
       },
@@ -79,7 +79,7 @@ const router = createRouter({
     {
       path: '/header-demo/slot',
       name: 'header-demo-slot',
-      component: () => import('@/views/HeaderDemo/Slot.vue'),
+      component: () => import('@/pages/HeaderDemo/Slot.vue'),
       meta: {
         title: '插槽方式演示',
       },
@@ -87,7 +87,7 @@ const router = createRouter({
     {
       path: '/header-demo/component',
       name: 'header-demo-component',
-      component: () => import('@/views/HeaderDemo/Component.vue'),
+      component: () => import('@/pages/HeaderDemo/Component.vue'),
       meta: {
         title: '组件对象方式演示',
       },
@@ -95,7 +95,7 @@ const router = createRouter({
     {
       path: '/header-demo/styles',
       name: 'header-demo-styles',
-      component: () => import('@/views/HeaderDemo/Styles.vue'),
+      component: () => import('@/pages/HeaderDemo/Styles.vue'),
       meta: {
         title: '样式控制演示',
       },
@@ -104,7 +104,7 @@ const router = createRouter({
     {
       path: '/footer-demo',
       name: 'footer-demo',
-      component: () => import('@/views/FooterDemo/Main.vue'),
+      component: () => import('@/pages/FooterDemo/Main.vue'),
       meta: {
         title: '页脚演示',
       },
@@ -112,7 +112,7 @@ const router = createRouter({
     {
       path: '/footer-demo/default',
       name: 'footer-demo-default',
-      component: () => import('@/views/FooterDemo/Default.vue'),
+      component: () => import('@/pages/FooterDemo/Default.vue'),
       meta: {
         title: '默认页脚演示',
       },
@@ -120,7 +120,7 @@ const router = createRouter({
     {
       path: '/footer-demo/fixed',
       name: 'footer-demo-fixed',
-      component: () => import('@/views/FooterDemo/Fixed.vue'),
+      component: () => import('@/pages/FooterDemo/Fixed.vue'),
       meta: {
         title: '固定页脚演示',
       },
@@ -128,7 +128,7 @@ const router = createRouter({
     {
       path: '/footer-demo/custom',
       name: 'footer-demo-custom',
-      component: () => import('@/views/FooterDemo/Custom.vue'),
+      component: () => import('@/pages/FooterDemo/Custom.vue'),
       meta: {
         title: '自定义页脚演示',
       },
