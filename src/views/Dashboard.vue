@@ -7,7 +7,7 @@ import AppFooter from '@/components/AppFooter.vue'
 <template>
   <v-app>
     <!-- 使用通用头部组件 -->
-    <AppHeader title="仪表板" :show-navigation="true" />
+    <AppHeader title="仪表板" />
 
     <!-- 主要内容区域 -->
     <v-main>

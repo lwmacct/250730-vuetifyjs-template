@@ -7,17 +7,20 @@
 ## Props 配置
 
 ### 标题相关
+
 - `title?: string` - 应用标题，默认值：'腾讯云'
 - `titleIcon?: string` - 标题图标，默认值：'mdi-cloud'
 - `showTitle?: boolean` - 是否显示标题，默认值：true
 
 ### 导航图标相关
+
 - `showNavIcon?: boolean` - 是否显示导航图标，默认值：true
 - `navIcon?: string` - 导航图标，默认值：'mdi-menu'
 - `navIconColor?: string` - 导航图标颜色，默认值：'white'
 - `onNavIconClick?: () => void` - 导航图标点击回调，默认打开/关闭抽屉菜单
 
 ### 操作按钮相关
+
 - `actions?: Array<ActionButton>` - 自定义操作按钮数组
   - `icon?: string` - 按钮图标
   - `text?: string` - 按钮文本
@@ -26,11 +29,12 @@
   - `onClick: () => void` - 点击回调函数
 
 ### 抽屉菜单相关
+
 - `showDrawer?: boolean` - 是否显示抽屉菜单，默认值：true
 - `drawerWidth?: number | string` - 抽屉宽度，默认值：240
 
 ### 其他配置
-- `showNavigation?: boolean` - 是否显示默认导航按钮，默认值：true
+
 - `elevation?: number | string` - 应用栏阴影，默认值：2
 - `color?: string` - 应用栏颜色，默认值：'grey-darken-4'
 - `height?: number | string` - 应用栏高度，默认值：50
@@ -38,22 +42,21 @@
 ## 使用示例
 
 ### 1. 默认配置
+
 ```vue
 <AppHeader title="我的应用" />
 ```
 
 ### 2. 自定义标题和图标
+
 ```vue
-<AppHeader 
-  title="我的应用" 
-  titleIcon="mdi-application"
-  :showNavigation="false"
-/>
+<AppHeader title="我的应用" titleIcon="mdi-application" />
 ```
 
 ### 3. 自定义操作按钮
+
 ```vue
-<AppHeader 
+<AppHeader
   title="带操作按钮的应用"
   :actions="[
     {
@@ -61,23 +64,23 @@
       text: '通知',
       color: 'warning',
       variant: 'text',
-      onClick: () => console.log('通知按钮点击')
+      onClick: () => console.log('通知按钮点击'),
     },
     {
       icon: 'mdi-account',
       text: '用户',
       color: 'info',
       variant: 'text',
-      onClick: () => console.log('用户按钮点击')
-    }
+      onClick: () => console.log('用户按钮点击'),
+    },
   ]"
-  :showNavigation="false"
 />
 ```
 
 ### 4. 自定义导航图标
+
 ```vue
-<AppHeader 
+<AppHeader
   title="自定义导航"
   navIcon="mdi-dots-vertical"
   navIconColor="primary"
@@ -86,17 +89,15 @@
 ```
 
 ### 5. 隐藏抽屉菜单
+
 ```vue
-<AppHeader 
-  title="无抽屉菜单"
-  :showDrawer="false"
-  :showNavigation="false"
-/>
+<AppHeader title="无抽屉菜单" :showDrawer="false" />
 ```
 
 ### 6. 完整自定义
+
 ```vue
-<AppHeader 
+<AppHeader
   title="完整自定义"
   titleIcon="mdi-star"
   navIcon="mdi-menu-open"
@@ -120,5 +121,4 @@
 
 - 当 `showDrawer` 为 false 时，导航图标不会显示抽屉菜单功能
 - 自定义 `onNavIconClick` 会覆盖默认的抽屉菜单切换功能
-- `actions` 数组中的按钮会显示在默认导航按钮之后
-- 所有颜色值都支持 Vuetify 的颜色系统 
+- 所有颜色值都支持 Vuetify 的颜色系统

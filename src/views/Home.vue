@@ -10,7 +10,6 @@ import AppFooter from '@/components/AppFooter.vue'
     <AppHeader
       title="Vue + Vuetify 应用"
       titleIcon="mdi-home"
-      :show-navigation="true"
       :actions="[
         {
           icon: 'mdi-bell',

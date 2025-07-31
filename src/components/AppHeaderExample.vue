@@ -47,11 +47,11 @@ const handleCustomNavClick = () => {
 
     <!-- 示例 2: 自定义标题和图标 -->
     <h3>自定义标题和图标</h3>
-    <AppHeader title="我的应用" titleIcon="mdi-application" :showNavigation="false" />
+    <AppHeader title="我的应用" titleIcon="mdi-application" />
 
     <!-- 示例 3: 自定义操作按钮 -->
     <h3>自定义操作按钮</h3>
-    <AppHeader title="带操作按钮的应用" :actions="customActions" :showNavigation="false" />
+    <AppHeader title="带操作按钮的应用" :actions="customActions" />
 
     <!-- 示例 4: 自定义导航图标 -->
     <h3>自定义导航图标</h3>
@@ -64,7 +64,7 @@ const handleCustomNavClick = () => {
 
     <!-- 示例 5: 隐藏抽屉菜单 -->
     <h3>隐藏抽屉菜单</h3>
-    <AppHeader title="无抽屉菜单" :showDrawer="false" :showNavigation="false" />
+    <AppHeader title="无抽屉菜单" :showDrawer="false" />
 
     <!-- 示例 6: 完整自定义 -->
     <h3>完整自定义</h3>

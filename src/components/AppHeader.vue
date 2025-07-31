@@ -32,7 +32,6 @@ interface Props {
   drawerWidth?: number | string
 
   // 其他
-  showNavigation?: boolean
   elevation?: number | string
   color?: string
   height?: number | string
@@ -47,7 +46,6 @@ const props = withDefaults(defineProps<Props>(), {
   navIconColor: 'white',
   showDrawer: true,
   drawerWidth: 240,
-  showNavigation: true,
   elevation: 2,
   color: 'grey-darken-4',
   height: 50,
@@ -120,19 +118,6 @@ const handleMouseEnter = (itemId: string) => {
 
     <!-- 操作按钮 -->
     <v-app-bar-actions>
-      <!-- 默认导航菜单 -->
-      <template v-if="showNavigation">
-        <v-btn
-          @click="navigateTo('/')"
-          variant="text"
-          prepend-icon="mdi-home"
-          class="mx-1"
-          color="white"
-        >
-          控制台
-        </v-btn>
-      </template>
-
       <!-- 自定义操作按钮 -->
       <template v-for="(action, index) in actions" :key="index">
         <v-btn
