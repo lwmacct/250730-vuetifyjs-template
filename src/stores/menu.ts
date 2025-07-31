@@ -24,6 +24,36 @@ export const useMenuStore = defineStore('menu', () => {
       category: 'Header Demo',
       lastAccessed: Date.now() - 1000 * 60 * 5, // 5分钟前
     },
+    // Footer Demo 组
+    {
+      title: 'AppFooter 演示',
+      path: '/footer-demo',
+      icon: 'mdi-foot-print',
+      isFavorite: true,
+      category: 'Footer Demo',
+      lastAccessed: Date.now() - 1000 * 60 * 2, // 2分钟前
+    },
+    {
+      title: '默认页脚演示',
+      path: '/footer-demo/default',
+      icon: 'mdi-arrow-down',
+      isFavorite: false,
+      category: 'Footer Demo',
+    },
+    {
+      title: '固定页脚演示',
+      path: '/footer-demo/fixed',
+      icon: 'mdi-pin',
+      isFavorite: false,
+      category: 'Footer Demo',
+    },
+    {
+      title: '自定义页脚演示',
+      path: '/footer-demo/custom',
+      icon: 'mdi-cog',
+      isFavorite: false,
+      category: 'Footer Demo',
+    },
     {
       title: '默认配置演示',
       path: '/header-demo/default',

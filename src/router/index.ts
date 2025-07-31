@@ -104,9 +104,33 @@ const router = createRouter({
     {
       path: '/footer-demo',
       name: 'footer-demo',
-      component: () => import('@/views/FooterDemo.vue'),
+      component: () => import('@/views/FooterDemo/Main.vue'),
       meta: {
         title: '页脚演示',
+      },
+    },
+    {
+      path: '/footer-demo/default',
+      name: 'footer-demo-default',
+      component: () => import('@/views/FooterDemo/Default.vue'),
+      meta: {
+        title: '默认页脚演示',
+      },
+    },
+    {
+      path: '/footer-demo/fixed',
+      name: 'footer-demo-fixed',
+      component: () => import('@/views/FooterDemo/Fixed.vue'),
+      meta: {
+        title: '固定页脚演示',
+      },
+    },
+    {
+      path: '/footer-demo/custom',
+      name: 'footer-demo-custom',
+      component: () => import('@/views/FooterDemo/Custom.vue'),
+      meta: {
+        title: '自定义页脚演示',
       },
     },
     // 404 页面重定向到首页
