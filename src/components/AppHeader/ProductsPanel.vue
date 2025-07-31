@@ -90,6 +90,8 @@ const isItemFavorite = (path: string) => {
   /* 确保滚动条始终显示 */
   scrollbar-width: thin;
   scrollbar-color: #757575 #424242;
+  /* 强制允许内容撑开 */
+  min-width: fit-content;
 }
 
 /* WebKit 浏览器滚动条样式 */
@@ -146,19 +148,23 @@ const isItemFavorite = (path: string) => {
   /* 允许内容撑开宽度 */
   min-width: fit-content;
   width: auto;
+  /* 强制撑开 */
+  overflow: visible;
 }
 
 .product-item-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* 修复对齐问题 */
   gap: 12px;
   width: 100%;
   min-width: 0;
+  /* 强制撑开 */
+  overflow: visible;
 }
 
 .product-icon {
   flex-shrink: 0;
-  margin-top: 2px;
+  /* 移除 margin-top，让 icon 与文本中心对齐 */
 }
 
 .product-text {
