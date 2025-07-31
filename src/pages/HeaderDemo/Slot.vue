@@ -30,21 +30,35 @@ import SlotTemplate from './SlotTemplate.vue'
             <v-card>
               <v-card-title>代码示例</v-card-title>
               <v-card-text>
-                <pre
-                  class="bg-grey-lighten-4 pa-4 rounded"
-                ><code>&lt;AppHeader :use-custom-content="true"&gt;
+                <pre class="bg-grey-lighten-4 pa-4 rounded"><code>// Slot.vue
+&lt;AppHeader :use-custom-content="true"&gt;
   &lt;template #custom-content&gt;
     &lt;SlotTemplate /&gt;
   &lt;/template&gt;
 &lt;/AppHeader&gt;
 
 // SlotTemplate.vue
+&lt;script setup lang="ts"&gt;
+import { ref } from 'vue'
+
 const notificationCount = ref(3)
 const userStatus = ref('在线')
 
 const handleNotification = () => {
   notificationCount.value = Math.max(0, notificationCount.value - 1)
-}</code></pre>
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div class="d-flex align-center"&gt;
+    &lt;v-btn @click="handleNotification"&gt;
+      &lt;v-badge :content="notificationCount"&gt;
+        &lt;v-icon&gt;mdi-bell&lt;/v-icon&gt;
+      &lt;/v-badge&gt;
+      &lt;v-tooltip activator="parent"&gt;通知&lt;/v-tooltip&gt;
+    &lt;/v-btn&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
               </v-card-text>
             </v-card>
           </v-col>
