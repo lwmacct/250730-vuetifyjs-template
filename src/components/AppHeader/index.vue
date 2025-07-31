@@ -43,8 +43,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: '腾讯云',
-  titleIcon: 'mdi-cloud',
+  title: '控制台',
+  titleIcon: 'mdi-console',
   showTitle: true,
   showNavIcon: true,
   navIcon: 'mdi-menu',
