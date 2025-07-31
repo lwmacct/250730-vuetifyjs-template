@@ -95,34 +95,40 @@ const handleMouseEnter = (itemId: string) => {
 <template>
   <!-- 头部导航栏 -->
   <v-app-bar app :elevation="elevation" :color="color" dark :height="height">
-    <!-- 导航图标 -->
-    <v-app-bar-nav-icon
-      v-if="showNavIcon"
-      @click="handleNavIconClick"
-      :color="navIconColor"
-      variant="text"
-      class="mr-2"
-    >
-      <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
-    </v-app-bar-nav-icon>
-    <!-- 菜单按钮分割线 -->
-    <v-divider vertical color="white"></v-divider>
-    <!-- 自定义内容或默认内容 -->
-    <template v-if="customContent">
-      <!-- 方式2：直接传入组件对象 -->
-      <component :is="customContent" />
-    </template>
-    <template v-else-if="useCustomContent">
-      <!-- 方式1：插槽：自定义导航栏右侧内容 -->
-      <slot name="custom-content"></slot>
-    </template>
-    <template v-else>
-      <!-- 默认内容 -->
+    <!-- 左侧区域：导航图标和分割线 -->
+    <div class="d-flex align-center">
+      <v-app-bar-nav-icon
+        v-if="showNavIcon"
+        @click="handleNavIconClick"
+        :color="navIconColor"
+        variant="text"
+        class="mr-2"
+      >
+        <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
+      </v-app-bar-nav-icon>
+      <!-- 菜单按钮分割线 -->
+      <v-divider vertical color="white"></v-divider>
+    </div>
+
+    <!-- 中间区域：默认标题（当没有自定义内容时） -->
+    <template v-if="!customContent && !useCustomContent">
       <v-app-bar-title v-if="showTitle" class="text-h6">
         <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
         {{ title }}
       </v-app-bar-title>
     </template>
+
+    <!-- 右侧区域：自定义内容 -->
+    <div class="custom-content-area">
+      <template v-if="customContent">
+        <!-- 方式2：直接传入组件对象 -->
+        <component :is="customContent" />
+      </template>
+      <template v-else-if="useCustomContent">
+        <!-- 方式1：插槽：自定义导航栏右侧内容 -->
+        <slot name="custom-content"></slot>
+      </template>
+    </div>
   </v-app-bar>
 
   <!-- 抽屉菜单 -->
@@ -221,6 +227,15 @@ const handleMouseEnter = (itemId: string) => {
 
 .favorite-active {
   color: #ffd700 !important;
+}
+
+/* 自定义内容区域样式 */
+.custom-content-area {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
 }
 
 /* 悬停面板样式 */

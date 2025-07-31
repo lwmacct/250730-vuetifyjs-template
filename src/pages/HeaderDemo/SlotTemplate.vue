@@ -173,7 +173,7 @@ const handleProfile = () => {
 
 <style scoped>
 .user-avatar-btn {
-  margin-left: auto; /* 推到最右侧 */
+  /* 移除 margin-left: auto，现在由父容器控制右对齐 */
 }
 
 .user-avatar {
