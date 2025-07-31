@@ -311,7 +311,7 @@ const handleMouseEnter = (itemId: string) => {
 
 .recent-page-item {
   border-radius: 4px;
-  margin: 2px 8px;
+  margin: 0px 0px;
   transition: all 0.3s ease;
 }
 
