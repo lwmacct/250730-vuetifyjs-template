@@ -3,7 +3,6 @@ import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useMenuStore } from '@/stores/menu'
 import FavoriteMenu from './AppHeaderFavoriteMenu.vue'
-import RecentPagesPanel from './RecentPagesPanel.vue'
 import AllProductsPanel from './AllProductsPanel.vue'
 import AppHeaderAllPages from './AppHeaderAllPages.vue'
 import AppHeaderRecentPages from './AppHeaderRecentPages.vue'
@@ -172,15 +171,6 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 所有页面专用组件 -->
       <template v-if="hoveredItem === 'all-products'">
         <AllProductsPanel
-          :on-navigate="navigateTo"
-          :on-add-to-favorites="addToFavorites"
-          :on-remove-from-favorites="removeFromFavorites"
-        />
-      </template>
-
-      <!-- 最近访问专用组件 -->
-      <template v-else-if="hoveredItem === 'recent'">
-        <RecentPagesPanel
           :on-navigate="navigateTo"
           :on-add-to-favorites="addToFavorites"
           :on-remove-from-favorites="removeFromFavorites"
