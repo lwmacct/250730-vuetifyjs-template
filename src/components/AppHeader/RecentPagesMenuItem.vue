@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMenuStore } from '@/stores/menu'
+import { useRouteMenuStore } from '@/stores/routeMenu'
 
 interface Props {
   onNavigate: (path: string) => void
@@ -9,15 +9,15 @@ const props = withDefaults(defineProps<Props>(), {
   onNavigate: () => {},
 })
 
-const menuStore = useMenuStore()
+const routeMenuStore = useRouteMenuStore()
 </script>
 
 <template>
   <div class="recent-pages-section">
     <v-list-subheader class="text-white text-caption px-4 py-2"> 最近访问 </v-list-subheader>
-    <div v-if="menuStore.recentPages.length > 0">
+    <div v-if="routeMenuStore.recentItems.length > 0">
       <v-list-item
-        v-for="page in menuStore.recentPages.slice(0, 5)"
+        v-for="page in routeMenuStore.recentItems.slice(0, 5)"
         :key="page.path"
         :title="page.title"
         :subtitle="page.category"
@@ -35,7 +35,7 @@ const menuStore = useMenuStore()
             size="small"
             color="white"
             :class="{ 'favorite-active': page.isFavorite }"
-            @click.stop="menuStore.toggleFavorite(page.path)"
+            @click.stop="routeMenuStore.toggleFavorite(page.path)"
           ></v-btn>
         </template>
       </v-list-item>

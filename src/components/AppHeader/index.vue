@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useMenuStore } from '@/stores/menu'
+import { useRouteMenuStore } from '@/stores/routeMenu'
 import FavoriteMenu from './FavoriteMenu.vue'
 import ProductsPanel from './ProductsPanel.vue'
 import AllPagesMenuItem from './AllPagesMenuItem.vue'
@@ -61,6 +62,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const router = useRouter()
 const menuStore = useMenuStore()
+const routeMenuStore = useRouteMenuStore()
 const drawer = ref(false)
 const hoveredItem = ref<string | null>(null)
 
@@ -73,6 +75,7 @@ watch(drawer, (newValue) => {
 
 const navigateTo = (path: string) => {
   router.push(path)
+  routeMenuStore.recordAccess(path) // 记录访问时间
   drawer.value = false // Close drawer on navigation
   hoveredItem.value = null // Hide hover panel
 }

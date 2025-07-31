@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMenuStore } from '@/stores/menu'
+import { useRouteMenuStore } from '@/stores/routeMenu'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
   onRemoveFromFavorites: () => {},
 })
 
-const menuStore = useMenuStore()
+const routeMenuStore = useRouteMenuStore()
 const router = useRouter()
 const draggedItem = ref<any>(null)
 const dragOverItem = ref<any>(null)
@@ -23,7 +23,7 @@ const handleClick = (product: any) => {
 
 // 移除收藏项
 const removeFromFavorites = (path: string) => {
-  menuStore.removeFromFavorites(path)
+  routeMenuStore.toggleFavorite(path)
 }
 
 // 拖拽开始
@@ -49,12 +49,13 @@ const handleDrop = (event: DragEvent, targetItem: any) => {
   event.preventDefault()
 
   if (draggedItem.value && draggedItem.value.path !== targetItem.path) {
-    const favoriteItems = menuStore.favoriteProducts
+    const favoriteItems = routeMenuStore.favoriteItems
     const fromIndex = favoriteItems.findIndex((item) => item.path === draggedItem.value!.path)
     const toIndex = favoriteItems.findIndex((item) => item.path === targetItem.path)
 
     if (fromIndex !== -1 && toIndex !== -1) {
-      menuStore.moveFavoriteItem(fromIndex, toIndex)
+      // TODO: 实现拖拽排序功能
+      console.log('拖拽排序功能待实现')
     }
   }
 
@@ -75,9 +76,9 @@ const handleDragEnd = () => {
     <v-list-subheader class="text-white text-caption px-4 py-2"> 收藏页面 </v-list-subheader>
 
     <!-- 收藏的产品列表 -->
-    <div v-if="menuStore.favoriteProducts.length > 0">
+    <div v-if="routeMenuStore.favoriteItems.length > 0">
       <div
-        v-for="(product, index) in menuStore.favoriteProducts"
+        v-for="(product, index) in routeMenuStore.favoriteItems"
         :key="product.path"
         class="menu-item-container"
         :class="{

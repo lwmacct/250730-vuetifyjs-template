@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMenuStore } from '@/stores/menu'
+import { useRouteMenuStore } from '@/stores/routeMenu'
 
 interface Props {
   onNavigate: (path: string) => void
@@ -13,16 +13,16 @@ const props = withDefaults(defineProps<Props>(), {
   onRemoveFromFavorites: () => {},
 })
 
-const menuStore = useMenuStore()
+const routeMenuStore = useRouteMenuStore()
 
 // 处理收藏按钮点击
 const handleFavoriteClick = (item: any) => {
-  menuStore.toggleFavorite(item.path)
+  routeMenuStore.toggleFavorite(item.path)
 }
 
 // 检查是否已收藏
 const isItemFavorite = (path: string) => {
-  return menuStore.isFavorite(path)
+  return routeMenuStore.isFavorite(path)
 }
 </script>
 
@@ -30,7 +30,7 @@ const isItemFavorite = (path: string) => {
   <div class="all-products-panel">
     <!-- 产品分类列表 -->
     <div
-      v-for="(items, category) in menuStore.productsByCategory"
+      v-for="(items, category) in routeMenuStore.menuItemsByCategory"
       :key="category"
       class="category-section"
     >
@@ -57,9 +57,6 @@ const isItemFavorite = (path: string) => {
         </template>
         <v-list-item-title class="text-white">
           {{ item.title }}
-          <span v-if="item.count" class="text-grey-lighten-2 ml-2 font-weight-medium">
-            {{ item.count }}
-          </span>
         </v-list-item-title>
         <template v-slot:append>
           <v-btn
