@@ -1,9 +1,9 @@
-version: "3"
+version: '3'
 
 vars:
-  PATH_LOCAL: ".local"
-  PATH_BIN: "{{.PATH_LOCAL}}/bin"
-  PATH_DATA: "{{.PATH_LOCAL}}/data"
+  PATH_LOCAL: '.local'
+  PATH_BIN: '{{.PATH_LOCAL}}/bin'
+  PATH_DATA: '{{.PATH_LOCAL}}/data'
 
   GO_MODE_NAME:
     sh: go mod edit -json 2>/dev/null | jq -r .Module.Path|| echo "{{.GO_MODE_NAME}}"
@@ -11,7 +11,7 @@ vars:
     sh: echo "{{.GO_MODE_NAME}}" | awk -F/ '{print $NF}'
   GO_MODE_APP:
     sh: echo "{{.GO_MODE_PROJ}}" | cut -d'-' -f2-
-  GO_BUILD_PATH: "{{.PATH_BIN}}/{{.GO_MODE_APP}}"
+  GO_BUILD_PATH: '{{.PATH_BIN}}/{{.GO_MODE_APP}}'
   GO_BUILD_LDFLAGS_SW: -s -w
   GO_BUILD_LDFLAGS_X: >-
     -X '{{.GO_MODE_NAME}}/app/version.AppRawName={{.GO_MODE_APP}}'
@@ -21,11 +21,11 @@ vars:
     -X '{{.GO_MODE_NAME}}/app/version.BuildTime={{.TIME_NOW}}'
     -X '{{.GO_MODE_NAME}}/app/version.Developer={{.DEVELOPER}}'
     -X '{{.GO_MODE_NAME}}/app/version.Workspace={{.PATH_REALPATH}}'
-  GO_BUILD_LDFLAGS: "{{.GO_BUILD_LDFLAGS_SW}} {{.GO_BUILD_LDFLAGS_X}}"
+  GO_BUILD_LDFLAGS: '{{.GO_BUILD_LDFLAGS_SW}} {{.GO_BUILD_LDFLAGS_X}}'
 
 tasks:
   env:
-    desc: "显示环境变量"
+    desc: '显示环境变量'
     silent: true
     cmds:
       - |
@@ -36,17 +36,17 @@ tasks:
         echo "GO_BUILD_LDFLAGS_X: {{.GO_BUILD_LDFLAGS_X}}"
 
   release:
-    desc: "发布所有架构"
+    desc: '发布所有架构'
     deps:
       - task: release:x86_64
 
   release:x86_64:
-    desc: "发布 x86_64 架构"
+    desc: '发布 x86_64 架构'
     vars:
-      ARCH: "x86_64"
-      VERSION: "{{.GIT_TAG_LATEST}}-{{.ARCH}}"
-      IMAGE: "{{.GO_MODE_PROJ}}:{{.VERSION}}"
-      REGISTRY: "ghcr.io/{{.NAMESPACE}}"
+      ARCH: 'x86_64'
+      VERSION: '{{.GIT_TAG_LATEST}}-{{.ARCH}}'
+      IMAGE: '{{.GO_MODE_PROJ}}:{{.VERSION}}'
+      REGISTRY: 'ghcr.io/{{.NAMESPACE}}'
     cmds:
       - |
         echo "构建项目: {{.GO_MODE_APP}}-{{.VERSION}}"
@@ -79,13 +79,13 @@ tasks:
         docker push {{.REGISTRY}}/{{.IMAGE}}
 
   build:
-    desc: "基础编译"
+    desc: '基础编译'
     silent: true
     cmds:
       - go build -ldflags "{{.GO_BUILD_LDFLAGS_X}}" -o {{.GO_BUILD_PATH}} .
 
   run:
-    desc: "先编译再运行"
+    desc: '先编译再运行'
     silent: true
     deps:
       - task: build

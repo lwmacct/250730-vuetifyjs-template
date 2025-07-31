@@ -1,8 +1,8 @@
-version: "3"
+version: '3'
 
 tasks:
   clear:
-    desc: "清除历史提交记录"
+    desc: '清除历史提交记录'
     silent: true
     cmds:
       - |
@@ -20,7 +20,7 @@ tasks:
         git push -f origin ${_branch_name_current}
 
   reinit:
-    desc: "重新初始化 git"
+    desc: '重新初始化 git'
     cmds:
       - |
         _remote_url=$(git remote get-url origin | head -n1)
@@ -35,7 +35,7 @@ tasks:
       - task: clear
 
   push:
-    desc: "推送代码"
+    desc: '推送代码'
     cmds:
       - |
         git add .
@@ -43,7 +43,7 @@ tasks:
         git push || true
 
   tag:next:
-    desc: "创建 tag"
+    desc: '创建 tag'
     vars:
       GIT_TAG_NEXT:
         sh: |
@@ -56,7 +56,7 @@ tasks:
         git push origin {{.GIT_TAG_NEXT}}
 
   keys:gen:
-    desc: "设置并使用部署秘钥"
+    desc: '设置并使用部署秘钥'
     cmds:
       - |
         _path_keys=".taskfile/git/keys"
@@ -68,7 +68,7 @@ tasks:
         chmod 644 ${_path_keys}/id_ed25519.pub
 
   keys:set:
-    desc: "设置部署秘钥"
+    desc: '设置部署秘钥'
     cmds:
       - |
         _path_keys=".taskfile/git/keys"

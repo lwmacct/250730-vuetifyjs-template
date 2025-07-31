@@ -2,13 +2,17 @@
 // 首页组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { useRouteIcon } from '@/utils/route'
+
+// 从路由meta中获取icon
+const pageIcon = useRouteIcon('mdi-home')
 </script>
 
 <template>
   <!-- 使用通用头部组件 -->
   <AppHeader
     title="Vue + Vuetify 应用"
-    titleIcon="mdi-home"
+    :titleIcon="pageIcon"
     :actions="[
       {
         icon: 'mdi-bell',
@@ -34,7 +38,7 @@ import AppFooter from '@/components/AppFooter.vue'
         <v-col cols="12" md="8">
           <v-card class="mx-auto" max-width="800">
             <v-card-title class="text-h4 text-center pa-6">
-              <v-icon size="large" color="primary" class="mr-3">mdi-home</v-icon>
+              <v-icon size="large" color="primary" class="mr-3">{{ pageIcon }}</v-icon>
               欢迎使用
             </v-card-title>
             <v-card-text class="text-body-1">

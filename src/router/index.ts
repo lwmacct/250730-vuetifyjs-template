@@ -9,6 +9,7 @@ const router = createRouter({
       component: () => import('@/views/Home.vue'),
       meta: {
         title: '首页',
+        icon: 'mdi-home',
       },
     },
     {
@@ -17,6 +18,7 @@ const router = createRouter({
       component: () => import('@/views/About.vue'),
       meta: {
         title: '关于',
+        icon: 'mdi-information',
       },
     },
     {
@@ -25,6 +27,7 @@ const router = createRouter({
       component: () => import('@/views/Contact.vue'),
       meta: {
         title: '联系',
+        icon: 'mdi-email',
       },
     },
     {
@@ -33,6 +36,7 @@ const router = createRouter({
       component: () => import('@/views/Login.vue'),
       meta: {
         title: '登录',
+        icon: 'mdi-login',
       },
     },
     {
@@ -41,6 +45,7 @@ const router = createRouter({
       component: () => import('@/views/Dashboard.vue'),
       meta: {
         title: '仪表板',
+        icon: 'mdi-view-dashboard',
       },
     },
     // AppHeader 演示页面
