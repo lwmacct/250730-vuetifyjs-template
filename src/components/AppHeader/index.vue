@@ -160,26 +160,22 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 收藏菜单组件 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
-
-    <!-- 悬停显示的二级菜单面板 -->
-    <div
-      v-if="hoveredItem && drawer"
-      class="hover-panel"
-      @mouseenter="handleMouseEnter(hoveredItem)"
-    >
-      <!-- 连接区域 - 确保鼠标可以移动到面板 -->
-      <div class="connection-area"></div>
-      <!-- 面板内容 -->
-      <!-- 所有页面专用组件 -->
-      <template v-if="hoveredItem === 'all-products'">
-        <ProductsPanel
-          :on-navigate="navigateTo"
-          :on-add-to-favorites="addToFavorites"
-          :on-remove-from-favorites="removeFromFavorites"
-        />
-      </template>
-    </div>
   </v-navigation-drawer>
+
+  <!-- 悬停显示的二级菜单面板 - 移到抽屉外部 -->
+  <div v-if="hoveredItem && drawer" class="hover-panel" @mouseenter="handleMouseEnter(hoveredItem)">
+    <!-- 连接区域 - 确保鼠标可以移动到面板 -->
+    <div class="connection-area"></div>
+    <!-- 面板内容 -->
+    <!-- 所有页面专用组件 -->
+    <template v-if="hoveredItem === 'all-products'">
+      <ProductsPanel
+        :on-navigate="navigateTo"
+        :on-add-to-favorites="addToFavorites"
+        :on-remove-from-favorites="removeFromFavorites"
+      />
+    </template>
+  </div>
 </template>
 
 <style scoped>
@@ -237,16 +233,17 @@ const handleMouseEnter = (itemId: string) => {
 
 /* 悬停面板样式 */
 .hover-panel {
-  position: absolute;
-  left: 100%; /* 相对于抽屉的右边缘 */
-  top: 0; /* 相对于抽屉的顶部 */
+  position: fixed; /* 改为 fixed 定位，因为现在在抽屉外部 */
+  left: 240px; /* 抽屉宽度 */
+  top: 50px; /* AppBar 高度 */
   min-width: 240px; /* 最小宽度 */
   width: auto; /* 允许自动撑开 */
   max-width: 800px; /* 进一步增加最大宽度限制 */
-  height: 100%; /* 相对于抽屉的高度 */
+  height: calc(100vh - 50px); /* 减去 AppBar 高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
   box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
   overflow: visible; /* 允许内容撑开 */
+  z-index: 1000; /* 确保在最上层 */
 }
 </style>
