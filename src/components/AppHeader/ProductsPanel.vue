@@ -58,6 +58,9 @@ const isItemFavorite = (path: string) => {
         <v-list-item-title class="text-white">
           {{ item.title }}
         </v-list-item-title>
+        <v-list-item-subtitle class="text-grey-lighten-2 text-caption">
+          {{ item.path }}
+        </v-list-item-subtitle>
         <template v-slot:append>
           <v-btn
             icon
