@@ -34,14 +34,14 @@ const styleThemes = [
     name: '成功主题',
     color: 'success',
     elevation: 8,
-    height: 60,
+    height: 80,
     navIconColor: 'white',
   },
   {
     name: '警告主题',
     color: 'warning',
     elevation: 6,
-    height: 30,
+    height: 80,
     navIconColor: 'white',
   },
 ]
@@ -113,6 +113,38 @@ const switchTheme = (theme: any) => {
           <v-chip color="grey-lighten-1" variant="outlined" size="small">
             <v-icon start>mdi-account-circle</v-icon>
             夜间模式
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 成功主题插槽 -->
+      <template v-else-if="currentStyle.color === 'success'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-check-circle" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-check-circle</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-chart-line" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-chart-line</v-icon>
+          </v-btn>
+          <v-chip color="green-lighten-4" variant="outlined" size="small">
+            <v-icon start>mdi-trending-up</v-icon>
+            运行正常
+          </v-chip>
+        </div>
+      </template>
+
+      <!-- 警告主题插槽 -->
+      <template v-else-if="currentStyle.color === 'warning'">
+        <div class="d-flex align-center">
+          <v-btn icon="mdi-alert" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-alert</v-icon>
+          </v-btn>
+          <v-btn icon="mdi-shield" variant="text" color="white" class="mr-2">
+            <v-icon>mdi-shield</v-icon>
+          </v-btn>
+          <v-chip color="orange-lighten-4" variant="outlined" size="small">
+            <v-icon start>mdi-exclamation</v-icon>
+            注意安全
           </v-chip>
         </div>
       </template>
