@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import CustomHeaderContent from '@/components/CustomHeaderContent.vue'
+
+// 定义自定义内容组件
+const CustomHeaderContent = {
+  template: `
+    <div class="d-flex align-center">
+      <v-btn icon="mdi-bell" variant="text" color="white" class="mr-2"></v-btn>
+      <v-btn icon="mdi-account" variant="text" color="white" class="mr-2"></v-btn>
+      <v-divider vertical class="mx-2" color="white"></v-divider>
+      <v-chip color="white" variant="outlined" size="small">
+        <v-icon start>mdi-account-circle</v-icon>
+        用户
+      </v-chip>
+    </div>
+  `,
+}
 </script>
 
 <template>
@@ -30,7 +44,17 @@ import CustomHeaderContent from '@/components/CustomHeaderContent.vue'
             <v-card>
               <v-card-title>代码示例</v-card-title>
               <v-card-text>
-                <pre class="bg-grey-lighten-4 pa-4 rounded"><code>&lt;AppHeader 
+                <pre class="bg-grey-lighten-4 pa-4 rounded"><code>const CustomHeaderContent = {
+  template: \`
+    &lt;div class="d-flex align-center"&gt;
+      &lt;v-btn icon="mdi-bell" variant="text" color="white"&gt;&lt;/v-btn&gt;
+      &lt;v-btn icon="mdi-account" variant="text" color="white"&gt;&lt;/v-btn&gt;
+      &lt;v-chip color="white" variant="outlined"&gt;用户&lt;/v-chip&gt;
+    &lt;/div&gt;
+  \`
+}
+
+&lt;AppHeader 
   :custom-content="CustomHeaderContent"
   navIcon="mdi-menu"
   navIconColor="white"
