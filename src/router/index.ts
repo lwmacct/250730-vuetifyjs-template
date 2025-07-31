@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: '/header-demo',
       name: 'header-demo',
-      component: () => import('@/views/HeaderDemo/HeaderDemo.vue'),
+      component: () => import('@/views/HeaderDemo/Main.vue'),
       meta: {
         title: 'AppHeader 演示',
       },
@@ -55,7 +55,7 @@ const router = createRouter({
     {
       path: '/header-demo/default',
       name: 'header-demo-default',
-      component: () => import('@/views/HeaderDemo/HeaderDemoDefault.vue'),
+      component: () => import('@/views/HeaderDemo/Default.vue'),
       meta: {
         title: '默认配置演示',
       },
@@ -63,7 +63,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-title',
       name: 'header-demo-custom-title',
-      component: () => import('@/views/HeaderDemo/HeaderDemoCustomTitle.vue'),
+      component: () => import('@/views/HeaderDemo/CustomTitle.vue'),
       meta: {
         title: '自定义标题演示',
       },
@@ -71,7 +71,7 @@ const router = createRouter({
     {
       path: '/header-demo/custom-actions',
       name: 'header-demo-custom-actions',
-      component: () => import('@/views/HeaderDemo/HeaderDemoCustomActions.vue'),
+      component: () => import('@/views/HeaderDemo/CustomActions.vue'),
       meta: {
         title: '自定义操作按钮演示',
       },
@@ -79,7 +79,7 @@ const router = createRouter({
     {
       path: '/header-demo/slot',
       name: 'header-demo-slot',
-      component: () => import('@/views/HeaderDemo/HeaderDemoSlot.vue'),
+      component: () => import('@/views/HeaderDemo/Slot.vue'),
       meta: {
         title: '插槽方式演示',
       },
@@ -87,7 +87,7 @@ const router = createRouter({
     {
       path: '/header-demo/component',
       name: 'header-demo-component',
-      component: () => import('@/views/HeaderDemo/HeaderDemoComponent.vue'),
+      component: () => import('@/views/HeaderDemo/Component.vue'),
       meta: {
         title: '组件对象方式演示',
       },
@@ -95,7 +95,7 @@ const router = createRouter({
     {
       path: '/header-demo/styles',
       name: 'header-demo-styles',
-      component: () => import('@/views/HeaderDemo/HeaderDemoStyles.vue'),
+      component: () => import('@/views/HeaderDemo/Styles.vue'),
       meta: {
         title: '样式控制演示',
       },
