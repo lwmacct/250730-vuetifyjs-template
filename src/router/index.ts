@@ -139,21 +139,7 @@ const router = createRouter({
         requireAuth: false,
       },
     },
-    {
-      path: '/header-demo/custom-actions',
-      name: 'header-demo-custom-actions',
-      component: () => import('@/pages/HeaderDemo/CustomActions.vue'),
-      meta: {
-        title: '自定义操作按钮演示',
-        icon: 'mdi-button-cursor',
-        description: 'AppHeader自定义操作按钮的使用演示',
-        keywords: ['自定义', '操作', '按钮', '演示'],
-        category: 'Header Demo',
-        priority: 9,
-        showInMenu: true,
-        requireAuth: false,
-      },
-    },
+
     {
       path: '/header-demo/slot',
       name: 'header-demo-slot',
