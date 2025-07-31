@@ -7,7 +7,27 @@ import AppFooter from '@/components/AppFooter.vue'
 <template>
   <v-app>
     <!-- 使用通用头部组件 -->
-    <AppHeader title="Vue + Vuetify 应用" :show-navigation="true" />
+    <AppHeader
+      title="Vue + Vuetify 应用"
+      titleIcon="mdi-home"
+      :show-navigation="true"
+      :actions="[
+        {
+          icon: 'mdi-bell',
+          text: '通知',
+          color: 'warning',
+          variant: 'text',
+          onClick: () => console.log('通知按钮点击'),
+        },
+        {
+          icon: 'mdi-account',
+          text: '用户',
+          color: 'info',
+          variant: 'text',
+          onClick: () => console.log('用户按钮点击'),
+        },
+      ]"
+    />
 
     <!-- 主要内容区域 -->
     <v-main>

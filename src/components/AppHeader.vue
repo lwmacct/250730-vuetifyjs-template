@@ -7,13 +7,51 @@ import RecentPagesPanel from './RecentPagesPanel.vue'
 import AllProductsPanel from './AllProductsPanel.vue'
 
 interface Props {
+  // 标题相关
   title?: string
+  titleIcon?: string
+  showTitle?: boolean
+
+  // 导航图标相关
+  showNavIcon?: boolean
+  navIcon?: string
+  navIconColor?: string
+  onNavIconClick?: () => void
+
+  // 操作按钮相关
+  actions?: Array<{
+    icon?: string
+    text?: string
+    color?: string
+    variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+    onClick: () => void
+  }>
+
+  // 抽屉菜单相关
+  showDrawer?: boolean
+  drawerWidth?: number | string
+
+  // 其他
   showNavigation?: boolean
+  elevation?: number | string
+  color?: string
+  height?: number | string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: '腾讯云',
+  titleIcon: 'mdi-cloud',
+  showTitle: true,
+  showNavIcon: true,
+  navIcon: 'mdi-menu',
+  navIconColor: 'white',
+  showDrawer: true,
+  drawerWidth: 240,
   showNavigation: true,
+  elevation: 2,
+  color: 'grey-darken-4',
+  height: 50,
+  actions: () => [],
 })
 
 const router = useRouter()
@@ -34,6 +72,15 @@ const navigateTo = (path: string) => {
   hoveredItem.value = null // Hide hover panel
 }
 
+// 处理导航图标点击
+const handleNavIconClick = () => {
+  if (props.onNavIconClick) {
+    props.onNavIconClick()
+  } else if (props.showDrawer) {
+    drawer.value = !drawer.value
+  }
+}
+
 // 添加收藏项的方法
 const addToFavorites = (item: any) => {
   menuStore.addToFavorites(item)
@@ -51,42 +98,66 @@ const handleMouseEnter = (itemId: string) => {
 
 <template>
   <!-- 头部导航栏 -->
-  <v-app-bar app elevation="2" color="grey-darken-4" dark height="50">
-    <!-- 抽屉菜单按钮 -->
-    <v-btn icon @click="drawer = !drawer" class="mr-2" color="white" variant="text">
-      <v-icon>{{ drawer ? 'mdi-close' : 'mdi-menu' }}</v-icon>
-    </v-btn>
+  <v-app-bar app :elevation="elevation" :color="color" dark :height="height">
+    <!-- 导航图标 -->
+    <v-app-bar-nav-icon
+      v-if="showNavIcon"
+      @click="handleNavIconClick"
+      :color="navIconColor"
+      variant="text"
+      class="mr-2"
+    >
+      <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
+    </v-app-bar-nav-icon>
 
-    <v-app-bar-title class="text-h6">
-      <v-icon class="mr-2" color="white">mdi-cloud</v-icon>
+    <!-- 标题 -->
+    <v-app-bar-title v-if="showTitle" class="text-h6">
+      <v-icon v-if="titleIcon" class="mr-2" color="white">{{ titleIcon }}</v-icon>
       {{ title }}
     </v-app-bar-title>
 
     <v-spacer></v-spacer>
 
-    <!-- 导航菜单 -->
-    <template v-if="showNavigation">
-      <v-btn
-        @click="navigateTo('/')"
-        variant="text"
-        prepend-icon="mdi-home"
-        class="mx-1"
-        color="white"
-      >
-        控制台
-      </v-btn>
-    </template>
+    <!-- 操作按钮 -->
+    <v-app-bar-actions>
+      <!-- 默认导航菜单 -->
+      <template v-if="showNavigation">
+        <v-btn
+          @click="navigateTo('/')"
+          variant="text"
+          prepend-icon="mdi-home"
+          class="mx-1"
+          color="white"
+        >
+          控制台
+        </v-btn>
+      </template>
+
+      <!-- 自定义操作按钮 -->
+      <template v-for="(action, index) in actions" :key="index">
+        <v-btn
+          @click="action.onClick"
+          :variant="action.variant || 'text'"
+          :prepend-icon="action.icon"
+          :color="action.color || 'white'"
+          class="mx-1"
+        >
+          {{ action.text }}
+        </v-btn>
+      </template>
+    </v-app-bar-actions>
   </v-app-bar>
 
   <!-- 抽屉菜单 -->
   <v-navigation-drawer
+    v-if="showDrawer"
     v-model="drawer"
     app
     temporary
     color="grey-darken-4"
     dark
     class="drawer-container"
-    width="240"
+    :width="drawerWidth"
   >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 最近访问页面 -->
