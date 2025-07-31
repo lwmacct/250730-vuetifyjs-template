@@ -146,7 +146,11 @@ const handleMouseEnter = (itemId: string) => {
   >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面 -->
-      <AppHeaderAllPages :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
+      <AppHeaderAllPages
+        :hovered-item="hoveredItem"
+        :on-mouse-enter="handleMouseEnter"
+        :on-navigate="navigateTo"
+      />
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
 
       <!-- 最近访问 -->
