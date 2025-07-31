@@ -92,7 +92,7 @@ import AppFooter from '@/components/AppFooter.vue'
     </v-main>
 
     <!-- 使用通用页脚组件 -->
-    <AppFooter :fixed="false" />
+    <AppFooter />
   </v-app>
 </template>
 

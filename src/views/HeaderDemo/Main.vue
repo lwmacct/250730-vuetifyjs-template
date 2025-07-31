@@ -137,7 +137,7 @@ const handleCustomNavClick = () => {
       </v-container>
     </v-main>
 
-    <AppFooter :fixed="false" />
+    <AppFooter />
   </v-app>
 </template>
 

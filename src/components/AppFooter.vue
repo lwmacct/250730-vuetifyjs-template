@@ -8,7 +8,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   showLinks: true,
   customText: '© 2024 Vue + Vuetify 演示应用',
-  fixed: false,
+  fixed: false, // 默认使用正常文档流模式，避免滚动条问题
 })
 </script>
 

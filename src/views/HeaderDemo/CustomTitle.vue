@@ -53,7 +53,7 @@ import AppFooter from '@/components/AppFooter.vue'
       </v-container>
     </v-main>
 
-    <AppFooter :fixed="false" />
+    <AppFooter />
   </v-app>
 </template>
 

@@ -97,7 +97,7 @@ const customActions = [
       </v-container>
     </v-main>
 
-    <AppFooter :fixed="false" />
+    <AppFooter />
   </v-app>
 </template>
 

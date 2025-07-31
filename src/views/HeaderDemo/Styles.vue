@@ -297,7 +297,7 @@ const switchTheme = (theme: any) => {
     </v-main>
 
     <!-- 页脚在正常文档流中 -->
-    <AppFooter :fixed="false" />
+    <AppFooter />
   </v-app>
 </template>
 
