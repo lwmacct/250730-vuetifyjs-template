@@ -36,7 +36,7 @@ const isItemFavorite = (path: string) => {
     >
       <!-- 分类标题 -->
       <div class="category-header">
-        <v-icon size="small" color="blue-lighten-2" class="mr-2">
+        <v-icon size="small" color="white" class="mr-2">
           {{ items[0]?.icon || 'mdi-folder' }}
         </v-icon>
         <span class="category-title">{{ category }}</span>
@@ -50,7 +50,7 @@ const isItemFavorite = (path: string) => {
         class="product-item"
       >
         <div class="product-item-content">
-          <v-icon size="small" color="grey-lighten-1" class="product-icon">
+          <v-icon size="small" color="white" class="product-icon">
             {{ item.icon }}
           </v-icon>
           <div class="product-text">
@@ -63,7 +63,8 @@ const isItemFavorite = (path: string) => {
             size="small"
             @click.stop="handleFavoriteClick(item)"
             class="product-favorite-btn"
-            :color="isItemFavorite(item.path) ? 'amber' : 'amber-lighten-1'"
+            :class="{ 'favorite-active': isItemFavorite(item.path) }"
+            color="white"
             variant="text"
           >
             <v-icon size="small">
@@ -83,10 +84,10 @@ const isItemFavorite = (path: string) => {
   min-height: 0;
   overflow-x: visible; /* 允许内容撑开宽度 */
   overflow-y: scroll;
-  background-color: #424242;
+  background-color: #212121; /* 与抽屉 grey-darken-4 保持一致 */
   /* 确保滚动条始终显示 */
   scrollbar-width: thin;
-  scrollbar-color: #757575 #424242;
+  scrollbar-color: #757575 #212121;
   /* 强制允许内容撑开 */
   min-width: fit-content;
 }
@@ -97,14 +98,14 @@ const isItemFavorite = (path: string) => {
 }
 
 .all-products-panel::-webkit-scrollbar-track {
-  background: #424242;
+  background: #212121;
   border-radius: 6px;
 }
 
 .all-products-panel::-webkit-scrollbar-thumb {
   background: #757575;
   border-radius: 6px;
-  border: 2px solid #424242;
+  border: 2px solid #212121;
 }
 
 .all-products-panel::-webkit-scrollbar-thumb:hover {
@@ -112,7 +113,7 @@ const isItemFavorite = (path: string) => {
 }
 
 .all-products-panel::-webkit-scrollbar-corner {
-  background: #424242;
+  background: #212121;
 }
 
 .category-section {
@@ -125,12 +126,12 @@ const isItemFavorite = (path: string) => {
   padding: 5px 15px 5px 15px;
   border-top: 1px solid #616161;
   border-bottom: 1px solid #616161;
-  background-color: #424242;
+  background-color: #212121;
 }
 
 .category-title {
   margin: 0;
-  color: #64b5f6;
+  color: white;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -193,14 +194,19 @@ const isItemFavorite = (path: string) => {
 }
 
 .product-item:hover {
-  background-color: #616161 !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
   transform: translateX(4px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .product-item:active {
-  background-color: #757575 !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
   transform: translateX(2px);
+}
+
+/* 收藏按钮样式 */
+.favorite-active {
+  color: #ffd700 !important;
 }
 
 /* 增强收藏按钮的悬浮效果 */
@@ -216,7 +222,7 @@ const isItemFavorite = (path: string) => {
 /* 确保在 Firefox 中滚动条可见 */
 @supports (scrollbar-color: auto) {
   .all-products-panel {
-    scrollbar-color: #757575 #424242;
+    scrollbar-color: #757575 #212121;
   }
 }
 
