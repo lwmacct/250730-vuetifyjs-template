@@ -145,32 +145,13 @@ const handleMouseEnter = (itemId: string) => {
     :width="drawerWidth"
   >
     <v-list color="transparent" nav class="drawer-list">
-      <!-- 最近访问 -->
-      <div class="menu-item-container" @mouseenter="handleMouseEnter('recent')">
-        <v-list-item
-          :active="hoveredItem === 'recent'"
-          color="white"
-          variant="text"
-          class="menu-item"
-          link
-        >
-          <template v-slot:prepend>
-            <v-icon color="white">mdi-clock</v-icon>
-          </template>
-          <v-list-item-title class="text-white"> 最近访问 </v-list-item-title>
-          <template v-slot:append>
-            <v-icon color="white" class="chevron-icon">mdi-chevron-right</v-icon>
-          </template>
-        </v-list-item>
-      </div>
-
       <!-- 所有页面 -->
-      <div class="menu-item-container" @mouseenter="handleMouseEnter('all-products')">
+      <div class="all-pages-section" @mouseenter="handleMouseEnter('all-products')">
         <v-list-item
           :active="hoveredItem === 'all-products'"
           color="white"
           variant="text"
-          class="menu-item"
+          class="all-pages-item"
           link
         >
           <template v-slot:prepend>
@@ -184,11 +165,6 @@ const handleMouseEnter = (itemId: string) => {
       </div>
 
       <!-- 分割线 -->
-      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
-
-      <!-- 收藏菜单组件 -->
-      <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
-
       <v-divider class="my-2" color="grey-lighten-1"></v-divider>
 
       <!-- 最近访问的页面 -->
@@ -223,6 +199,9 @@ const handleMouseEnter = (itemId: string) => {
           <v-chip color="grey" variant="outlined" size="small"> 暂无最近访问记录 </v-chip>
         </div>
       </div>
+      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
+      <!-- 收藏菜单组件 -->
+      <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
 
     <!-- 悬停显示的二级菜单面板 -->
@@ -302,6 +281,20 @@ const handleMouseEnter = (itemId: string) => {
 
 .menu-item:hover .chevron-icon {
   transform: translateX(4px);
+}
+
+/* 所有页面样式 */
+.all-pages-section {
+  margin-top: 0px;
+}
+
+.all-pages-item {
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.all-pages-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* 最近访问页面样式 */
