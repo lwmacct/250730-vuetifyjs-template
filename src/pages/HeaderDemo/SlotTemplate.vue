@@ -5,6 +5,15 @@ import { ref } from 'vue'
 const notificationCount = ref(3)
 const userStatus = ref('在线')
 const isSettingsOpen = ref(false)
+const userDrawer = ref(false)
+
+// 用户信息
+const userInfo = ref({
+  name: '张三',
+  email: 'zhangsan@example.com',
+  avatar: 'https://cdn.vuetifyjs.com/images/john.jpg',
+  role: '管理员',
+})
 
 // 事件处理函数
 const handleNotification = () => {
@@ -40,6 +49,20 @@ const handleSettings = () => {
     isSettingsOpen.value = false
   }, 2000)
 }
+
+const toggleUserDrawer = () => {
+  userDrawer.value = !userDrawer.value
+}
+
+const handleLogout = () => {
+  console.log('用户登出')
+  userDrawer.value = false
+}
+
+const handleProfile = () => {
+  console.log('查看个人资料')
+  userDrawer.value = false
+}
 </script>
 
 <template>
@@ -69,13 +92,116 @@ const handleSettings = () => {
     </v-chip>
 
     <!-- 设置按钮 -->
-    <v-btn icon="mdi-cog" variant="text" color="white" @click="handleSettings">
+    <v-btn icon="mdi-cog" variant="text" color="white" class="mr-2" @click="handleSettings">
       <v-icon>mdi-cog</v-icon>
       <v-tooltip activator="parent" location="bottom"> 系统设置 </v-tooltip>
     </v-btn>
+
+    <!-- 用户头像 - 最右侧 -->
+    <v-btn icon variant="text" color="white" @click="toggleUserDrawer" class="user-avatar-btn">
+      <v-avatar size="32" class="user-avatar">
+        <v-img :src="userInfo.avatar" alt="用户头像"></v-img>
+      </v-avatar>
+      <v-tooltip activator="parent" location="bottom"> 点击查看用户菜单 </v-tooltip>
+    </v-btn>
+
+    <!-- 用户抽屉 -->
+    <v-navigation-drawer
+      v-model="userDrawer"
+      location="right"
+      temporary
+      width="300"
+      class="user-drawer"
+    >
+      <v-list>
+        <!-- 用户信息头部 -->
+        <v-list-item class="user-info-header">
+          <template v-slot:prepend>
+            <v-avatar size="48">
+              <v-img :src="userInfo.avatar" alt="用户头像"></v-img>
+            </v-avatar>
+          </template>
+          <v-list-item-title class="text-h6">{{ userInfo.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{ userInfo.email }}</v-list-item-subtitle>
+          <v-list-item-subtitle class="text-caption">
+            <v-chip size="small" color="primary" variant="outlined">
+              {{ userInfo.role }}
+            </v-chip>
+          </v-list-item-subtitle>
+        </v-list-item>
+
+        <v-divider class="my-2"></v-divider>
+
+        <!-- 用户状态 -->
+        <v-list-item @click="handleUserStatus">
+          <template v-slot:prepend>
+            <v-icon>mdi-account-circle</v-icon>
+          </template>
+          <v-list-item-title>状态</v-list-item-title>
+          <v-list-item-subtitle>{{ userStatus }}</v-list-item-subtitle>
+        </v-list-item>
+
+        <!-- 个人资料 -->
+        <v-list-item @click="handleProfile">
+          <template v-slot:prepend>
+            <v-icon>mdi-account-edit</v-icon>
+          </template>
+          <v-list-item-title>个人资料</v-list-item-title>
+        </v-list-item>
+
+        <!-- 设置 -->
+        <v-list-item @click="handleSettings">
+          <template v-slot:prepend>
+            <v-icon>mdi-cog</v-icon>
+          </template>
+          <v-list-item-title>设置</v-list-item-title>
+        </v-list-item>
+
+        <v-divider class="my-2"></v-divider>
+
+        <!-- 登出 -->
+        <v-list-item @click="handleLogout" color="error">
+          <template v-slot:prepend>
+            <v-icon color="error">mdi-logout</v-icon>
+          </template>
+          <v-list-item-title class="text-error">登出</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
 <style scoped>
-/* 插槽模板样式 */
+.user-avatar-btn {
+  margin-left: auto; /* 推到最右侧 */
+}
+
+.user-avatar {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.user-avatar:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.user-drawer {
+  z-index: 1000;
+}
+
+.user-info-header {
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.user-info-header .v-list-item-title {
+  color: white;
+  font-weight: 600;
+}
+
+.user-info-header .v-list-item-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
 </style>

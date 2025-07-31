@@ -20,7 +20,8 @@ import SlotTemplate from './SlotTemplate.vue'
             <h1 class="text-h3 mb-6">插槽方式自定义内容</h1>
             <p class="text-body-1 mb-6">
               使用插槽方式可以完全自定义导航栏右侧的内容，支持完整的 Vue
-              组件功能，包括响应式数据、事件处理、状态管理等。
+              组件功能，包括响应式数据、事件处理、状态管理等。本示例展示了类似 GitHub
+              的用户头像和抽屉功能。
             </p>
           </v-col>
         </v-row>
@@ -41,22 +42,33 @@ import SlotTemplate from './SlotTemplate.vue'
 &lt;script setup lang="ts"&gt;
 import { ref } from 'vue'
 
-const notificationCount = ref(3)
-const userStatus = ref('在线')
+const userDrawer = ref(false)
+const userInfo = ref({
+  name: '张三',
+  email: 'zhangsan@example.com',
+  avatar: 'https://cdn.vuetifyjs.com/images/john.jpg'
+})
 
-const handleNotification = () => {
-  notificationCount.value = Math.max(0, notificationCount.value - 1)
+const toggleUserDrawer = () => {
+  userDrawer.value = !userDrawer.value
 }
 &lt;/script&gt;
 
 &lt;template&gt;
   &lt;div class="d-flex align-center"&gt;
-    &lt;v-btn @click="handleNotification"&gt;
-      &lt;v-badge :content="notificationCount"&gt;
-        &lt;v-icon&gt;mdi-bell&lt;/v-icon&gt;
-      &lt;/v-badge&gt;
-      &lt;v-tooltip activator="parent"&gt;通知&lt;/v-tooltip&gt;
+    &lt;!-- 其他按钮 --&gt;
+    
+    &lt;!-- 用户头像 - 最右侧 --&gt;
+    &lt;v-btn @click="toggleUserDrawer" class="user-avatar-btn"&gt;
+      &lt;v-avatar size="32"&gt;
+        &lt;v-img :src="userInfo.avatar"&gt;&lt;/v-img&gt;
+      &lt;/v-avatar&gt;
     &lt;/v-btn&gt;
+
+    &lt;!-- 用户抽屉 --&gt;
+    &lt;v-navigation-drawer v-model="userDrawer" location="right"&gt;
+      &lt;!-- 用户信息 --&gt;
+    &lt;/v-navigation-drawer&gt;
   &lt;/div&gt;
 &lt;/template&gt;</code></pre>
               </v-card-text>
@@ -75,6 +87,8 @@ const handleNotification = () => {
                   <li>✅ 动态内容更新</li>
                   <li>✅ 组件化设计，易于复用</li>
                   <li>✅ 简单可靠，易于维护</li>
+                  <li>✅ GitHub 风格的用户头像</li>
+                  <li>✅ 右侧抽屉菜单</li>
                 </ul>
               </v-card-text>
             </v-card>
@@ -93,6 +107,8 @@ const handleNotification = () => {
                 <li>点击用户按钮：切换用户状态（在线/忙碌）</li>
                 <li>点击用户状态芯片：循环切换状态（在线→忙碌→离开→勿扰）</li>
                 <li>点击设置按钮：模拟设置面板切换</li>
+                <li><strong>点击用户头像：打开右侧抽屉菜单（类似 GitHub）</strong></li>
+                <li>抽屉中包含：用户信息、状态、个人资料、设置、登出等功能</li>
               </ul>
             </v-alert>
           </v-col>
