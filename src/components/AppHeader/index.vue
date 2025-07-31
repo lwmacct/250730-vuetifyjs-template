@@ -160,31 +160,6 @@ const handleMouseEnter = (itemId: string) => {
       <!-- 收藏菜单组件 -->
       <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
     </v-list>
-  </v-navigation-drawer>
-
-  <!-- 抽屉菜单 -->
-  <v-navigation-drawer
-    v-if="showDrawer"
-    v-model="drawer"
-    app
-    temporary
-    color="grey-darken-4"
-    dark
-    class="drawer-container"
-    :width="drawerWidth"
-  >
-    <v-list color="transparent" nav class="drawer-list">
-      <!-- 所有页面菜单项 -->
-      <AllPagesMenuItem :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
-      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
-
-      <!-- 最近访问菜单项 -->
-      <RecentPagesMenuItem :on-navigate="navigateTo" />
-      <v-divider class="my-2" color="grey-lighten-1"></v-divider>
-
-      <!-- 收藏菜单组件 -->
-      <FavoriteMenu :on-remove-from-favorites="removeFromFavorites" />
-    </v-list>
 
     <!-- 悬停显示的二级菜单面板 -->
     <div
@@ -210,8 +185,6 @@ const handleMouseEnter = (itemId: string) => {
 <style scoped>
 .drawer-container {
   position: relative;
-  /* 允许抽屉容器撑开以容纳悬停面板 */
-  overflow: visible;
 }
 
 :deep(.v-list-item__prepend) {
@@ -220,15 +193,6 @@ const handleMouseEnter = (itemId: string) => {
 
 .drawer-list {
   padding-top: 0;
-}
-
-/* 覆盖 Vuetify 抽屉的默认样式，允许内容撑开 */
-:deep(.v-navigation-drawer) {
-  overflow: visible !important;
-}
-
-:deep(.v-navigation-drawer__content) {
-  overflow: visible !important;
 }
 
 .menu-item-container {
@@ -273,16 +237,15 @@ const handleMouseEnter = (itemId: string) => {
 
 /* 悬停面板样式 */
 .hover-panel {
-  position: absolute; /* 恢复 absolute 定位 */
+  position: absolute;
   left: 100%; /* 相对于抽屉的右边缘 */
   top: 0; /* 相对于抽屉的顶部 */
-  min-width: 240px; /* 最小宽度 */
-  width: auto; /* 允许自动撑开 */
+  min-width: 300px; /* 最小宽度 */
   max-width: 800px; /* 进一步增加最大宽度限制 */
   height: 100%; /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
   box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
-  overflow: visible; /* 允许内容撑开 */
+  overflow: visible;
 }
 </style>
