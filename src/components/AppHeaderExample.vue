@@ -87,6 +87,15 @@ const handleCustomNavClick = () => {
         <CustomHeaderContent />
       </template>
     </AppHeader>
+
+    <!-- 示例 8: 直接传入组件对象 -->
+    <h3>直接传入组件对象</h3>
+    <AppHeader
+      :custom-content="CustomHeaderContent"
+      navIcon="mdi-menu"
+      navIconColor="white"
+      color="success"
+    />
   </div>
 </template>
 
