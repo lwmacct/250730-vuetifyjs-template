@@ -128,7 +128,7 @@ const handleCustomNavClick = () => {
           </v-col>
         </v-row>
 
-        <v-alert type="info" variant="tonal" class="mt-4">
+        <v-alert type="info" variant="tonal" class="mt-4 mb-6">
           <template v-slot:prepend>
             <v-icon>mdi-information</v-icon>
           </template>
@@ -137,7 +137,7 @@ const handleCustomNavClick = () => {
       </v-container>
     </v-main>
 
-    <AppFooter />
+    <AppFooter :fixed="false" />
   </v-app>
 </template>
 

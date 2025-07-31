@@ -46,7 +46,7 @@ import AppFooter from '@/components/AppFooter.vue'
                     subtitle="周一至周五 9:00-18:00"
                   ></v-list-item>
                 </v-list>
-                <v-alert type="info" variant="tonal" class="mt-4">
+                <v-alert type="info" variant="tonal" class="mt-4 mb-6">
                   <template v-slot:prepend>
                     <v-icon>mdi-information</v-icon>
                   </template>
@@ -60,7 +60,7 @@ import AppFooter from '@/components/AppFooter.vue'
     </v-main>
 
     <!-- 使用通用页脚组件 -->
-    <AppFooter />
+    <AppFooter :fixed="false" />
   </v-app>
 </template>
 

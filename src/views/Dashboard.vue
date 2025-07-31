@@ -98,7 +98,7 @@ import AppFooter from '@/components/AppFooter.vue'
           </v-col>
         </v-row>
 
-        <v-alert type="success" variant="tonal" class="mt-4">
+        <v-alert type="success" variant="tonal" class="mt-4 mb-6">
           <template v-slot:prepend>
             <v-icon>mdi-check-circle</v-icon>
           </template>
@@ -108,7 +108,7 @@ import AppFooter from '@/components/AppFooter.vue'
     </v-main>
 
     <!-- 使用通用页脚组件 -->
-    <AppFooter />
+    <AppFooter :fixed="false" />
   </v-app>
 </template>
 
