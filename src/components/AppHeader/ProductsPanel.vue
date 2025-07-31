@@ -143,21 +143,19 @@ const isItemFavorite = (path: string) => {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   padding: 8px 16px;
-  /* 允许内容撑开宽度 */
+  /* 移除可能导致跳动的设置 */
   min-width: fit-content;
   width: auto;
-  /* 强制撑开 */
-  overflow: visible;
+  /* 移除 overflow: visible，避免布局不稳定 */
 }
 
 .product-item-content {
   display: flex;
-  align-items: center; /* 修复对齐问题 */
+  align-items: center;
   gap: 12px;
   width: 100%;
   min-width: 0;
-  /* 强制撑开 */
-  overflow: visible;
+  /* 移除 overflow: visible */
 }
 
 .product-icon {
@@ -168,7 +166,7 @@ const isItemFavorite = (path: string) => {
 .product-text {
   flex: 1;
   min-width: 0;
-  overflow: visible;
+  /* 移除 overflow: visible */
 }
 
 .product-title {
@@ -176,7 +174,7 @@ const isItemFavorite = (path: string) => {
   line-height: 1.4;
   white-space: normal;
   word-wrap: break-word;
-  overflow: visible;
+  /* 移除 overflow: visible */
   margin-bottom: 2px;
 }
 
@@ -184,7 +182,7 @@ const isItemFavorite = (path: string) => {
   line-height: 1.3;
   white-space: normal;
   word-wrap: break-word;
-  overflow: visible;
+  /* 移除 overflow: visible */
   opacity: 0.8;
 }
 
@@ -195,13 +193,13 @@ const isItemFavorite = (path: string) => {
 
 .product-item:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
-  transform: translateX(4px);
+  /* 移除 transform: translateX(4px)，避免跳动 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .product-item:active {
   background-color: rgba(255, 255, 255, 0.2) !important;
-  transform: translateX(2px);
+  /* 移除 transform: translateX(2px)，避免跳动 */
 }
 
 /* 收藏按钮样式 */
@@ -209,14 +207,14 @@ const isItemFavorite = (path: string) => {
   color: #ffd700 !important;
 }
 
-/* 增强收藏按钮的悬浮效果 */
+/* 优化收藏按钮的悬浮效果，移除transform避免跳动 */
 .product-item:hover .v-btn {
   background-color: rgba(255, 193, 7, 0.2) !important;
 }
 
 .product-item:hover .v-btn:hover {
   background-color: rgba(255, 193, 7, 0.3) !important;
-  transform: scale(1.1);
+  /* 移除 transform: scale(1.1)，避免跳动 */
 }
 
 /* 确保在 Firefox 中滚动条可见 */
