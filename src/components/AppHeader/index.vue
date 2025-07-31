@@ -240,7 +240,9 @@ const handleMouseEnter = (itemId: string) => {
   position: absolute;
   left: 100%; /* 相对于抽屉的右边缘 */
   top: 0; /* 相对于抽屉的顶部 */
-  width: 300px;
+  min-width: 240px; /* 最小宽度 */
+  width: auto; /* 允许自动撑开 */
+  max-width: 500px; /* 最大宽度限制 */
   height: 100%; /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;

@@ -85,7 +85,7 @@ const isItemFavorite = (path: string) => {
   width: 100%;
   height: 100%;
   min-height: 0;
-  overflow-x: hidden;
+  overflow-x: visible; /* 允许内容撑开宽度 */
   overflow-y: scroll;
   background-color: #424242;
   /* 确保滚动条始终显示 */
