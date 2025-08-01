@@ -106,7 +106,6 @@ const handleMouseEnter = (itemId: string) => {
     </v-app-bar-nav-icon>
     <!-- 菜单按钮分割线 -->
     <v-divider vertical color="white"></v-divider>
-
     <!-- 自定义内容或默认内容 -->
     <template v-if="useCustomContent">
       <!-- 插槽：自定义导航栏右侧内容 -->
