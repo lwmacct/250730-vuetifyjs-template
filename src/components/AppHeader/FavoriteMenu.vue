@@ -54,8 +54,8 @@ const handleDrop = (event: DragEvent, targetItem: any) => {
     const toIndex = favoriteItems.findIndex((item) => item.path === targetItem.path)
 
     if (fromIndex !== -1 && toIndex !== -1) {
-      // TODO: 实现拖拽排序功能
-      console.log('拖拽排序功能待实现')
+      // 实现拖拽排序功能
+      routeMenuStore.reorderFavorites(fromIndex, toIndex)
     }
   }
 
@@ -91,13 +91,7 @@ const handleDragEnd = () => {
         @drop="handleDrop($event, product)"
         @dragend="handleDragEnd"
       >
-        <v-list-item
-          @click="handleClick(product)"
-          class="menu-item"
-          color="white"
-          variant="text"
-          link
-        >
+        <v-list-item @click="handleClick(product)" class="menu-item" color="white" variant="text">
           <template v-slot:prepend>
             <v-icon color="white">{{ product.icon }}</v-icon>
           </template>

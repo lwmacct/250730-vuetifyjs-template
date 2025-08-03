@@ -38,9 +38,7 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
   const router = useRouter()
 
   // 用户状态存储（持久化）
-  const userFavorites = ref<Set<string>>(
-    new Set(['/', '/dashboard', '/header-demo', '/footer-demo']),
-  )
+  const userFavorites = ref<string[]>(['/', '/dashboard', '/header-demo', '/footer-demo'])
   const userAccessHistory = ref<Map<string, number>>(
     new Map([
       ['/', Date.now() - 1000 * 60 * 1], // 1分钟前
@@ -70,7 +68,7 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
         priority: (meta.priority as number) || 999,
         showInMenu: (meta.showInMenu as boolean) !== false, // 默认显示
         requireAuth: (meta.requireAuth as boolean) === true,
-        isFavorite: userFavorites.value.has(route.path), // 从用户状态获取
+        isFavorite: userFavorites.value.includes(route.path), // 从用户状态获取
         lastAccessed: userAccessHistory.value.get(route.path), // 从用户状态获取
       }
 
@@ -111,7 +109,12 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
 
   // 收藏的菜单项
   const favoriteItems = computed(() => {
-    return allMenuItems.value.filter((item) => item.isFavorite)
+    const allFavorites = allMenuItems.value.filter((item) => item.isFavorite)
+
+    // 按照userFavorites的顺序返回收藏项
+    return userFavorites.value
+      .map((path) => allFavorites.find((item) => item.path === path))
+      .filter((item) => item !== undefined) as RouteMenuItem[]
   })
 
   // 最近访问的菜单项
@@ -124,16 +127,29 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
 
   // 切换收藏状态
   const toggleFavorite = (path: string) => {
-    if (userFavorites.value.has(path)) {
-      userFavorites.value.delete(path)
+    if (userFavorites.value.includes(path)) {
+      userFavorites.value = userFavorites.value.filter((p) => p !== path)
     } else {
-      userFavorites.value.add(path)
+      userFavorites.value.push(path)
     }
   }
 
   // 检查是否已收藏
   const isFavorite = (path: string) => {
-    return userFavorites.value.has(path)
+    return userFavorites.value.includes(path)
+  }
+
+  // 重新排序收藏项
+  const reorderFavorites = (fromIndex: number, toIndex: number) => {
+    const items = favoriteItems.value
+
+    if (fromIndex < 0 || fromIndex >= items.length || toIndex < 0 || toIndex >= items.length) {
+      return
+    }
+
+    // 直接操作favoriteOrder数组
+    const [movedPath] = userFavorites.value.splice(fromIndex, 1)
+    userFavorites.value.splice(toIndex, 0, movedPath)
   }
 
   // 记录访问时间
@@ -233,6 +249,7 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
     // 菜单操作方法
     toggleFavorite,
     isFavorite,
+    reorderFavorites,
     recordAccess,
     getMenuItemByPath,
     getMenuItemsByCategory,
