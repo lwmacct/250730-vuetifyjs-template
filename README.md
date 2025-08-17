@@ -45,3 +45,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Use Template
+
+```sh
+npx degit lwmacct/250730-vuetifyjs-console-menu.git#main my-project
+```
