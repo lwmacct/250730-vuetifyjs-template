@@ -1,58 +1,97 @@
-# HeaderDemo 文件夹
+# HeaderDemo 页面架构说明
 
-这个文件夹包含了 AppHeader 组件的演示页面。
-
-## 文件结构
+## 📁 目录结构
 
 ```
-src/pages/HeaderDemo/
-├── index.vue              # 入口文件，重定向到插槽演示页面
-├── Slot.vue               # 插槽方式演示
-├── SlotTemplate.vue       # 插槽模板组件
-├── Styles.vue             # 样式控制演示
-└── README.md             # 本说明文件
+pages/HeaderDemo/
+├── index.vue              # 主页面组件
+├── types.ts              # 📋 类型定义
+├── stores/
+│   └── index.ts          # 📦 状态管理
+├── components/           # 🧩 页面专用组件
+│   ├── SlotTemplate.vue  # 插槽模板组件
+│   ├── SlotDemo.vue      # 插槽演示说明
+│   └── StylesDemo.vue    # 样式演示组件
+└── README.md            # 📖 本说明文档
 ```
 
-## 演示页面说明
+## 🎯 重构说明
 
-### Slot.vue
+### 重构前（多个单独文件）
 
-- **路径**: `/header-demo/slot`
-- **功能**: 展示插槽方式自定义内容
-- **特点**: 提供最大的自由度，支持完整的 Vue 组件功能
+```
+pages/HeaderDemo/
+├── index.vue        # 重定向文件
+├── Slot.vue         # 插槽演示
+├── SlotTemplate.vue # 插槽模板
+├── Styles.vue       # 样式演示
+└── README.md        # 说明文档
+```
 
-### Styles.vue
+### 重构后（标准页面级结构）
 
-- **路径**: `/header-demo/styles`
-- **功能**: 展示颜色、阴影、高度等样式控制
-- **特点**: 展示所有可控制的样式属性
+- ✅ **统一入口**: `index.vue` 作为唯一主页面
+- ✅ **状态管理**: `stores/index.ts` 管理演示状态
+- ✅ **类型安全**: `types.ts` 定义所有类型
+- ✅ **组件化**: 将演示功能拆分为可复用组件
 
-## 访问方式
+## 🧩 组件职责分工
 
-1. **通过菜单访问**：
-   - 抽屉菜单 → 全部云产品 → Header Demo → 选择具体演示
+### SlotTemplate.vue - 插槽模板组件
 
-2. **直接访问**：
-   - 插槽演示：`/header-demo/slot`
-   - 样式演示：`/header-demo/styles`
+- 完整的用户交互界面
+- 响应式数据和事件处理
+- 用户头像和抽屉功能
+- GitHub 风格的用户菜单
 
-## 路由配置
+### SlotDemo.vue - 插槽演示说明
 
-所有演示页面都使用动态导入，支持代码分割和懒加载：
+- 插槽功能介绍和说明
+- 使用方法和代码示例
+- 功能特性列表
+
+### StylesDemo.vue - 样式演示组件
+
+- 主题选择器界面
+- 样式配置实时预览
+- 插槽内容控制开关
+- 当前配置显示
+
+## 📦 状态管理策略
+
+### useHeaderDemoStore
 
 ```typescript
-{
-  path: '/header-demo/slot',
-  component: () => import('@/pages/HeaderDemo/Slot.vue')
-},
-{
-  path: '/header-demo/styles',
-  component: () => import('@/pages/HeaderDemo/Styles.vue')
-}
+// 核心状态
+currentMode: 'slot' | 'styles'
+useSlotContent: boolean
+currentStyle: HeaderStyleConfig
+
+// 演示数据
+examples: HeaderDemoExample[]
+styleThemes: StyleTheme[]
+userInfo: UserInfo
+
+// 主要方法
+switchMode(mode) - 切换演示模式
+toggleSlotContent() - 切换插槽内容
+switchTheme(theme) - 切换样式主题
+initialize() - 初始化状态
 ```
 
-## 维护说明
+## 🎨 设计优势
 
-- 新增演示页面时，请同时更新路由配置和菜单配置
-- 保持文件命名的一致性（简洁明了，避免重复前缀）
-- 每个演示页面都应该有清晰的代码示例和特性说明
+1. **模式切换**: 支持插槽和样式两种演示模式
+2. **实时预览**: 样式更改立即在头部反映
+3. **状态持久化**: 使用 localStorage 保存用户选择
+4. **类型安全**: 完整的 TypeScript 类型定义
+5. **组件复用**: 演示逻辑封装为独立组件
+
+## 🚀 扩展性
+
+- **添加新模式**: 在 `examples` 数组中添加新演示
+- **新增主题**: 在 `styleThemes` 中添加新样式
+- **扩展功能**: 在 Store 中添加新的状态和方法
+- **组件扩展**: 在 `components/` 目录下添加新组件
+
+这种结构使得头部组件的演示更加集中和易于管理，适合复杂的交互演示需求。
