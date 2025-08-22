@@ -213,10 +213,6 @@ const handleProfile = () => {
   gap: 8px;
 }
 
-.user-avatar-btn {
-  /* 用户头像按钮样式 */
-}
-
 .user-avatar {
   border: 2px solid rgba(255, 255, 255, 0.3);
   transition: all 0.2s ease;
