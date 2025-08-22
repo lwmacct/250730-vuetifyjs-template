@@ -17,29 +17,29 @@ export function useHomeData() {
       title: '响应式设计',
       icon: 'mdi-devices',
       description: ['适配各种设备尺寸', '流畅的移动端体验'],
-      color: 'success'
+      color: 'success',
     },
     {
       id: 'modern',
       title: '现代化 UI',
       icon: 'mdi-palette',
       description: ['Material Design 3', '美观的视觉设计'],
-      color: 'info'
+      color: 'info',
     },
     {
       id: 'typescript',
       title: '类型安全',
       icon: 'mdi-shield-check',
       description: ['TypeScript 支持', '编译时错误检查'],
-      color: 'warning'
+      color: 'warning',
     },
     {
       id: 'component',
       title: '组件化架构',
       icon: 'mdi-view-module',
       description: ['可复用组件', '模块化设计'],
-      color: 'error'
-    }
+      color: 'error',
+    },
   ])
 
   // 技术栈数据
@@ -49,29 +49,29 @@ export function useHomeData() {
       title: 'Vue 3 Composition API',
       icon: 'mdi-vuejs',
       description: ['最新的 Vue 3 特性', '组合式 API'],
-      color: 'success'
+      color: 'success',
     },
     {
       id: 'vuetify',
       title: 'Vuetify 3',
       icon: 'mdi-material-design',
       description: ['Material Design', '丰富的组件库'],
-      color: 'info'
+      color: 'info',
     },
     {
       id: 'ts',
       title: 'TypeScript',
       icon: 'mdi-language-typescript',
       description: ['类型安全', '更好的开发体验'],
-      color: 'primary'
+      color: 'primary',
     },
     {
       id: 'router',
       title: 'Vue Router 4',
       icon: 'mdi-router',
       description: ['现代化路由', '动态路由管理'],
-      color: 'secondary'
-    }
+      color: 'secondary',
+    },
   ])
 
   // 头部操作按钮
@@ -84,7 +84,7 @@ export function useHomeData() {
       onClick: () => {
         console.log('通知按钮点击')
         // TODO: 实现通知功能
-      }
+      },
     },
     {
       icon: 'mdi-account',
@@ -94,14 +94,14 @@ export function useHomeData() {
       onClick: () => {
         console.log('用户按钮点击')
         // TODO: 跳转到用户中心
-      }
-    }
+      },
+    },
   ])
 
   return {
     features: computed(() => features.value),
     techStack: computed(() => techStack.value),
-    headerActions
+    headerActions,
   }
 }
 
@@ -128,6 +128,6 @@ export function useHomeStats() {
     visitCount: computed(() => visitCount.value),
     lastVisitTime: computed(() => lastVisitTime.value),
     formattedLastVisit,
-    updateVisitStats
+    updateVisitStats,
   }
 }

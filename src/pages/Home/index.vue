@@ -1,14 +1,26 @@
 <script setup lang="ts">
 // 首页组件
+import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useHomeStore } from './stores/index'
 
 const routeMenuStore = useRouteMenuStore()
+const homeStore = useHomeStore()
 
 // 从路由meta中获取信息
 const pageIcon = routeMenuStore.useRouteIcon('mdi-home')
 const pageTitle = routeMenuStore.useRouteTitle('首页')
+
+// 页面生命周期
+onMounted(() => {
+  homeStore.initialize()
+})
+
+onUnmounted(() => {
+  homeStore.saveToLocalStorage()
+})
 </script>
 
 <template>
@@ -18,18 +30,18 @@ const pageTitle = routeMenuStore.useRouteTitle('首页')
     :titleIcon="pageIcon"
     :actions="[
       {
+        icon: 'mdi-chart-line',
+        text: '统计',
+        color: homeStore.showStatistics ? 'success' : 'grey',
+        variant: 'text',
+        onClick: () => homeStore.toggleStatistics(),
+      },
+      {
         icon: 'mdi-bell',
         text: '通知',
         color: 'warning',
         variant: 'text',
         onClick: () => console.log('通知按钮点击'),
-      },
-      {
-        icon: 'mdi-account',
-        text: '用户',
-        color: 'info',
-        variant: 'text',
-        onClick: () => console.log('用户按钮点击'),
       },
     ]"
   />
@@ -84,11 +96,42 @@ const pageTitle = routeMenuStore.useRouteTitle('首页')
                   </v-card>
                 </v-col>
               </v-row>
-              <v-alert type="info" variant="tonal" class="mt-4 mb-6">
+              <!-- 页面级 Store 演示 -->
+              <v-alert
+                v-if="homeStore.showStatistics"
+                type="info"
+                variant="tonal"
+                class="mt-4 mb-6"
+              >
                 <template v-slot:prepend>
-                  <v-icon>mdi-information</v-icon>
+                  <v-icon>mdi-database</v-icon>
                 </template>
-                当前页面：首页 (/) - 现已移动到 pages/Home/
+                <div class="text-body-2">
+                  <div><strong>📊 页面级 Store 演示:</strong></div>
+                  <div>• 访问次数: {{ homeStore.stats.visitCount }}</div>
+                  <div>• 上次访问: {{ homeStore.formattedLastVisit }}</div>
+                  <div>• 本次会话: {{ homeStore.sessionDuration }}</div>
+                  <div class="text-caption mt-2 text-medium-emphasis">
+                    💡 这些数据由页面级 Store 管理，支持本地存储持久化
+                  </div>
+                </div>
+              </v-alert>
+
+              <!-- 页面信息 -->
+              <v-alert type="success" variant="tonal" class="mt-4 mb-6">
+                <template v-slot:prepend>
+                  <v-icon>mdi-folder-outline</v-icon>
+                </template>
+                <div class="text-body-2">
+                  <div><strong>🗂️ 页面级架构演示:</strong></div>
+                  <div>• 路径: <code>pages/Home/</code></div>
+                  <div>• Store: <code>pages/Home/stores/index.ts</code></div>
+                  <div>• 类型: <code>pages/Home/types.ts</code></div>
+                  <div>• 组件: <code>pages/Home/components/</code></div>
+                  <div class="text-caption mt-2 text-medium-emphasis">
+                    💡 点击头部"统计"按钮可切换显示状态
+                  </div>
+                </div>
               </v-alert>
             </v-card-text>
           </v-card>
