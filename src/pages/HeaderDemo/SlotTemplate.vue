@@ -38,7 +38,10 @@ const handleUserStatus = () => {
   const statuses = ['在线', '忙碌', '离开', '勿扰']
   const currentIndex = statuses.indexOf(userStatus.value)
   const nextIndex = (currentIndex + 1) % statuses.length
-  userStatus.value = statuses[nextIndex]
+  const newStatus = statuses[nextIndex]
+  if (newStatus) {
+    userStatus.value = newStatus
+  }
 }
 
 const handleSettings = () => {

@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/pages/Home/index.vue'),
       meta: {
         title: '首页',
         icon: 'mdi-home',

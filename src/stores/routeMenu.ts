@@ -149,7 +149,9 @@ export const useRouteMenuStore = defineStore('routeMenu', () => {
 
     // 直接操作favoriteOrder数组
     const [movedPath] = userFavorites.value.splice(fromIndex, 1)
-    userFavorites.value.splice(toIndex, 0, movedPath)
+    if (movedPath) {
+      userFavorites.value.splice(toIndex, 0, movedPath)
+    }
   }
 
   // 记录访问时间

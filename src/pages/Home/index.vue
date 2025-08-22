@@ -88,7 +88,7 @@ const pageTitle = routeMenuStore.useRouteTitle('首页')
                 <template v-slot:prepend>
                   <v-icon>mdi-information</v-icon>
                 </template>
-                当前页面：首页 (/)
+                当前页面：首页 (/) - 现已移动到 pages/Home/
               </v-alert>
             </v-card-text>
           </v-card>
