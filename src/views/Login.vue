@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import AppFooter from '@/components/AppFooter.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
 
 const router = useRouter()
 const email = ref('')

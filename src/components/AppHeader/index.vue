@@ -2,35 +2,11 @@
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { useRouteMenuStore } from '@/stores/routeMenu'
-import FavoriteMenu from './FavoriteMenu.vue'
-import ProductsPanel from './ProductsPanel.vue'
-import AllPagesMenuItem from './AllPagesMenuItem.vue'
-import RecentPagesMenuItem from './RecentPagesMenuItem.vue'
-
-interface Props {
-  // 标题相关
-  title?: string
-  titleIcon?: string
-  showTitle?: boolean
-
-  // 导航图标相关
-  showNavIcon?: boolean
-  navIcon?: string
-  navIconColor?: string
-  onNavIconClick?: () => void
-
-  // 抽屉菜单相关
-  showDrawer?: boolean
-  drawerWidth?: number | string
-
-  // 其他
-  elevation?: number | string
-  color?: string
-  height?: number | string
-
-  // 自定义内容相关
-  useCustomContent?: boolean
-}
+import FavoriteMenu from './components/FavoriteMenu.vue'
+import ProductsPanel from './components/ProductsPanel.vue'
+import AllPagesMenuItem from './components/AllPagesMenuItem.vue'
+import RecentPagesMenuItem from './components/RecentPagesMenuItem.vue'
+import type { Props } from './types'
 
 const props = withDefaults(defineProps<Props>(), {
   title: '控制台',

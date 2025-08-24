@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 仪表板页面组件
 import AppHeader from '@/components/AppHeader/index.vue'
-import AppFooter from '@/components/AppFooter.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
 </script>
 
 <template>

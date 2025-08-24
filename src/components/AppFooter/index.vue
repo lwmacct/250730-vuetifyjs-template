@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface Props {
-  showLinks?: boolean
-  customText?: string
-  fixed?: boolean
-}
+import type { Props } from './types'
 
 const props = withDefaults(defineProps<Props>(), {
   showLinks: true,

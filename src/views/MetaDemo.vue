@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 路由Meta演示页面
 import AppHeader from '@/components/AppHeader/index.vue'
-import AppFooter from '@/components/AppFooter.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
 import { useRouteMenuStore } from '@/stores/routeMenu'
 
 const routeMenuStore = useRouteMenuStore()

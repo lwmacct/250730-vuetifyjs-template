@@ -2,7 +2,7 @@
 // 头部演示主页面
 import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader/index.vue'
-import AppFooter from '@/components/AppFooter.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
 import { useRouteMenuStore } from '@/stores/routeMenu'
 import { useHeaderDemoStore } from './stores/index'
 import SlotTemplate from './components/SlotTemplate.vue'
