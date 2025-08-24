@@ -67,12 +67,12 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('@/views/Dashboard.vue'),
+      component: () => import('@/pages/Dashboard/index.vue'),
       meta: {
         title: '仪表板',
         icon: 'mdi-view-dashboard',
-        description: '系统仪表板，展示关键指标',
-        keywords: ['仪表板', 'dashboard', '统计'],
+        description: '系统仪表板，展示关键指标和实时数据',
+        keywords: ['仪表板', 'dashboard', '统计', '数据', '监控'],
         category: '基础页面',
         priority: 3,
         showInMenu: true,
