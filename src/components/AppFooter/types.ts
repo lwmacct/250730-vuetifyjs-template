@@ -12,6 +12,8 @@ export interface Props {
   customText?: string
   /** 是否固定在底部 */
   fixed?: boolean
+  /** 是否居中对齐 */
+  centered?: boolean
 }
 
 /**

@@ -5,6 +5,7 @@ const props = withDefaults(defineProps<Props>(), {
   showLinks: true,
   customText: '© 2024 Vue + Vuetify 演示应用',
   fixed: false, // 默认使用正常文档流模式
+  centered: true, // 默认居中对齐
 })
 </script>
 
@@ -12,11 +13,19 @@ const props = withDefaults(defineProps<Props>(), {
   <v-footer
     :app="fixed"
     color="grey-darken-3"
-    class="text-center"
-    :class="{ 'footer-sticky': fixed, 'footer-normal': !fixed }"
+    class="footer-container"
+    :class="{
+      'footer-sticky': fixed,
+      'footer-normal': !fixed,
+      'text-center': centered,
+      'text-left': !centered,
+    }"
   >
-    <div class="d-flex justify-center align-center py-2">
-      <span class="text-body-2 text-grey-lighten-1">
+    <div
+      class="py-2 w-100"
+      :class="centered ? 'd-flex justify-center align-center' : 'd-flex align-center'"
+    >
+      <span class="text-body-2 text-grey-lighten-1" :class="centered ? 'footer-content' : ''">
         {{ customText }}
         <template v-if="showLinks">
           |
@@ -69,12 +78,30 @@ const props = withDefaults(defineProps<Props>(), {
   max-height: 48px !important;
 }
 
+/* 页脚容器居中对齐 */
+.footer-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
 /* 优化页脚内容布局 */
 .v-footer {
   padding: 0;
   height: 48px !important;
   min-height: 48px !important;
   max-height: 48px !important;
+}
+
+/* 页脚内容居中 */
+.footer-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* 减少按钮间距 */

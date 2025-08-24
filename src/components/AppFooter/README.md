@@ -56,6 +56,7 @@ components/AppFooter/
 | `showLinks`  | `boolean` | `true`                             | 是否显示外部链接   |
 | `customText` | `string`  | `'© 2024 Vue + Vuetify 演示应用'` | 自定义文本内容     |
 | `fixed`      | `boolean` | `false`                            | 是否固定在页面底部 |
+| `centered`   | `boolean` | `true`                             | 是否居中对齐       |
 
 ## 🚀 使用方式
 
@@ -85,4 +86,19 @@ footerStore.updateConfig({
   defaultText: '© 2024 自定义应用',
   defaultHeight: 60,
 })
+```
+
+### 居中对齐控制
+
+```vue
+<template>
+  <!-- 默认居中对齐 -->
+  <AppFooter />
+
+  <!-- 强制居中对齐 -->
+  <AppFooter :centered="true" />
+
+  <!-- 左对齐 -->
+  <AppFooter :centered="false" />
+</template>
 ```
