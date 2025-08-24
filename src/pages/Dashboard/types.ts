@@ -57,3 +57,47 @@ export interface HeaderAction {
   variant: string
   onClick: () => void
 }
+
+/**
+ * 通知接口
+ */
+export interface Notification {
+  id: string
+  title: string
+  message: string
+  type: 'system' | 'user' | 'alert'
+  priority: 'low' | 'normal' | 'high'
+  icon: string
+  timestamp: Date
+  isRead: boolean
+  actionUrl?: string
+}
+
+/**
+ * 图表数据接口
+ */
+export interface ChartDataItem {
+  label: string
+  value: number
+  color?: string
+}
+
+/**
+ * 仪表盘布局配置接口
+ */
+export interface DashboardLayout {
+  showStats: boolean
+  showChart: boolean
+  showSystemMonitor: boolean
+  showNotifications: boolean
+  showActivities: boolean
+  showQuickActions: boolean
+  gridLayout: {
+    stats: { cols: number; order: number }
+    chart: { cols: number; order: number }
+    systemMonitor: { cols: number; order: number }
+    notifications: { cols: number; order: number }
+    activities: { cols: number; order: number }
+    quickActions: { cols: number; order: number }
+  }
+}
