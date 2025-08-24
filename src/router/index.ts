@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { setPageTitle } from '@/utils'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -132,6 +133,18 @@ const router = createRouter({
       redirect: '/',
     },
   ],
+})
+
+// 全局路由守卫 - 自动更新页面标题
+router.beforeEach((to, from, next) => {
+  // 获取路由的 meta.title
+  const title = to.meta?.title as string
+
+  // 使用页面标题管理工具设置标题
+  setPageTitle(title)
+
+  // 继续路由导航
+  next()
 })
 
 export default router

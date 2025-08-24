@@ -146,7 +146,38 @@ headerStore.setHoveredItem('all-products')
 
 // 更新配置
 headerStore.updateDrawerConfig({ width: 300 })
+
+// 页面标题管理
+headerStore.setCurrentPageTitle('自定义标题')
+headerStore.setPageTitleByPath('/dashboard')
+
+// 路由菜单操作
+headerStore.toggleFavorite('/dashboard')
+const recentPages = headerStore.recentItems
 ```
+
+### 页面标题管理
+
+AppHeader Store 集成了页面标题管理功能，可以方便地控制浏览器标题栏显示：
+
+```typescript
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
+
+const headerStore = useAppHeaderStore()
+
+// 设置当前页面标题
+headerStore.setCurrentPageTitle('自定义标题')
+
+// 根据路由路径设置标题
+headerStore.setPageTitleByPath('/dashboard')
+
+// 使用临时配置设置标题
+headerStore.setCurrentPageTitle('无后缀标题', {
+  showAppName: false,
+})
+```
+
+页面标题会自动根据路由变化更新，默认格式为：`页面标题 - Vue + Vuetify Console`
 
 ## 🔧 开发指南
 

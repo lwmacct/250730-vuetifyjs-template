@@ -10,24 +10,44 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <v-footer :app="fixed" color="grey-darken-3" class="footer-container" :class="{
-    'footer-sticky': fixed,
-    'footer-normal': !fixed,
-    'text-center': centered,
-    'text-left': !centered,
-  }">
-    <div class="py-2 w-100" :class="centered ? 'd-flex justify-center align-center' : 'd-flex align-center'">
+  <v-footer
+    :app="fixed"
+    color="grey-darken-3"
+    class="footer-container"
+    :class="{
+      'footer-sticky': fixed,
+      'footer-normal': !fixed,
+      'text-center': centered,
+      'text-left': !centered,
+    }"
+  >
+    <div
+      class="py-2 w-100"
+      :class="centered ? 'd-flex justify-center align-center' : 'd-flex align-center'"
+    >
       <span class="text-body-2 text-grey-lighten-1" :class="centered ? 'footer-content' : ''">
         {{ customText }}
         <template v-if="showLinks">
           |
-          <v-btn href="https://vuejs.org/" target="_blank" variant="text" size="small" color="grey-lighten-1"
-            density="compact">
+          <v-btn
+            href="https://vuejs.org/"
+            target="_blank"
+            variant="text"
+            size="small"
+            color="grey-lighten-1"
+            density="compact"
+          >
             Vue.js
           </v-btn>
           |
-          <v-btn href="https://vuetifyjs.com/" target="_blank" variant="text" size="small" color="grey-lighten-1"
-            density="compact">
+          <v-btn
+            href="https://vuetifyjs.com/"
+            target="_blank"
+            variant="text"
+            size="small"
+            color="grey-lighten-1"
+            density="compact"
+          >
             Vuetify
           </v-btn>
         </template>

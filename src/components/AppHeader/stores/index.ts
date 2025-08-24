@@ -8,6 +8,7 @@ import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import type { DrawerConfig, HoverPanelConfig, MenuItem } from '../types'
+import { setPageTitle, type TitleConfig } from '@/utils'
 
 // 扩展Vue Router的RouteMeta接口
 declare module 'vue-router' {
@@ -323,6 +324,32 @@ export const useAppHeaderStore = defineStore('appHeader', () => {
     })
   }
 
+  // === 页面标题管理方法 ===
+
+  /**
+   * 设置页面标题
+   * @param title - 页面标题，如果不传则使用当前路由的标题
+   * @param options - 临时配置选项
+   */
+  const setCurrentPageTitle = (title?: string, options?: Partial<TitleConfig>) => {
+    const route = useRoute()
+    const finalTitle = title || (route.meta?.title as string)
+    return setPageTitle(finalTitle, options)
+  }
+
+  /**
+   * 根据路由路径设置页面标题
+   * @param path - 路由路径
+   * @param options - 临时配置选项
+   */
+  const setPageTitleByPath = (path: string, options?: Partial<TitleConfig>) => {
+    const menuItem = getMenuItemByPath(path)
+    if (menuItem) {
+      return setPageTitle(menuItem.title, options)
+    }
+    return setPageTitle(undefined, options)
+  }
+
   return {
     // 抽屉状态
     drawerOpen: computed(() => drawerOpen.value),
@@ -366,5 +393,9 @@ export const useAppHeaderStore = defineStore('appHeader', () => {
     useRouteDescription,
     useRouteCategory,
     useRouteMeta,
+
+    // 页面标题管理方法
+    setCurrentPageTitle,
+    setPageTitleByPath,
   }
 })
