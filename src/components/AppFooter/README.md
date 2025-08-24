@@ -51,11 +51,11 @@ components/AppFooter/
 
 ### 🎛️ 配置选项
 
-| 属性         | 类型      | 默认值                            | 说明               |
-| ------------ | --------- | --------------------------------- | ------------------ |
-| `showLinks`  | `boolean` | `true`                            | 是否显示外部链接   |
+| 属性         | 类型      | 默认值                             | 说明               |
+| ------------ | --------- | ---------------------------------- | ------------------ |
+| `showLinks`  | `boolean` | `true`                             | 是否显示外部链接   |
 | `customText` | `string`  | `'© 2024 Vue + Vuetify 演示应用'` | 自定义文本内容     |
-| `fixed`      | `boolean` | `false`                           | 是否固定在页面底部 |
+| `fixed`      | `boolean` | `false`                            | 是否固定在页面底部 |
 
 ## 🚀 使用方式
 
@@ -71,11 +71,7 @@ components/AppFooter/
 
 ```vue
 <template>
-  <AppFooter
-    :show-links="true"
-    custom-text="© 2024 我的应用"
-    :fixed="false"
-  />
+  <AppFooter :show-links="true" custom-text="© 2024 我的应用" :fixed="false" />
 </template>
 ```
 
@@ -87,6 +83,6 @@ import { useAppFooterStore } from '@/components/AppFooter/stores'
 const footerStore = useAppFooterStore()
 footerStore.updateConfig({
   defaultText: '© 2024 自定义应用',
-  defaultHeight: 60
+  defaultHeight: 60,
 })
 ```

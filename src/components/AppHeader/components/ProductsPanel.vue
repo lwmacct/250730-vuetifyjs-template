@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '../stores'
 
 interface Props {
   onNavigate: (path: string) => void
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
   onRemoveFromFavorites: () => {},
 })
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 
 // 处理收藏按钮点击
 const handleFavoriteClick = (item: any) => {

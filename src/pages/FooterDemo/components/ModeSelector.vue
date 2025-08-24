@@ -4,8 +4,12 @@
     <v-card-text>
       <v-row>
         <v-col v-for="example in examples" :key="example.id" cols="12" sm="4">
-          <v-card :class="{ 'border-primary': currentMode === example.id }" class="demo-card cursor-pointer"
-            variant="outlined" @click="$emit('switchMode', example.id as FooterMode)">
+          <v-card
+            :class="{ 'border-primary': currentMode === example.id }"
+            class="demo-card cursor-pointer"
+            variant="outlined"
+            @click="$emit('switchMode', example.id as FooterMode)"
+          >
             <v-card-text class="text-center">
               <v-icon :color="example.color" size="40" class="mb-2">
                 {{ example.icon }}

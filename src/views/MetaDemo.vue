@@ -2,9 +2,9 @@
 // 路由Meta演示页面
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 
 // 从路由meta中获取所有信息
 const pageIcon = routeMenuStore.useRouteIcon('mdi-information')

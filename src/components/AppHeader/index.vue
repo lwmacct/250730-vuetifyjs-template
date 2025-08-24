@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from './stores'
 import FavoriteMenu from './components/FavoriteMenu.vue'
 import ProductsPanel from './components/ProductsPanel.vue'
 import AllPagesMenuItem from './components/AllPagesMenuItem.vue'
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const router = useRouter()
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 const drawer = ref(false)
 const hoveredItem = ref<string | null>(null)
 

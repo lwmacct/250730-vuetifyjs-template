@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '../stores'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
   onRemoveFromFavorites: () => {},
 })
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 const router = useRouter()
 const draggedItem = ref<any>(null)
 const dragOverItem = ref<any>(null)

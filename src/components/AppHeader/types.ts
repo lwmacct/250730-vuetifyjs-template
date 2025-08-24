@@ -31,7 +31,7 @@ export interface Props {
 }
 
 /**
- * 菜单项接口
+ * 菜单项接口（基础版本，复杂的路由菜单项在 stores 中定义）
  */
 export interface MenuItem {
   id: string

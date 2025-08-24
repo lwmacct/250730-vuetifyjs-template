@@ -3,13 +3,13 @@
 import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 import { useFooterDemoStore } from './stores/index'
 import ModeSelector from './components/ModeSelector.vue'
 import ConfigPanel from './components/ConfigPanel.vue'
 import CodeExample from './components/CodeExample.vue'
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 const footerStore = useFooterDemoStore()
 
 // 从路由meta中获取信息

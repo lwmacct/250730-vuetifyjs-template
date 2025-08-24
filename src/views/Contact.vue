@@ -2,9 +2,9 @@
 // 联系页面组件
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 
 // 从路由meta中获取信息
 const pageIcon = routeMenuStore.useRouteIcon('mdi-email')

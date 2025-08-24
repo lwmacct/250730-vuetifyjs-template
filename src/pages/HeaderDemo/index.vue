@@ -3,13 +3,13 @@
 import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 import { useHeaderDemoStore } from './stores/index'
 import SlotTemplate from './components/SlotTemplate.vue'
 import SlotDemo from './components/SlotDemo.vue'
 import StylesDemo from './components/StylesDemo.vue'
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 const headerStore = useHeaderDemoStore()
 
 // 从路由meta中获取信息

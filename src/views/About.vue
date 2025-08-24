@@ -26,12 +26,26 @@ import AppFooter from '@/components/AppFooter/index.vue'
                 </p>
                 <v-divider class="my-4"></v-divider>
                 <v-list>
-                  <v-list-item prepend-icon="mdi-vuejs" title="Vue 3" subtitle="渐进式 JavaScript 框架"></v-list-item>
-                  <v-list-item prepend-icon="mdi-vuetify" title="Vuetify 3"
-                    subtitle="Material Design 组件库"></v-list-item>
-                  <v-list-item prepend-icon="mdi-router" title="Vue Router 4" subtitle="官方路由管理器"></v-list-item>
-                  <v-list-item prepend-icon="mdi-language-typescript" title="TypeScript"
-                    subtitle="类型安全的 JavaScript"></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-vuejs"
+                    title="Vue 3"
+                    subtitle="渐进式 JavaScript 框架"
+                  ></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-vuetify"
+                    title="Vuetify 3"
+                    subtitle="Material Design 组件库"
+                  ></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-router"
+                    title="Vue Router 4"
+                    subtitle="官方路由管理器"
+                  ></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-language-typescript"
+                    title="TypeScript"
+                    subtitle="类型安全的 JavaScript"
+                  ></v-list-item>
                 </v-list>
                 <v-alert type="success" variant="tonal" class="mt-4 mb-6">
                   <template v-slot:prepend>

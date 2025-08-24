@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '../stores'
 
 interface Props {
   onNavigate: (path: string) => void
@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<Props>(), {
   onNavigate: () => {},
 })
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 </script>
 
 <template>

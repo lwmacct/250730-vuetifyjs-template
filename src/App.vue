@@ -2,10 +2,10 @@
 // 主应用组件 - 路由入口
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 
 const route = useRoute()
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 
 // 监听路由变化，更新页面访问时间
 watch(

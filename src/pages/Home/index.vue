@@ -3,10 +3,10 @@
 import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
-import { useRouteMenuStore } from '@/stores/routeMenu'
+import { useAppHeaderStore } from '@/components/AppHeader/stores'
 import { useHomeStore } from './stores/index'
 
-const routeMenuStore = useRouteMenuStore()
+const routeMenuStore = useAppHeaderStore()
 const homeStore = useHomeStore()
 
 // 从路由meta中获取信息

@@ -45,21 +45,25 @@ components/AppHeader/
 ### 🧩 子组件说明
 
 #### AllPagesMenuItem.vue
+
 - 显示"所有页面"菜单项
 - 支持悬停效果和图标动画
 - 触发产品面板显示
 
 #### FavoriteMenu.vue
+
 - 管理收藏的页面列表
 - 支持拖拽排序功能
 - 提供收藏/取消收藏操作
 
 #### ProductsPanel.vue
+
 - 显示所有页面的分类视图
 - 支持按分类组织页面
 - 提供快速导航和收藏功能
 
 #### RecentPagesMenuItem.vue
+
 - 显示最近访问的页面
 - 自动记录访问历史
 - 提供快速跳转功能
@@ -121,9 +125,7 @@ components/AppHeader/
   <AppHeader :use-custom-content="true">
     <template #custom-content>
       <v-spacer />
-      <v-btn color="white" variant="text">
-        自定义按钮
-      </v-btn>
+      <v-btn color="white" variant="text"> 自定义按钮 </v-btn>
     </template>
   </AppHeader>
 </template>
