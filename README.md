@@ -156,7 +156,7 @@ npm run type-check && npm run format
 
 ### 使用此模板创建新项目
 ```bash
-npx degit lwmacct/250730-vuetifyjs-console-menu.git#main my-project
+npx degit lwmacct/250730-vuetifyjs-template.git#main my-project
 cd my-project
 npm install
 npm run dev
