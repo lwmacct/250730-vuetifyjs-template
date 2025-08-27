@@ -6,8 +6,12 @@
 components/AppHeader/
 ├── index.vue                    # 主组件文件
 ├── types.ts                     # 📋 类型定义
-├── stores/
-│   └── index.ts                # 📦 状态管理
+├── stores/                     # 📦 状态管理模块
+│   ├── index.ts                # 统一导出入口
+│   ├── useAppHeader.ts         # 主要 Store
+│   ├── useDrawer.ts            # 抽屉菜单状态管理
+│   ├── useRouteMenu.ts         # 路由菜单管理
+│   └── useRouteHelpers.ts      # 路由工具函数
 ├── utils/                      # 🛠️ 组件专用工具函数
 │   ├── index.ts                # 工具函数主入口
 │   └── title-helpers.ts        # 页面标题管理工具
@@ -24,6 +28,7 @@ components/AppHeader/
 
 - **作用**: 定义组件属性和数据结构，统一管理所有类型定义
 - **内容**:
+
   ```typescript
   // Vue Router 扩展
   declare module 'vue-router' {
@@ -33,7 +38,7 @@ components/AppHeader/
       // ...
     }
   }
-  
+
   // 组件属性
   interface Props {
     title?: string
@@ -41,7 +46,7 @@ components/AppHeader/
     drawerWidth?: number | string
     // ...
   }
-  
+
   // 菜单项类型
   interface RouteMenuItem {
     title: string
@@ -49,7 +54,7 @@ components/AppHeader/
     icon: string
     // ...
   }
-  
+
   // 配置类型
   interface TitleConfig {
     defaultTitle?: string
@@ -58,17 +63,44 @@ components/AppHeader/
   }
   ```
 
-### 📦 stores/index.ts - 状态管理
+### 📦 stores/ - 状态管理模块
 
-- **作用**: 管理头部导航、抽屉菜单和悬停状态
+采用模块化设计，按功能拆分为多个 Composables：
+
+#### stores/index.ts - 统一导出入口 (12行)
+
+- **作用**: 仅用于导出所有 stores 模块，保持接口简洁
 - **内容**:
+
   ```typescript
-  export const useAppHeaderStore = defineStore('appHeader', () => {
-    const drawerOpen = ref(false)
-    const hoveredItem = ref<string | null>(null)
-    // ...
-  })
+  // 导出主 Store
+  export { useAppHeaderStore } from './useAppHeader'
+
+  // 导出各个功能模块（可按需使用）
+  export { useDrawer } from './useDrawer'
+  export { useRouteMenu } from './useRouteMenu'
+  export { useRouteHelpers } from './useRouteHelpers'
   ```
+
+#### stores/useAppHeader.ts - 主要 Store (55行)
+
+- **作用**: 组合各个功能模块，提供统一的 Pinia Store 接口
+- **特点**: 通过组合模式整合各个 Composables
+
+#### stores/useDrawer.ts - 抽屉菜单管理 (88行)
+
+- **作用**: 管理抽屉开关、悬停状态、配置更新
+- **主要功能**: `toggleDrawer()`, `setHoveredItem()`, `updateDrawerConfig()`
+
+#### stores/useRouteMenu.ts - 路由菜单管理 (172行)
+
+- **作用**: 处理路由菜单数据、收藏管理、访问记录
+- **主要功能**: `toggleFavorite()`, `recordAccess()`, `getMenuItemByPath()`
+
+#### stores/useRouteHelpers.ts - 路由工具函数 (92行)
+
+- **作用**: 提供路由相关的工具函数和页面标题管理
+- **主要功能**: `useRouteTitle()`, `setCurrentPageTitle()`
 
 ### 🛠️ utils/ - 组件专用工具函数
 
@@ -210,84 +242,25 @@ const recentPages = headerStore.recentItems
 
 ### 使用工具函数
 
-AppHeader 组件提供了专用的工具函数库，可以在组件内部或其他地方使用：
+AppHeader 组件提供了专用的页面标题管理工具：
 
-#### 菜单项处理工具
-
-```typescript
-import { MenuHelpers } from '@/components/AppHeader/utils'
-
-// 过滤菜单项
-const filteredItems = MenuHelpers.filterMenuItems(allItems, {
-  category: ['仪表板', '用户管理'],
-  keyword: '搜索关键词',
-})
-
-// 排序菜单项
-const sortedItems = MenuHelpers.sortMenuItems(filteredItems, {
-  field: 'priority',
-  order: 'asc',
-})
-
-// 按分类分组
-const groupedItems = MenuHelpers.groupMenuItemsByCategory(sortedItems)
-```
-
-#### 拖拽排序工具
+#### 页面标题管理
 
 ```typescript
-import { DragHelpers } from '@/components/AppHeader/utils'
+import { setPageTitle } from '@/components/AppHeader/utils'
 
-// 创建拖拽处理器
-const dragHandler = DragHelpers.createDragHandler(favoriteItems, 'path', (newOrder) => {
-  // 处理重新排序后的结果
-  updateFavoriteOrder(newOrder)
+// 基础用法
+setPageTitle('仪表板')
+
+// 自定义格式
+setPageTitle('登录', { showAppName: false })
+
+// 完全自定义
+setPageTitle('我的页面', {
+  template: '{title} | {appName}',
+  separator: ' | ',
+  appName: '自定义应用名称',
 })
-
-// 在模板中使用
-const dragClasses = DragHelpers.getDragClasses(item, dragHandler.dragState, 'path')
-```
-
-#### 导航工具
-
-```typescript
-import { NavigationHelpers } from '@/components/AppHeader/utils'
-
-// 安全导航
-await NavigationHelpers.navigateTo(router, '/dashboard', {
-  beforeNavigate: async (path) => {
-    // 导航前检查
-    return await checkPermission(path)
-  },
-  afterNavigate: (path) => {
-    // 导航后处理
-    trackPageView(path)
-  },
-})
-
-// 创建访问记录管理器
-const accessTracker = NavigationHelpers.createAccessTracker()
-accessTracker.recordAccess('/dashboard', '仪表板')
-const recentPages = accessTracker.getRecentAccess(5)
-```
-
-#### 悬停状态管理工具
-
-```typescript
-import { HoverHelpers } from '@/components/AppHeader/utils'
-
-// 创建悬停管理器
-const hoverManager = HoverHelpers.createHoverManager(
-  { showDelay: 200, hideDelay: 500 },
-  {
-    onHoverStart: (itemId) => console.log('开始悬停:', itemId),
-    onHoverEnd: (itemId) => console.log('结束悬停:', itemId),
-  },
-)
-
-// 处理悬停事件
-hoverManager.handleMouseEnter('menu-item-1')
-hoverManager.handleMouseLeave('menu-item-1')
 ```
 
 ### 页面标题管理
@@ -328,48 +301,14 @@ headerStore.setCurrentPageTitle('无后缀标题', {
 2. 在 `index.vue` 的悬停面板区域添加条件渲染
 3. 在 Store 中添加面板状态管理
 
-### 使用工具函数开发
+### 扩展开发
 
 #### 添加新的工具函数
 
-1. 确定工具函数的类别（菜单、拖拽、导航、悬停）
-2. 在对应的 `utils/xxx-helpers.ts` 文件中添加函数
-3. 在 `utils/index.ts` 中导出新函数
-4. 添加 TypeScript 类型定义
-5. 在组件中导入使用
-
-#### 工具函数最佳实践
-
-- **单一职责**: 每个工具函数只处理一个特定任务
-- **类型安全**: 为所有函数参数和返回值提供类型定义
-- **错误处理**: 在函数内部处理可能的错误情况
-- **文档注释**: 为每个函数提供详细的 JSDoc 注释
-- **测试友好**: 函数设计应便于单元测试
-
-#### 示例：添加新的菜单工具函数
-
-```typescript
-// 在 utils/menu-helpers.ts 中添加
-/**
- * 根据用户角色过滤菜单项
- * @param items - 菜单项列表
- * @param userRole - 用户角色
- * @returns 过滤后的菜单项
- */
-export function filterByUserRole(items: RouteMenuItem[], userRole: string): RouteMenuItem[] {
-  return items.filter((item) => {
-    // 实现角色过滤逻辑
-    return item.allowedRoles?.includes(userRole) || !item.allowedRoles
-  })
-}
-
-// 在 utils/index.ts 中导出
-export { filterByUserRole } from './menu-helpers'
-
-// 在组件中使用
-import { filterByUserRole } from '@/components/AppHeader/utils'
-const userMenuItems = filterByUserRole(allMenuItems, currentUserRole)
-```
+1. 在 `utils/` 目录创建新的工具文件
+2. 在 `utils/index.ts` 中导出新函数
+3. 在 `types.ts` 中添加相应类型定义
+4. 更新文档说明
 
 ### 样式自定义
 
@@ -389,29 +328,31 @@ const userMenuItems = filterByUserRole(allMenuItems, currentUserRole)
 </style>
 ```
 
-### 工具函数架构说明
+### 组件架构图
 
 ```mermaid
 graph TB
-    A[AppHeader 组件] --> B[utils/index.ts 主入口]
-    B --> C[menu-helpers.ts 菜单工具]
-    B --> D[drag-helpers.ts 拖拽工具]
-    B --> E[navigation-helpers.ts 导航工具]
-    B --> F[hover-helpers.ts 悬停工具]
+    A[AppHeader 组件] --> B[stores/ 状态管理模块]
+    A --> C[utils/ 工具函数]
+    A --> D[components/ 子组件]
+    A --> E[types.ts 类型定义]
 
-    C --> C1[过滤排序]
-    C --> C2[搜索匹配]
-    C --> C3[分类分组]
+    B --> B1[index.ts 导出入口]
+    B --> B2[useAppHeader.ts 主 Store]
+    B --> B3[useDrawer.ts 抽屉管理]
+    B --> B4[useRouteMenu.ts 菜单管理]
+    B --> B5[useRouteHelpers.ts 路由工具]
 
-    D --> D1[拖拽状态管理]
-    D --> D2[数组重排序]
-    D --> D3[事件处理]
+    B1 --> B2
+    B2 --> B3
+    B2 --> B4
+    B2 --> B5
 
-    E --> E1[路由导航]
-    E --> E2[访问记录]
-    E --> E3[面包屑导航]
+    C --> C1[index.ts 导出入口]
+    C --> C2[title-helpers.ts 标题管理]
 
-    F --> F1[悬停管理器]
-    F --> F2[区域检测]
-    F --> F3[防抖处理]
+    D --> D1[AllPagesMenuItem.vue]
+    D --> D2[FavoriteMenu.vue]
+    D --> D3[ProductsPanel.vue]
+    D --> D4[RecentPagesMenuItem.vue]
 ```
