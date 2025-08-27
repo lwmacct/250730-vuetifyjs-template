@@ -1,81 +1,27 @@
 /**
- * AppFooter 组件专用状态管理
- * 管理页脚的配置和行为状态
+ * AppFooter Stores 主模块
+ * 组合各功能模块，统一导出
  */
 
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { FooterConfig, FooterLink } from '../types'
+import { useFooterConfig } from './useFooterConfig'
+import { useFooterLinks } from './useFooterLinks'
 
-/**
- * AppFooter 组件 Store
- * 管理页脚的配置信息和状态
- */
+// 主 Store - 组合各个功能模块
 export const useAppFooterStore = defineStore('appFooter', () => {
-  // === 状态 ===
-  const config = ref<FooterConfig>({
-    defaultText: '© 2024 Vue + Vuetify 演示应用',
-    defaultLinks: [
-      {
-        href: 'https://vuejs.org/',
-        text: 'Vue.js',
-        target: '_blank',
-      },
-      {
-        href: 'https://vuetifyjs.com/',
-        text: 'Vuetify',
-        target: '_blank',
-      },
-    ],
-    defaultHeight: 48,
-  })
-
-  const customConfig = ref<Partial<FooterConfig>>({})
-
-  // === 计算属性 ===
-  const finalConfig = computed(() => ({
-    ...config.value,
-    ...customConfig.value,
-  }))
-
-  const footerText = computed(() => finalConfig.value.defaultText)
-
-  const footerLinks = computed(() => finalConfig.value.defaultLinks)
-
-  // === 方法 ===
-  const updateConfig = (newConfig: Partial<FooterConfig>) => {
-    customConfig.value = { ...customConfig.value, ...newConfig }
-  }
-
-  const resetConfig = () => {
-    customConfig.value = {}
-  }
-
-  const addLink = (link: FooterLink) => {
-    const currentLinks = [...finalConfig.value.defaultLinks]
-    currentLinks.push(link)
-    updateConfig({ defaultLinks: currentLinks })
-  }
-
-  const removeLink = (href: string) => {
-    const currentLinks = finalConfig.value.defaultLinks.filter((link) => link.href !== href)
-    updateConfig({ defaultLinks: currentLinks })
-  }
+  // 组合各个功能模块
+  const footerConfig = useFooterConfig()
+  const footerLinks = useFooterLinks(footerConfig.finalConfig)
 
   return {
-    // 状态
-    config: computed(() => config.value),
-    customConfig: computed(() => customConfig.value),
+    // 配置管理状态和方法
+    ...footerConfig,
 
-    // 计算属性
-    finalConfig,
-    footerText,
-    footerLinks,
-
-    // 方法
-    updateConfig,
-    resetConfig,
-    addLink,
-    removeLink,
+    // 链接管理方法
+    ...footerLinks,
   }
 })
+
+// 导出各个功能模块 Composables（可按需使用）
+export { useFooterConfig } from './useFooterConfig'
+export { useFooterLinks } from './useFooterLinks'
