@@ -7,8 +7,7 @@ components/AppHeader/
 ├── index.vue                    # 主组件文件
 ├── types.ts                     # 📋 类型定义
 ├── stores/                     # 📦 状态管理模块
-│   ├── index.ts                # 统一导出入口
-│   ├── useAppHeader.ts         # 主要 Store
+│   ├── index.ts                # 主 Store + 导出模块
 │   ├── useDrawer.ts            # 抽屉菜单状态管理
 │   ├── useRouteMenu.ts         # 路由菜单管理
 │   └── useRouteHelpers.ts      # 路由工具函数
@@ -67,25 +66,31 @@ components/AppHeader/
 
 采用模块化设计，按功能拆分为多个 Composables：
 
-#### stores/index.ts - 统一导出入口 (12行)
+#### stores/index.ts - 主 Store + 导出模块 (62行)
 
-- **作用**: 仅用于导出所有 stores 模块，保持接口简洁
+- **作用**: 组合各功能模块创建主 Store，同时导出所有模块
 - **内容**:
 
   ```typescript
-  // 导出主 Store
-  export { useAppHeaderStore } from './useAppHeader'
+  // 主 Store - 组合各个功能模块
+  export const useAppHeaderStore = defineStore('appHeader', () => {
+    const drawer = useDrawer()
+    const routeMenu = useRouteMenu()
+    const routeHelpers = useRouteHelpers()
+
+    // 组合方法
+    const handleNavigation = (path: string) => {
+      drawer.closeDrawer()
+      routeMenu.recordAccess(path)
+      router.push(path)
+    }
+
+    return { ...drawer, ...routeMenu, ...routeHelpers, handleNavigation }
+  })
 
   // 导出各个功能模块（可按需使用）
-  export { useDrawer } from './useDrawer'
-  export { useRouteMenu } from './useRouteMenu'
-  export { useRouteHelpers } from './useRouteHelpers'
+  export { useDrawer, useRouteMenu, useRouteHelpers }
   ```
-
-#### stores/useAppHeader.ts - 主要 Store (55行)
-
-- **作用**: 组合各个功能模块，提供统一的 Pinia Store 接口
-- **特点**: 通过组合模式整合各个 Composables
 
 #### stores/useDrawer.ts - 抽屉菜单管理 (88行)
 
@@ -337,16 +342,14 @@ graph TB
     A --> D[components/ 子组件]
     A --> E[types.ts 类型定义]
 
-    B --> B1[index.ts 导出入口]
-    B --> B2[useAppHeader.ts 主 Store]
-    B --> B3[useDrawer.ts 抽屉管理]
-    B --> B4[useRouteMenu.ts 菜单管理]
-    B --> B5[useRouteHelpers.ts 路由工具]
+    B --> B1[index.ts 主 Store + 导出]
+    B --> B2[useDrawer.ts 抽屉管理]
+    B --> B3[useRouteMenu.ts 菜单管理]
+    B --> B4[useRouteHelpers.ts 路由工具]
 
     B1 --> B2
-    B2 --> B3
-    B2 --> B4
-    B2 --> B5
+    B1 --> B3
+    B1 --> B4
 
     C --> C1[index.ts 导出入口]
     C --> C2[title-helpers.ts 标题管理]
