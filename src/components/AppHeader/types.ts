@@ -2,6 +2,22 @@
  * AppHeader 组件相关的类型定义
  */
 
+// 扩展Vue Router的RouteMeta接口
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+    icon?: string
+    // 自定义字段
+    description?: string
+    keywords?: string[]
+    category?: string
+    priority?: number
+    showInMenu?: boolean
+    requireAuth?: boolean
+    [key: string]: any
+  }
+}
+
 /**
  * 头部组件属性接口
  */
@@ -31,7 +47,7 @@ export interface Props {
 }
 
 /**
- * 菜单项接口（基础版本，复杂的路由菜单项在 stores 中定义）
+ * 基础菜单项接口
  */
 export interface MenuItem {
   id: string
@@ -40,6 +56,23 @@ export interface MenuItem {
   path: string
   category?: string
   isFavorite?: boolean
+}
+
+/**
+ * 路由菜单项接口（完整版本）
+ */
+export interface RouteMenuItem {
+  title: string
+  path: string
+  icon: string
+  description?: string
+  category?: string
+  priority?: number
+  showInMenu?: boolean
+  requireAuth?: boolean
+  isFavorite?: boolean
+  lastAccessed?: number
+  children?: RouteMenuItem[]
 }
 
 /**
@@ -72,4 +105,20 @@ export interface HoverPanelConfig {
   backgroundColor: string
   borderColor: string
   showAnimation: boolean
+}
+
+/**
+ * 页面标题管理配置接口
+ */
+export interface TitleConfig {
+  /** 默认标题 */
+  defaultTitle?: string
+  /** 应用名称后缀 */
+  appName?: string
+  /** 标题分隔符 */
+  separator?: string
+  /** 是否显示应用名称 */
+  showAppName?: boolean
+  /** 标题模板，{title} 和 {appName} 会被替换 */
+  template?: string
 }

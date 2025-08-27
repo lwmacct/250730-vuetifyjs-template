@@ -14,13 +14,26 @@
 
       <!-- 时间范围选择和操作 -->
       <div class="d-flex align-center gap-2">
-        <v-select v-model="selectedPeriod" :items="periodOptions" density="compact" variant="outlined" hide-details
-          style="min-width: 100px" @update:modelValue="updateChart" />
+        <v-select
+          v-model="selectedPeriod"
+          :items="periodOptions"
+          density="compact"
+          variant="outlined"
+          hide-details
+          style="min-width: 100px"
+          @update:modelValue="updateChart"
+        />
 
         <v-tooltip text="刷新图表">
           <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" icon="mdi-refresh" size="small" variant="text" :loading="refreshing"
-              @click="refreshChart" />
+            <v-btn
+              v-bind="props"
+              icon="mdi-refresh"
+              size="small"
+              variant="text"
+              :loading="refreshing"
+              @click="refreshChart"
+            />
           </template>
         </v-tooltip>
       </div>
@@ -45,10 +58,15 @@
         <!-- 柱状图 -->
         <div v-else-if="chartType === 'bar'" class="chart-widget__chart">
           <div class="chart-widget__bar-chart">
-            <div v-for="(item, index) in chartData" :key="index" class="chart-widget__bar-item" :style="{
-              '--bar-height': `${(item.value / maxValue) * 100}%`,
-              '--bar-color': item.color || primaryColor,
-            }">
+            <div
+              v-for="(item, index) in chartData"
+              :key="index"
+              class="chart-widget__bar-item"
+              :style="{
+                '--bar-height': `${(item.value / maxValue) * 100}%`,
+                '--bar-color': item.color || primaryColor,
+              }"
+            >
               <div class="chart-widget__bar" />
               <div class="chart-widget__bar-label">{{ item.label }}</div>
               <div class="chart-widget__bar-value">{{ item.value }}</div>
@@ -59,12 +77,28 @@
         <!-- 饼图 -->
         <div v-else-if="chartType === 'pie'" class="chart-widget__chart">
           <div class="chart-widget__pie-chart">
-            <svg :width="pieSize" :height="pieSize" viewBox="0 0 100 100" class="chart-widget__pie-svg">
-              <circle v-for="(segment, index) in pieSegments" :key="index" cx="50" cy="50" r="25" fill="transparent"
-                :stroke="segment.color" stroke-width="10" :stroke-dasharray="segment.dashArray"
-                :stroke-dashoffset="segment.dashOffset" class="chart-widget__pie-segment"
+            <svg
+              :width="pieSize"
+              :height="pieSize"
+              viewBox="0 0 100 100"
+              class="chart-widget__pie-svg"
+            >
+              <circle
+                v-for="(segment, index) in pieSegments"
+                :key="index"
+                cx="50"
+                cy="50"
+                r="25"
+                fill="transparent"
+                :stroke="segment.color"
+                stroke-width="10"
+                :stroke-dasharray="segment.dashArray"
+                :stroke-dashoffset="segment.dashOffset"
+                class="chart-widget__pie-segment"
                 :class="{ 'chart-widget__pie-segment--hover': hoveredSegment === index }"
-                @mouseenter="hoveredSegment = index" @mouseleave="hoveredSegment = -1" />
+                @mouseenter="hoveredSegment = index"
+                @mouseleave="hoveredSegment = -1"
+              />
             </svg>
 
             <!-- 饼图中心数值 -->
@@ -76,14 +110,22 @@
 
           <!-- 图例 -->
           <div class="chart-widget__legend mt-4">
-            <div v-for="(item, index) in chartData" :key="index" class="chart-widget__legend-item"
+            <div
+              v-for="(item, index) in chartData"
+              :key="index"
+              class="chart-widget__legend-item"
               :class="{ 'chart-widget__legend-item--hover': hoveredSegment === index }"
-              @mouseenter="hoveredSegment = index" @mouseleave="hoveredSegment = -1">
-              <div class="chart-widget__legend-color"
-                :style="{ backgroundColor: item.color || colors[index % colors.length] }" />
+              @mouseenter="hoveredSegment = index"
+              @mouseleave="hoveredSegment = -1"
+            >
+              <div
+                class="chart-widget__legend-color"
+                :style="{ backgroundColor: item.color || colors[index % colors.length] }"
+              />
               <span class="chart-widget__legend-label">{{ item.label }}</span>
-              <span class="chart-widget__legend-value">{{ item.value }} ({{ ((item.value / totalValue) * 100).toFixed(1)
-                }}%)</span>
+              <span class="chart-widget__legend-value"
+                >{{ item.value }} ({{ ((item.value / totalValue) * 100).toFixed(1) }}%)</span
+              >
             </div>
           </div>
         </div>

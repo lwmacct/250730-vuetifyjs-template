@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { setPageTitle } from '@/utils'
+import { setPageTitle } from '@/components/AppHeader/utils'
 
 const router = createRouter({
   history: createWebHashHistory(),

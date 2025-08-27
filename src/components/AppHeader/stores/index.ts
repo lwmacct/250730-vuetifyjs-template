@@ -7,39 +7,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import type { DrawerConfig, HoverPanelConfig, MenuItem } from '../types'
-import { setPageTitle, type TitleConfig } from '@/utils'
-
-// 扩展Vue Router的RouteMeta接口
-declare module 'vue-router' {
-  interface RouteMeta {
-    title: string
-    icon?: string
-    // 自定义字段
-    description?: string
-    keywords?: string[]
-    category?: string
-    priority?: number
-    showInMenu?: boolean
-    requireAuth?: boolean
-    [key: string]: any
-  }
-}
-
-// 定义菜单项的类型
-export interface RouteMenuItem {
-  title: string
-  path: string
-  icon: string
-  description?: string
-  category?: string
-  priority?: number
-  showInMenu?: boolean
-  requireAuth?: boolean
-  isFavorite?: boolean
-  lastAccessed?: number
-  children?: RouteMenuItem[]
-}
+import type { DrawerConfig, HoverPanelConfig, MenuItem, RouteMenuItem, TitleConfig } from '../types'
+import { setPageTitle } from '../utils'
 
 /**
  * AppHeader 组件 Store

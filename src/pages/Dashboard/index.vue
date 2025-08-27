@@ -143,29 +143,33 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
 
 <template>
   <!-- 使用通用头部组件 -->
-  <AppHeader :title="pageTitle" :titleIcon="pageIcon" :actions="[
-    {
-      icon: dashboardStore.isAutoRefresh ? 'mdi-pause' : 'mdi-play',
-      text: dashboardStore.isAutoRefresh ? '暂停刷新' : '开始刷新',
-      color: dashboardStore.isAutoRefresh ? 'warning' : 'success',
-      variant: 'text',
-      onClick: () => dashboardStore.toggleAutoRefresh(),
-    },
-    {
-      icon: 'mdi-refresh',
-      text: '手动刷新',
-      color: 'primary',
-      variant: 'text',
-      onClick: () => dashboardStore.refreshData(),
-    },
-    {
-      icon: 'mdi-bell',
-      text: `通知 ${dashboardStore.unreadCount > 0 ? `(${dashboardStore.unreadCount})` : ''}`,
-      color: dashboardStore.unreadCount > 0 ? 'error' : 'grey',
-      variant: 'text',
-      onClick: () => console.log('打开通知面板'),
-    },
-  ]" />
+  <AppHeader
+    :title="pageTitle"
+    :titleIcon="pageIcon"
+    :actions="[
+      {
+        icon: dashboardStore.isAutoRefresh ? 'mdi-pause' : 'mdi-play',
+        text: dashboardStore.isAutoRefresh ? '暂停刷新' : '开始刷新',
+        color: dashboardStore.isAutoRefresh ? 'warning' : 'success',
+        variant: 'text',
+        onClick: () => dashboardStore.toggleAutoRefresh(),
+      },
+      {
+        icon: 'mdi-refresh',
+        text: '手动刷新',
+        color: 'primary',
+        variant: 'text',
+        onClick: () => dashboardStore.refreshData(),
+      },
+      {
+        icon: 'mdi-bell',
+        text: `通知 ${dashboardStore.unreadCount > 0 ? `(${dashboardStore.unreadCount})` : ''}`,
+        color: dashboardStore.unreadCount > 0 ? 'error' : 'grey',
+        variant: 'text',
+        onClick: () => console.log('打开通知面板'),
+      },
+    ]"
+  />
 
   <!-- 主要内容区域 -->
   <v-main>
@@ -181,8 +185,12 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
 
             <!-- 实时信息 -->
             <div class="d-flex align-center gap-4">
-              <v-chip :color="dashboardStore.isAutoRefresh ? 'success' : 'grey'" variant="flat" size="small"
-                :prepend-icon="dashboardStore.isAutoRefresh ? 'mdi-autorenew' : 'mdi-pause'">
+              <v-chip
+                :color="dashboardStore.isAutoRefresh ? 'success' : 'grey'"
+                variant="flat"
+                size="small"
+                :prepend-icon="dashboardStore.isAutoRefresh ? 'mdi-autorenew' : 'mdi-pause'"
+              >
                 {{ dashboardStore.isAutoRefresh ? '自动刷新中' : '已暂停' }}
               </v-chip>
 
@@ -197,29 +205,49 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
       <!-- 统计卡片区域 -->
       <v-row class="mb-6">
         <v-col cols="12">
-          <StatCards :stats="dashboardStore.stats" :animated="true" :show-trend="true"
-            @card-click="handleStatCardClick" />
+          <StatCards
+            :stats="dashboardStore.stats"
+            :animated="true"
+            :show-trend="true"
+            @card-click="handleStatCardClick"
+          />
         </v-col>
       </v-row>
 
       <!-- 图表和系统监控区域 -->
       <v-row class="mb-6">
         <v-col cols="12" lg="8">
-          <ChartWidget title="数据趋势图" subtitle="近6个月数据变化" chart-type="line" :chart-data="dashboardStore.chartData"
-            :height="350" :auto-refresh="true" @refresh="handleChartRefresh" @period-change="handleChartPeriodChange" />
+          <ChartWidget
+            title="数据趋势图"
+            subtitle="近6个月数据变化"
+            chart-type="line"
+            :chart-data="dashboardStore.chartData"
+            :height="350"
+            :auto-refresh="true"
+            @refresh="handleChartRefresh"
+            @period-change="handleChartPeriodChange"
+          />
         </v-col>
 
         <v-col cols="12" lg="4">
-          <ChartWidget title="数据分布" subtitle="各类型占比" chart-type="pie" :chart-data="dashboardStore.chartData"
-            :height="350" @refresh="handleChartRefresh" />
+          <ChartWidget
+            title="数据分布"
+            subtitle="各类型占比"
+            chart-type="pie"
+            :chart-data="dashboardStore.chartData"
+            :height="350"
+            @refresh="handleChartRefresh"
+          />
         </v-col>
       </v-row>
 
       <!-- 系统监控区域 -->
       <v-row class="mb-6">
         <v-col cols="12">
-          <SystemMonitor @open-settings="handleSystemMonitorOpenSettings"
-            @alert-dismissed="handleSystemMonitorAlertDismissed" />
+          <SystemMonitor
+            @open-settings="handleSystemMonitorOpenSettings"
+            @alert-dismissed="handleSystemMonitorAlertDismissed"
+          />
         </v-col>
       </v-row>
 
@@ -227,36 +255,58 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
       <v-row class="mb-6">
         <!-- 最近活动 -->
         <v-col cols="12" lg="6">
-          <ActivityList :activities="dashboardStore.activities" :max-items="10"
-            @activity-click="(activity) => console.log('活动点击:', activity)" @refresh="handleActivityRefresh"
-            @clear="handleActivityClear" @export="handleActivityExport" @delete="handleActivityDelete" />
+          <ActivityList
+            :activities="dashboardStore.activities"
+            :max-items="10"
+            @activity-click="(activity) => console.log('活动点击:', activity)"
+            @refresh="handleActivityRefresh"
+            @clear="handleActivityClear"
+            @export="handleActivityExport"
+            @delete="handleActivityDelete"
+          />
         </v-col>
 
         <!-- 通知中心 -->
         <v-col cols="12" lg="6">
-          <NotificationCenter :notifications="dashboardStore.notifications"
-            @notification-click="handleNotificationClick" @mark-as-read="handleNotificationMarkAsRead"
-            @mark-as-unread="handleNotificationMarkAsUnread" @delete="handleNotificationDelete"
-            @action="handleNotificationAction" @clear-all="handleNotificationClearAll"
-            @mark-all-as-read="handleNotificationMarkAllAsRead" />
+          <NotificationCenter
+            :notifications="dashboardStore.notifications"
+            @notification-click="handleNotificationClick"
+            @mark-as-read="handleNotificationMarkAsRead"
+            @mark-as-unread="handleNotificationMarkAsUnread"
+            @delete="handleNotificationDelete"
+            @action="handleNotificationAction"
+            @clear-all="handleNotificationClearAll"
+            @mark-all-as-read="handleNotificationMarkAllAsRead"
+          />
         </v-col>
       </v-row>
 
       <!-- 快速操作区域 -->
       <v-row class="mb-6">
         <v-col cols="12" lg="8">
-          <QuickActions :actions="dashboardStore.allQuickActions" :max-visible="6" :show-custom-action="true"
-            @action-click="handleQuickActionClick" @custom-action="() => console.log('自定义操作')" />
+          <QuickActions
+            :actions="dashboardStore.allQuickActions"
+            :max-visible="6"
+            :show-custom-action="true"
+            @action-click="handleQuickActionClick"
+            @custom-action="() => console.log('自定义操作')"
+          />
         </v-col>
 
         <!-- 柱状图 -->
         <v-col cols="12" lg="4">
-          <ChartWidget title="活动统计" subtitle="各类型活动数量" chart-type="bar" :chart-data="[
-            { label: '系统', value: 25, color: '#1976D2' },
-            { label: '用户', value: 18, color: '#388E3C' },
-            { label: '数据', value: 12, color: '#F57C00' },
-            { label: '安全', value: 8, color: '#D32F2F' },
-          ]" :height="280" />
+          <ChartWidget
+            title="活动统计"
+            subtitle="各类型活动数量"
+            chart-type="bar"
+            :chart-data="[
+              { label: '系统', value: 25, color: '#1976D2' },
+              { label: '用户', value: 18, color: '#388E3C' },
+              { label: '数据', value: 12, color: '#F57C00' },
+              { label: '安全', value: 8, color: '#D32F2F' },
+            ]"
+            :height="280"
+          />
         </v-col>
       </v-row>
 
@@ -286,7 +336,11 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
                 <div><strong>🔄 最后更新:</strong> {{ dashboardStore.formattedLastRefresh }}</div>
                 <div>
                   <strong>⚡ 自动刷新:</strong>
-                  <v-chip size="small" :color="dashboardStore.isAutoRefresh ? 'success' : 'grey'" variant="flat">
+                  <v-chip
+                    size="small"
+                    :color="dashboardStore.isAutoRefresh ? 'success' : 'grey'"
+                    variant="flat"
+                  >
                     {{ dashboardStore.isAutoRefresh ? '开启' : '关闭' }}
                   </v-chip>
                 </div>

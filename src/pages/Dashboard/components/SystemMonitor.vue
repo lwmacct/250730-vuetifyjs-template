@@ -11,7 +11,12 @@
       </div>
 
       <!-- 系统状态指示器 -->
-      <v-chip :color="systemStatus.color" variant="flat" size="small" :prepend-icon="systemStatus.icon">
+      <v-chip
+        :color="systemStatus.color"
+        variant="flat"
+        size="small"
+        :prepend-icon="systemStatus.icon"
+      >
         {{ systemStatus.text }}
       </v-chip>
     </v-card-title>
@@ -29,8 +34,13 @@
               <span class="text-subtitle-2">CPU</span>
             </div>
 
-            <v-progress-circular :model-value="metrics.cpu.usage" :color="getMetricColor(metrics.cpu.usage)" :size="80"
-              :width="8" class="system-monitor__progress">
+            <v-progress-circular
+              :model-value="metrics.cpu.usage"
+              :color="getMetricColor(metrics.cpu.usage)"
+              :size="80"
+              :width="8"
+              class="system-monitor__progress"
+            >
               <span class="text-h6 font-weight-bold"> {{ metrics.cpu.usage }}% </span>
             </v-progress-circular>
 
@@ -51,8 +61,13 @@
               <span class="text-subtitle-2">内存</span>
             </div>
 
-            <v-progress-circular :model-value="metrics.memory.usage" :color="getMetricColor(metrics.memory.usage)"
-              :size="80" :width="8" class="system-monitor__progress">
+            <v-progress-circular
+              :model-value="metrics.memory.usage"
+              :color="getMetricColor(metrics.memory.usage)"
+              :size="80"
+              :width="8"
+              class="system-monitor__progress"
+            >
               <span class="text-h6 font-weight-bold"> {{ metrics.memory.usage }}% </span>
             </v-progress-circular>
 
@@ -73,8 +88,13 @@
               <span class="text-subtitle-2">磁盘</span>
             </div>
 
-            <v-progress-circular :model-value="metrics.disk.usage" :color="getMetricColor(metrics.disk.usage)"
-              :size="80" :width="8" class="system-monitor__progress">
+            <v-progress-circular
+              :model-value="metrics.disk.usage"
+              :color="getMetricColor(metrics.disk.usage)"
+              :size="80"
+              :width="8"
+              class="system-monitor__progress"
+            >
               <span class="text-h6 font-weight-bold"> {{ metrics.disk.usage }}% </span>
             </v-progress-circular>
 
@@ -126,7 +146,11 @@
             </div>
 
             <v-list density="compact" class="system-monitor__process-list">
-              <v-list-item v-for="process in topProcesses" :key="process.pid" class="system-monitor__process-item">
+              <v-list-item
+                v-for="process in topProcesses"
+                :key="process.pid"
+                class="system-monitor__process-item"
+              >
                 <template v-slot:prepend>
                   <v-avatar size="32" :color="process.status === 'running' ? 'success' : 'grey'">
                     <v-icon size="16" color="white">
@@ -144,8 +168,12 @@
                 </v-list-item-subtitle>
 
                 <template v-slot:append>
-                  <v-progress-linear :model-value="process.cpu" :color="getMetricColor(process.cpu)" height="4"
-                    style="width: 60px" />
+                  <v-progress-linear
+                    :model-value="process.cpu"
+                    :color="getMetricColor(process.cpu)"
+                    height="4"
+                    style="width: 60px"
+                  />
                 </template>
               </v-list-item>
             </v-list>
@@ -172,8 +200,15 @@
 
       <!-- 警告和提醒 -->
       <div v-if="alerts.length > 0" class="system-monitor__alerts mt-4">
-        <v-alert v-for="alert in alerts" :key="alert.id" :type="alert.type" variant="tonal" closable class="mb-2"
-          @click:close="dismissAlert(alert.id)">
+        <v-alert
+          v-for="alert in alerts"
+          :key="alert.id"
+          :type="alert.type"
+          variant="tonal"
+          closable
+          class="mb-2"
+          @click:close="dismissAlert(alert.id)"
+        >
           <template v-slot:prepend>
             <v-icon>{{ alert.icon }}</v-icon>
           </template>
@@ -196,7 +231,13 @@
       <div class="text-caption text-medium-emphasis">最后更新: {{ lastUpdateTime }}</div>
 
       <div class="d-flex gap-2">
-        <v-btn variant="text" size="small" prepend-icon="mdi-refresh" :loading="refreshing" @click="refreshMetrics">
+        <v-btn
+          variant="text"
+          size="small"
+          prepend-icon="mdi-refresh"
+          :loading="refreshing"
+          @click="refreshMetrics"
+        >
           刷新
         </v-btn>
 
