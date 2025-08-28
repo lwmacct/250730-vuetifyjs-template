@@ -2,13 +2,8 @@
   <!-- 日志统计 -->
   <div class="log-stats px-4 py-2">
     <div class="d-flex gap-2">
-      <v-chip
-        v-for="level in logLevelOptions"
-        :key="level.value"
-        :color="level.color"
-        size="x-small"
-        variant="outlined"
-      >
+      <v-chip v-for="level in logLevelOptions" :key="level.value" :color="level.color" size="x-small"
+        variant="outlined">
         <v-icon start :icon="getLogLevelIcon(level.value)" size="x-small" />
         {{ logStats[level.value] }}
       </v-chip>

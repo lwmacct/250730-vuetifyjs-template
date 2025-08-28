@@ -26,26 +26,22 @@ onUnmounted(() => {
 
 <template>
   <!-- 使用通用头部组件 -->
-  <AppHeader
-    :title="pageTitle"
-    :titleIcon="pageIcon"
-    :actions="[
-      {
-        icon: demoStore.isLogPanelOpen ? 'mdi-console' : 'mdi-console-line',
-        text: '日志面板',
-        color: demoStore.isLogPanelOpen ? 'success' : 'grey',
-        variant: 'text',
-        onClick: () => demoStore.toggleLogPanel(),
-      },
-      {
-        icon: 'mdi-delete',
-        text: '清空日志',
-        color: 'error',
-        variant: 'text',
-        onClick: () => demoStore.clearAllLogs(),
-      },
-    ]"
-  />
+  <AppHeader :title="pageTitle" :titleIcon="pageIcon" :actions="[
+    {
+      icon: demoStore.isLogPanelOpen ? 'mdi-console' : 'mdi-console-line',
+      text: '日志面板',
+      color: demoStore.isLogPanelOpen ? 'success' : 'grey',
+      variant: 'text',
+      onClick: () => demoStore.toggleLogPanel(),
+    },
+    {
+      icon: 'mdi-delete',
+      text: '清空日志',
+      color: 'error',
+      variant: 'text',
+      onClick: () => demoStore.clearAllLogs(),
+    },
+  ]" />
 
   <!-- 主要内容区域 -->
   <v-main>
@@ -66,30 +62,17 @@ onUnmounted(() => {
                   演示模式
                 </v-card-title>
                 <v-card-text>
-                  <v-chip-group
-                    v-model="demoStore.currentMode"
-                    mandatory
-                    variant="outlined"
-                    @update:model-value="(value) => demoStore.switchMode(value)"
-                  >
-                    <v-chip
-                      v-for="scenario in demoStore.scenarios"
-                      :key="scenario.id"
-                      :value="scenario.id"
-                      :color="scenario.color"
-                      :prepend-icon="scenario.icon"
-                      size="large"
-                    >
+                  <v-chip-group v-model="demoStore.currentMode" mandatory variant="outlined"
+                    @update:model-value="(value) => demoStore.switchMode(value)">
+                    <v-chip v-for="scenario in demoStore.scenarios" :key="scenario.id" :value="scenario.id"
+                      :color="scenario.color" :prepend-icon="scenario.icon" size="large">
                       {{ scenario.title }}
                     </v-chip>
                   </v-chip-group>
 
-                  <v-alert
-                    v-if="demoStore.currentScenario"
-                    :type="demoStore.currentScenario.color === 'warning' ? 'warning' : 'info'"
-                    variant="tonal"
-                    class="mt-3"
-                  >
+                  <v-alert v-if="demoStore.currentScenario"
+                    :type="demoStore.currentScenario.color === 'warning' ? 'warning' : 'info'" variant="tonal"
+                    class="mt-3">
                     {{ demoStore.currentScenario.description }}
                   </v-alert>
                 </v-card-text>
@@ -103,20 +86,9 @@ onUnmounted(() => {
                 </v-card-title>
                 <v-card-text>
                   <v-row>
-                    <v-col
-                      v-for="sample in demoStore.logSamples"
-                      :key="sample.id"
-                      cols="12"
-                      sm="6"
-                      md="3"
-                    >
-                      <v-btn
-                        :color="sample.color"
-                        :prepend-icon="sample.icon"
-                        variant="outlined"
-                        block
-                        @click="demoStore.generateSampleLogs(sample.id)"
-                      >
+                    <v-col v-for="sample in demoStore.logSamples" :key="sample.id" cols="12" sm="6" md="3">
+                      <v-btn :color="sample.color" :prepend-icon="sample.icon" variant="outlined" block
+                        @click="demoStore.generateSampleLogs(sample.id)">
                         {{ sample.name }}
                       </v-btn>
                     </v-col>
@@ -140,18 +112,12 @@ onUnmounted(() => {
                           API 模拟
                         </v-card-title>
                         <v-card-text>
-                          <v-switch
-                            v-model="demoStore.apiMockConfig.enabled"
-                            :label="
-                              demoStore.apiMockConfig.enabled ? 'API 模拟已开启' : 'API 模拟已关闭'
-                            "
-                            color="primary"
-                            @change="
+                          <v-switch v-model="demoStore.apiMockConfig.enabled" :label="demoStore.apiMockConfig.enabled ? 'API 模拟已开启' : 'API 模拟已关闭'
+                            " color="primary" @change="
                               demoStore.apiMockConfig.enabled
                                 ? demoStore.startApiMocking()
                                 : demoStore.stopApiMocking()
-                            "
-                          />
+                              " />
                           <div class="text-caption text-medium-emphasis">
                             模拟 {{ demoStore.apiMockConfig.endpoint }}
                             {{ demoStore.apiMockConfig.method }} 请求
@@ -168,18 +134,12 @@ onUnmounted(() => {
                           系统监控
                         </v-card-title>
                         <v-card-text>
-                          <v-switch
-                            v-model="demoStore.monitoringConfig.enabled"
-                            :label="
-                              demoStore.monitoringConfig.enabled ? '监控已开启' : '监控已关闭'
-                            "
-                            color="success"
-                            @change="
+                          <v-switch v-model="demoStore.monitoringConfig.enabled" :label="demoStore.monitoringConfig.enabled ? '监控已开启' : '监控已关闭'
+                            " color="success" @change="
                               demoStore.monitoringConfig.enabled
                                 ? demoStore.startMonitoring()
                                 : demoStore.stopMonitoring()
-                            "
-                          />
+                              " />
                           <div class="text-caption text-medium-emphasis">
                             监控频率: {{ demoStore.monitoringConfig.interval / 1000 }}秒
                           </div>
@@ -290,36 +250,28 @@ onUnmounted(() => {
                     <template v-slot:prepend>
                       <v-icon size="small">mdi-database</v-icon>
                     </template>
-                    <v-list-item-title
-                      >最大日志数: {{ demoStore.panelConfig.maxLogs }}</v-list-item-title
-                    >
+                    <v-list-item-title>最大日志数: {{ demoStore.panelConfig.maxLogs }}</v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <template v-slot:prepend>
                       <v-icon size="small">mdi-arrow-down</v-icon>
                     </template>
-                    <v-list-item-title
-                      >自动滚动:
-                      {{ demoStore.panelConfig.autoScroll ? '是' : '否' }}</v-list-item-title
-                    >
+                    <v-list-item-title>自动滚动:
+                      {{ demoStore.panelConfig.autoScroll ? '是' : '否' }}</v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <template v-slot:prepend>
                       <v-icon size="small">mdi-filter</v-icon>
                     </template>
-                    <v-list-item-title
-                      >过滤功能:
-                      {{ demoStore.panelConfig.enableFilter ? '开启' : '关闭' }}</v-list-item-title
-                    >
+                    <v-list-item-title>过滤功能:
+                      {{ demoStore.panelConfig.enableFilter ? '开启' : '关闭' }}</v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <template v-slot:prepend>
                       <v-icon size="small">mdi-download</v-icon>
                     </template>
-                    <v-list-item-title
-                      >导出功能:
-                      {{ demoStore.panelConfig.enableExport ? '开启' : '关闭' }}</v-list-item-title
-                    >
+                    <v-list-item-title>导出功能:
+                      {{ demoStore.panelConfig.enableExport ? '开启' : '关闭' }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </div>
@@ -370,7 +322,7 @@ onUnmounted(() => {
   <AppFooter />
 
   <!-- LogPanel 组件 - 按页面需要使用 -->
-  <LogPanel v-bind="demoStore.panelConfig" :showPanel="demoStore.isLogPanelOpen" />
+  <LogPanel v-bind="demoStore.panelConfig" v-model:showPanel="demoStore.isLogPanelOpen" />
 </template>
 
 <style scoped>

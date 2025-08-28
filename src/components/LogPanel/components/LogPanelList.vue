@@ -2,18 +2,9 @@
   <!-- 日志列表 -->
   <div ref="logContainer" class="log-list-container">
     <v-list v-if="displayLogs.length > 0" color="transparent" class="log-list">
-      <v-list-item
-        v-for="log in displayLogs"
-        :key="log.id"
-        class="log-item"
-        @click="$emit('showLogDetail', log)"
-      >
+      <v-list-item v-for="log in displayLogs" :key="log.id" class="log-item" @click="$emit('showLogDetail', log)">
         <template v-slot:prepend>
-          <v-icon
-            :icon="getLogLevelIcon(log.level)"
-            :color="getLogLevelColor(log.level)"
-            size="small"
-          />
+          <v-icon :icon="getLogLevelIcon(log.level)" :color="getLogLevelColor(log.level)" size="small" />
         </template>
 
         <v-list-item-title class="log-message">
@@ -33,12 +24,8 @@
         </v-list-item-subtitle>
 
         <template v-slot:append>
-          <v-btn
-            icon="mdi-content-copy"
-            variant="text"
-            size="x-small"
-            @click.stop="$emit('copyLogMessage', log.message)"
-          />
+          <v-btn icon="mdi-content-copy" variant="text" size="x-small"
+            @click.stop="$emit('copyLogMessage', log.message)" />
         </template>
       </v-list-item>
     </v-list>

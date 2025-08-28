@@ -30,6 +30,10 @@ const props = withDefaults(defineProps<Props>(), {
   enableExport: true,
 })
 
+const emit = defineEmits<{
+  'update:showPanel': [value: boolean]
+}>()
+
 const logPanelStore = useLogPanelStore()
 
 // 组件内部状态
@@ -174,10 +178,26 @@ const unlockBodyScroll = () => {
   document.body.style.paddingRight = ''
 }
 
+// 同步外部showPanel属性和内部store状态
+watch(() => props.showPanel, (newShowPanel) => {
+  if (newShowPanel !== logPanelStore.panelOpen) {
+    if (newShowPanel) {
+      logPanelStore.openPanel()
+    } else {
+      logPanelStore.closePanel()
+    }
+  }
+}, { immediate: true })
+
 // 监听面板开关状态
 watch(
   () => logPanelStore.panelOpen,
   (isOpen) => {
+    // 发射状态变化事件，保持与外部同步
+    if (isOpen !== props.showPanel) {
+      emit('update:showPanel', isOpen)
+    }
+
     if (isOpen) {
       lockBodyScroll()
       // 面板打开时自动滚动到底部
@@ -241,66 +261,36 @@ onMounted(() => {
   <!-- 使用 Teleport 将日志面板挂载到 body，确保不受任何父容器层叠上下文影响 -->
   <Teleport to="body">
     <!-- 日志面板抽屉 -->
-    <v-navigation-drawer
-      v-model="logPanelStore.panelOpen"
-      location="right"
-      :width="width"
-      temporary
-      :color="color"
-      dark
-      :elevation="elevation"
-      :style="{ zIndex: 2147483647 }"
-      class="log-panel-drawer"
-    >
+    <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" temporary :color="color" dark
+      :elevation="elevation" :style="{ zIndex: 2147483647 }" class="log-panel-drawer">
       <!-- 头部工具栏 -->
-      <LogPanelHeader
-        :display-logs-count="displayLogs.length"
-        :is-filter-active="!!logPanelStore.isFilterActive"
-        :active-filter-count="logPanelStore.activeFilterCount"
-        :log-count="logPanelStore.logCount"
-        @toggle-filter="handleToggleFilter"
-        @export-logs="handleExportLogs"
-        @clear-logs="handleClearLogs"
-        @close-panel="handleClosePanel"
-      />
+      <LogPanelHeader :display-logs-count="displayLogs.length" :is-filter-active="!!logPanelStore.isFilterActive"
+        :active-filter-count="logPanelStore.activeFilterCount" :log-count="logPanelStore.logCount"
+        @toggle-filter="handleToggleFilter" @export-logs="handleExportLogs" @clear-logs="handleClearLogs"
+        @close-panel="handleClosePanel" />
 
       <!-- 过滤器面板 -->
-      <LogPanelFilter
-        :show-filter-panel="showFilterPanel"
-        v-model:search-keyword="searchKeyword"
-        v-model:temp-level-filter="tempLevelFilter"
-        v-model:temp-category-filter="tempCategoryFilter"
-        v-model:temp-source-filter="tempSourceFilter"
-        :log-level-options="logLevelOptions"
-        :available-categories="logPanelStore.availableCategories"
-        :available-sources="logPanelStore.availableSources"
-        @apply-filters="handleApplyFilters"
-        @clear-filters="handleClearFilters"
-      />
+      <LogPanelFilter :show-filter-panel="showFilterPanel" v-model:search-keyword="searchKeyword"
+        v-model:temp-level-filter="tempLevelFilter" v-model:temp-category-filter="tempCategoryFilter"
+        v-model:temp-source-filter="tempSourceFilter" :log-level-options="logLevelOptions"
+        :available-categories="logPanelStore.availableCategories" :available-sources="logPanelStore.availableSources"
+        @apply-filters="handleApplyFilters" @clear-filters="handleClearFilters" />
 
       <!-- 日志统计 -->
       <LogPanelStats :log-level-options="logLevelOptions" :log-stats="logPanelStore.logStats" />
 
       <!-- 日志列表 -->
-      <LogPanelList
-        ref="logListRef"
-        :display-logs="displayLogs"
-        :auto-scroll="!!autoScroll"
-        @show-log-detail="handleShowLogDetail"
-        @copy-log-message="handleCopyLogMessage"
-        @add-sample-logs="handleAddSampleLogs"
-      />
+      <LogPanelList ref="logListRef" :display-logs="displayLogs" :auto-scroll="!!autoScroll"
+        @show-log-detail="handleShowLogDetail" @copy-log-message="handleCopyLogMessage"
+        @add-sample-logs="handleAddSampleLogs" />
 
       <!-- 底部快捷操作 -->
       <LogPanelFooter @add-test-log="handleAddTestLog" />
     </v-navigation-drawer>
 
     <!-- 日志详情对话框 -->
-    <LogDetailDialog
-      v-model:show-detail-dialog="showDetailDialog"
-      :selected-log="selectedLog"
-      @copy-log-message="handleCopyLogMessage"
-    />
+    <LogDetailDialog v-model:show-detail-dialog="showDetailDialog" :selected-log="selectedLog"
+      @copy-log-message="handleCopyLogMessage" />
   </Teleport>
 </template>
 

@@ -4,35 +4,17 @@
     <v-card v-show="showFilterPanel" flat color="grey-darken-3" class="filter-panel">
       <v-card-text>
         <!-- 搜索框 -->
-        <v-text-field
-          :model-value="searchKeyword"
-          @update:model-value="$emit('update:searchKeyword', $event)"
-          label="搜索关键词"
-          prepend-inner-icon="mdi-magnify"
-          variant="outlined"
-          density="compact"
-          clearable
-          hide-details
-          class="mb-3"
-        />
+        <v-text-field :model-value="searchKeyword" @update:model-value="$emit('update:searchKeyword', $event)"
+          label="搜索关键词" prepend-inner-icon="mdi-magnify" variant="outlined" density="compact" clearable hide-details
+          class="mb-3" />
 
         <!-- 级别过滤 -->
         <div class="mb-3">
           <v-label class="text-caption mb-1">日志级别</v-label>
-          <v-chip-group
-            :model-value="tempLevelFilter"
-            @update:model-value="$emit('update:tempLevelFilter', $event)"
-            multiple
-            selected-class="text-primary"
-          >
-            <v-chip
-              v-for="level in logLevelOptions"
-              :key="level.value"
-              :value="level.value"
-              :color="level.color"
-              size="small"
-              variant="outlined"
-            >
+          <v-chip-group :model-value="tempLevelFilter" @update:model-value="$emit('update:tempLevelFilter', $event)"
+            multiple selected-class="text-primary">
+            <v-chip v-for="level in logLevelOptions" :key="level.value" :value="level.value" :color="level.color"
+              size="small" variant="outlined">
               <v-icon start :icon="getLogLevelIcon(level.value)" size="small" />
               {{ level.title }}
             </v-chip>
@@ -40,32 +22,14 @@
         </div>
 
         <!-- 分类过滤 -->
-        <v-select
-          v-if="availableCategories.length > 0"
-          :model-value="tempCategoryFilter"
-          @update:model-value="$emit('update:tempCategoryFilter', $event)"
-          :items="availableCategories"
-          label="分类"
-          multiple
-          variant="outlined"
-          density="compact"
-          hide-details
-          class="mb-3"
-        />
+        <v-select v-if="availableCategories.length > 0" :model-value="tempCategoryFilter"
+          @update:model-value="$emit('update:tempCategoryFilter', $event)" :items="availableCategories" label="分类"
+          multiple variant="outlined" density="compact" hide-details class="mb-3" />
 
         <!-- 来源过滤 -->
-        <v-select
-          v-if="availableSources.length > 0"
-          :model-value="tempSourceFilter"
-          @update:model-value="$emit('update:tempSourceFilter', $event)"
-          :items="availableSources"
-          label="来源"
-          multiple
-          variant="outlined"
-          density="compact"
-          hide-details
-          class="mb-3"
-        />
+        <v-select v-if="availableSources.length > 0" :model-value="tempSourceFilter"
+          @update:model-value="$emit('update:tempSourceFilter', $event)" :items="availableSources" label="来源" multiple
+          variant="outlined" density="compact" hide-details class="mb-3" />
 
         <!-- 过滤器操作按钮 -->
         <div class="d-flex gap-2">

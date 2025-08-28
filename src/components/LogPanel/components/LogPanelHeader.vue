@@ -12,26 +12,15 @@
     <v-spacer />
 
     <!-- 工具按钮 -->
-    <v-btn
-      icon="mdi-filter-variant"
-      variant="text"
-      size="small"
-      @click="$emit('toggleFilter')"
-      :color="isFilterActive ? 'primary' : 'white'"
-    >
+    <v-btn icon="mdi-filter-variant" variant="text" size="small" @click="$emit('toggleFilter')"
+      :color="isFilterActive ? 'primary' : 'white'">
       <v-icon>mdi-filter-variant</v-icon>
       <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="error" inline />
     </v-btn>
 
     <v-menu>
       <template v-slot:activator="{ props: menuProps }">
-        <v-btn
-          icon="mdi-export"
-          variant="text"
-          size="small"
-          v-bind="menuProps"
-          :disabled="displayLogsCount === 0"
-        />
+        <v-btn icon="mdi-export" variant="text" size="small" v-bind="menuProps" :disabled="displayLogsCount === 0" />
       </template>
       <v-list>
         <v-list-item @click="$emit('exportLogs', 'json')">
@@ -46,13 +35,7 @@
       </v-list>
     </v-menu>
 
-    <v-btn
-      icon="mdi-delete"
-      variant="text"
-      size="small"
-      @click="$emit('clearLogs')"
-      :disabled="logCount === 0"
-    />
+    <v-btn icon="mdi-delete" variant="text" size="small" @click="$emit('clearLogs')" :disabled="logCount === 0" />
 
     <v-btn icon="mdi-close" variant="text" size="small" @click="$emit('closePanel')" />
   </v-app-bar>
