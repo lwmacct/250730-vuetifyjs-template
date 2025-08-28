@@ -1,13 +1,27 @@
 <template>
   <!-- 日志详情对话框 -->
-  <v-dialog :model-value="showDetailDialog" @update:model-value="$emit('update:showDetailDialog', $event)"
-    max-width="800" :style="{ zIndex: 2147483647 }" class="log-detail-dialog">
+  <v-dialog
+    :model-value="showDetailDialog"
+    @update:model-value="$emit('update:showDetailDialog', $event)"
+    max-width="800"
+    :style="{ zIndex: 2147483647 }"
+    class="log-detail-dialog"
+  >
     <v-card v-if="selectedLog">
       <v-card-title class="d-flex align-center">
-        <v-icon :icon="getLogLevelIcon(selectedLog.level)" :color="getLogLevelColor(selectedLog.level)" class="mr-2" />
+        <v-icon
+          :icon="getLogLevelIcon(selectedLog.level)"
+          :color="getLogLevelColor(selectedLog.level)"
+          class="mr-2"
+        />
         日志详情
         <v-spacer />
-        <v-btn icon="mdi-close" variant="text" size="small" @click="$emit('update:showDetailDialog', false)" />
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          size="small"
+          @click="$emit('update:showDetailDialog', false)"
+        />
       </v-card-title>
 
       <v-card-text>
@@ -59,7 +73,10 @@
 
       <v-card-actions>
         <v-spacer />
-        <v-btn color="primary" @click="$emit('copyLogMessage', JSON.stringify(selectedLog, null, 2))">
+        <v-btn
+          color="primary"
+          @click="$emit('copyLogMessage', JSON.stringify(selectedLog, null, 2))"
+        >
           复制完整日志
         </v-btn>
         <v-btn @click="$emit('update:showDetailDialog', false)">关闭</v-btn>

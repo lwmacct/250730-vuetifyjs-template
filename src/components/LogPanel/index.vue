@@ -1,7 +1,15 @@
 <template>
   <!-- 日志面板主组件 -->
-  <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" temporary :color="color" dark
-    :elevation="elevation" class="log-panel-drawer">
+  <v-navigation-drawer
+    v-model="logPanelStore.panelOpen"
+    location="right"
+    :width="width"
+    temporary
+    :color="color"
+    dark
+    :elevation="elevation"
+    class="log-panel-drawer"
+  >
     <!-- 头部工具栏 -->
     <v-app-bar color="transparent" flat density="compact" class="log-panel-header">
       <v-app-bar-title class="text-h6">
@@ -17,18 +25,32 @@
       <!-- 工具按钮组 -->
       <div class="d-flex align-center ga-1">
         <!-- 过滤按钮 -->
-        <v-btn variant="text" size="small" icon="mdi-filter-variant" @click="showFilterPanel = !showFilterPanel"
-          :color="logPanelStore.isFilterActive ? 'primary' : 'white'">
+        <v-btn
+          variant="text"
+          size="small"
+          icon="mdi-filter-variant"
+          @click="showFilterPanel = !showFilterPanel"
+          :color="logPanelStore.isFilterActive ? 'primary' : 'white'"
+        >
           <v-icon>mdi-filter-variant</v-icon>
-          <v-badge v-if="logPanelStore.activeFilterCount > 0" :content="logPanelStore.activeFilterCount" color="error"
-            inline />
+          <v-badge
+            v-if="logPanelStore.activeFilterCount > 0"
+            :content="logPanelStore.activeFilterCount"
+            color="error"
+            inline
+          />
         </v-btn>
 
         <!-- 导出按钮 -->
         <v-menu>
           <template v-slot:activator="{ props: menuProps }">
-            <v-btn icon="mdi-export" variant="text" size="small" v-bind="menuProps"
-              :disabled="displayLogs.length === 0" />
+            <v-btn
+              icon="mdi-export"
+              variant="text"
+              size="small"
+              v-bind="menuProps"
+              :disabled="displayLogs.length === 0"
+            />
           </template>
           <v-list>
             <v-list-item @click="handleExportLogs('json')">
@@ -44,8 +66,13 @@
         </v-menu>
 
         <!-- 清空按钮 -->
-        <v-btn icon="mdi-delete" variant="text" size="small" @click="handleClearLogs"
-          :disabled="logPanelStore.logCount === 0" />
+        <v-btn
+          icon="mdi-delete"
+          variant="text"
+          size="small"
+          @click="handleClearLogs"
+          :disabled="logPanelStore.logCount === 0"
+        />
 
         <!-- 关闭按钮 -->
         <v-btn icon="mdi-close" variant="text" size="small" @click="handleClosePanel" />
@@ -57,15 +84,29 @@
       <v-card v-show="showFilterPanel" flat color="grey-darken-3" class="filter-panel">
         <v-card-text>
           <!-- 搜索框 -->
-          <v-text-field v-model="searchKeyword" label="搜索关键词" prepend-inner-icon="mdi-magnify" variant="outlined"
-            density="compact" clearable hide-details class="mb-3" />
+          <v-text-field
+            v-model="searchKeyword"
+            label="搜索关键词"
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            density="compact"
+            clearable
+            hide-details
+            class="mb-3"
+          />
 
           <!-- 级别过滤 -->
           <div class="mb-3">
             <v-label class="text-caption mb-1">日志级别</v-label>
             <v-chip-group v-model="tempLevelFilter" multiple selected-class="text-primary">
-              <v-chip v-for="level in logLevelOptions" :key="level.value" :value="level.value" :color="level.color"
-                size="small" variant="outlined">
+              <v-chip
+                v-for="level in logLevelOptions"
+                :key="level.value"
+                :value="level.value"
+                :color="level.color"
+                size="small"
+                variant="outlined"
+              >
                 <v-icon start :icon="getLogLevelIcon(level.value)" size="small" />
                 {{ level.title }}
               </v-chip>
@@ -73,14 +114,30 @@
           </div>
 
           <!-- 分类过滤 -->
-          <v-select v-if="logPanelStore.availableCategories.length > 0" v-model="tempCategoryFilter"
-            :items="logPanelStore.availableCategories" label="分类" multiple variant="outlined" density="compact"
-            hide-details class="mb-3" />
+          <v-select
+            v-if="logPanelStore.availableCategories.length > 0"
+            v-model="tempCategoryFilter"
+            :items="logPanelStore.availableCategories"
+            label="分类"
+            multiple
+            variant="outlined"
+            density="compact"
+            hide-details
+            class="mb-3"
+          />
 
           <!-- 来源过滤 -->
-          <v-select v-if="logPanelStore.availableSources.length > 0" v-model="tempSourceFilter"
-            :items="logPanelStore.availableSources" label="来源" multiple variant="outlined" density="compact"
-            hide-details class="mb-3" />
+          <v-select
+            v-if="logPanelStore.availableSources.length > 0"
+            v-model="tempSourceFilter"
+            :items="logPanelStore.availableSources"
+            label="来源"
+            multiple
+            variant="outlined"
+            density="compact"
+            hide-details
+            class="mb-3"
+          />
 
           <!-- 过滤器操作按钮 -->
           <div class="d-flex ga-2">
@@ -94,8 +151,13 @@
     <!-- 日志统计 -->
     <div class="log-stats pa-3">
       <div class="d-flex ga-2">
-        <v-chip v-for="level in logLevelOptions" :key="level.value" :color="level.color" size="x-small"
-          variant="outlined">
+        <v-chip
+          v-for="level in logLevelOptions"
+          :key="level.value"
+          :color="level.color"
+          size="x-small"
+          variant="outlined"
+        >
           <v-icon start :icon="getLogLevelIcon(level.value)" size="x-small" />
           {{ logPanelStore.logStats[level.value] }}
         </v-chip>
@@ -105,9 +167,18 @@
     <!-- 日志列表 -->
     <div ref="logContainer" class="log-list-container">
       <v-list v-if="displayLogs.length > 0" color="transparent" class="log-list">
-        <v-list-item v-for="log in displayLogs" :key="log.id" class="log-item" @click="handleShowLogDetail(log)">
+        <v-list-item
+          v-for="log in displayLogs"
+          :key="log.id"
+          class="log-item"
+          @click="handleShowLogDetail(log)"
+        >
           <template v-slot:prepend>
-            <v-icon :icon="getLogLevelIcon(log.level)" :color="getLogLevelColor(log.level)" size="small" />
+            <v-icon
+              :icon="getLogLevelIcon(log.level)"
+              :color="getLogLevelColor(log.level)"
+              size="small"
+            />
           </template>
 
           <v-list-item-title class="log-message">
@@ -127,8 +198,12 @@
           </v-list-item-subtitle>
 
           <template v-slot:append>
-            <v-btn icon="mdi-content-copy" variant="text" size="x-small"
-              @click.stop="handleCopyLogMessage(log.message)" />
+            <v-btn
+              icon="mdi-content-copy"
+              variant="text"
+              size="x-small"
+              @click.stop="handleCopyLogMessage(log.message)"
+            />
           </template>
         </v-list-item>
       </v-list>
@@ -159,7 +234,11 @@
   <v-dialog v-model="showDetailDialog" max-width="800" class="log-detail-dialog">
     <v-card v-if="selectedLog">
       <v-card-title class="d-flex align-center">
-        <v-icon :icon="getLogLevelIcon(selectedLog.level)" :color="getLogLevelColor(selectedLog.level)" class="mr-2" />
+        <v-icon
+          :icon="getLogLevelIcon(selectedLog.level)"
+          :color="getLogLevelColor(selectedLog.level)"
+          class="mr-2"
+        />
         日志详情
         <v-spacer />
         <v-btn icon="mdi-close" variant="text" size="small" @click="showDetailDialog = false" />

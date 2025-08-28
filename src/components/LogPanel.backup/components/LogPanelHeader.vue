@@ -14,8 +14,13 @@
     <!-- 工具按钮组 -->
     <div class="d-flex align-center">
       <!-- 过滤按钮 -->
-      <v-btn variant="text" size="small" @click="$emit('toggleFilter')" :color="isFilterActive ? 'primary' : 'white'"
-        class="mr-1">
+      <v-btn
+        variant="text"
+        size="small"
+        @click="$emit('toggleFilter')"
+        :color="isFilterActive ? 'primary' : 'white'"
+        class="mr-1"
+      >
         <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="error" inline>
           <v-icon>mdi-filter-variant</v-icon>
         </v-badge>
@@ -25,8 +30,14 @@
       <!-- 导出按钮菜单 -->
       <v-menu>
         <template v-slot:activator="{ props: menuProps }">
-          <v-btn icon="mdi-export" variant="text" size="small" v-bind="menuProps" :disabled="displayLogsCount === 0"
-            class="mr-1" />
+          <v-btn
+            icon="mdi-export"
+            variant="text"
+            size="small"
+            v-bind="menuProps"
+            :disabled="displayLogsCount === 0"
+            class="mr-1"
+          />
         </template>
         <v-list>
           <v-list-item @click="$emit('exportLogs', 'json')">
@@ -42,8 +53,14 @@
       </v-menu>
 
       <!-- 清空按钮 -->
-      <v-btn icon="mdi-delete" variant="text" size="small" @click="$emit('clearLogs')" :disabled="logCount === 0"
-        class="mr-1" />
+      <v-btn
+        icon="mdi-delete"
+        variant="text"
+        size="small"
+        @click="$emit('clearLogs')"
+        :disabled="logCount === 0"
+        class="mr-1"
+      />
 
       <!-- 关闭按钮 -->
       <v-btn icon="mdi-close" variant="text" size="small" @click="$emit('closePanel')" />
