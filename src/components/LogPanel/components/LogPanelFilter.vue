@@ -1,7 +1,7 @@
 <template>
   <!-- 过滤器面板 -->
-  <v-expand-transition>
-    <v-card v-show="showFilterPanel" flat color="grey-darken-3" class="filter-panel">
+  <div v-show="showFilterPanel" class="filter-panel">
+    <v-card flat color="grey-darken-3">
       <v-card-text>
         <!-- 搜索框 -->
         <v-text-field
@@ -74,7 +74,7 @@
         </div>
       </v-card-text>
     </v-card>
-  </v-expand-transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -114,5 +114,14 @@ defineEmits<Emits>()
 <style scoped>
 .filter-panel {
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 确保过滤面板内容不会脱离正常文档流 */
+.filter-panel .v-card {
+  position: relative;
 }
 </style>

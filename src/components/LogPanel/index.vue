@@ -287,6 +287,27 @@ onMounted(() => {
   position: relative;
 }
 
+/* v-navigation-drawer 内部布局修复 */
+:global(.log-panel-drawer .v-navigation-drawer__content) {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* 确保子组件在drawer内的正确定位 */
+:global(.log-panel-drawer .v-navigation-drawer__content > *) {
+  position: relative !important;
+  flex-shrink: 0 !important;
+  z-index: auto !important;
+}
+
+/* 日志列表容器需要可滚动 */
+:global(.log-panel-drawer .log-list-container) {
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
 /* 日志面板抽屉样式 - 恢复关键定位样式 */
 :global(.log-panel-drawer.v-navigation-drawer) {
   z-index: 2147483647 !important;

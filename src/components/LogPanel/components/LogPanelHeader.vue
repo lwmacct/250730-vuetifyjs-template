@@ -11,50 +11,43 @@
 
     <v-spacer />
 
-    <!-- 工具按钮 -->
-    <v-btn
-      icon="mdi-filter-variant"
-      variant="text"
-      size="small"
-      @click="$emit('toggleFilter')"
-      :color="isFilterActive ? 'primary' : 'white'"
-    >
-      <v-icon>mdi-filter-variant</v-icon>
-      <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="error" inline />
-    </v-btn>
+    <!-- 工具按钮组 -->
+    <div class="d-flex align-center">
+      <!-- 过滤按钮 -->
+      <v-btn variant="text" size="small" @click="$emit('toggleFilter')" :color="isFilterActive ? 'primary' : 'white'"
+        class="mr-1">
+        <v-badge v-if="activeFilterCount > 0" :content="activeFilterCount" color="error" inline>
+          <v-icon>mdi-filter-variant</v-icon>
+        </v-badge>
+        <v-icon v-else>mdi-filter-variant</v-icon>
+      </v-btn>
 
-    <v-menu>
-      <template v-slot:activator="{ props: menuProps }">
-        <v-btn
-          icon="mdi-export"
-          variant="text"
-          size="small"
-          v-bind="menuProps"
-          :disabled="displayLogsCount === 0"
-        />
-      </template>
-      <v-list>
-        <v-list-item @click="$emit('exportLogs', 'json')">
-          <v-list-item-title>导出 JSON</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="$emit('exportLogs', 'csv')">
-          <v-list-item-title>导出 CSV</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="$emit('exportLogs', 'txt')">
-          <v-list-item-title>导出 TXT</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+      <!-- 导出按钮菜单 -->
+      <v-menu>
+        <template v-slot:activator="{ props: menuProps }">
+          <v-btn icon="mdi-export" variant="text" size="small" v-bind="menuProps" :disabled="displayLogsCount === 0"
+            class="mr-1" />
+        </template>
+        <v-list>
+          <v-list-item @click="$emit('exportLogs', 'json')">
+            <v-list-item-title>导出 JSON</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="$emit('exportLogs', 'csv')">
+            <v-list-item-title>导出 CSV</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="$emit('exportLogs', 'txt')">
+            <v-list-item-title>导出 TXT</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
-    <v-btn
-      icon="mdi-delete"
-      variant="text"
-      size="small"
-      @click="$emit('clearLogs')"
-      :disabled="logCount === 0"
-    />
+      <!-- 清空按钮 -->
+      <v-btn icon="mdi-delete" variant="text" size="small" @click="$emit('clearLogs')" :disabled="logCount === 0"
+        class="mr-1" />
 
-    <v-btn icon="mdi-close" variant="text" size="small" @click="$emit('closePanel')" />
+      <!-- 关闭按钮 -->
+      <v-btn icon="mdi-close" variant="text" size="small" @click="$emit('closePanel')" />
+    </div>
   </v-app-bar>
 </template>
 
@@ -80,5 +73,25 @@ defineEmits<Emits>()
 <style scoped>
 .log-panel-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 工具按钮组样式优化 */
+.d-flex.align-center {
+  gap: 2px;
+  /* 按钮间距 */
+  flex-wrap: nowrap;
+  /* 防止换行 */
+}
+
+/* 确保按钮在窄宽度下不会变形 */
+.v-btn--size-small {
+  min-width: 32px !important;
+  width: 32px;
+  height: 32px;
+}
+
+/* 优化badge显示 */
+.v-badge {
+  line-height: 1;
 }
 </style>
