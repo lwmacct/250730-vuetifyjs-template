@@ -179,15 +179,19 @@ const unlockBodyScroll = () => {
 }
 
 // 同步外部showPanel属性和内部store状态
-watch(() => props.showPanel, (newShowPanel) => {
-  if (newShowPanel !== logPanelStore.panelOpen) {
-    if (newShowPanel) {
-      logPanelStore.openPanel()
-    } else {
-      logPanelStore.closePanel()
+watch(
+  () => props.showPanel,
+  (newShowPanel) => {
+    if (newShowPanel !== logPanelStore.panelOpen) {
+      if (newShowPanel) {
+        logPanelStore.openPanel()
+      } else {
+        logPanelStore.closePanel()
+      }
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true },
+)
 
 // 监听面板开关状态
 watch(
@@ -244,95 +248,87 @@ onMounted(() => {
   <!-- 测试：移除 Teleport，看看是否仍能正常工作 -->
   <div class="log-panel-container">
     <!-- 日志面板抽屉 -->
-    <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" temporary :color="color" dark
-      :elevation="elevation" :style="{ zIndex: 2147483647 }" class="log-panel-drawer">
+    <v-navigation-drawer
+      v-model="logPanelStore.panelOpen"
+      location="right"
+      :width="width"
+      temporary
+      :color="color"
+      dark
+      :elevation="elevation"
+      :style="{ zIndex: 2147483647 }"
+      class="log-panel-drawer"
+    >
       <!-- 头部工具栏 -->
-      <LogPanelHeader :display-logs-count="displayLogs.length" :is-filter-active="!!logPanelStore.isFilterActive"
-        :active-filter-count="logPanelStore.activeFilterCount" :log-count="logPanelStore.logCount"
-        @toggle-filter="handleToggleFilter" @export-logs="handleExportLogs" @clear-logs="handleClearLogs"
-        @close-panel="handleClosePanel" />
+      <LogPanelHeader
+        :display-logs-count="displayLogs.length"
+        :is-filter-active="!!logPanelStore.isFilterActive"
+        :active-filter-count="logPanelStore.activeFilterCount"
+        :log-count="logPanelStore.logCount"
+        @toggle-filter="handleToggleFilter"
+        @export-logs="handleExportLogs"
+        @clear-logs="handleClearLogs"
+        @close-panel="handleClosePanel"
+      />
 
       <!-- 过滤器面板 -->
-      <LogPanelFilter :show-filter-panel="showFilterPanel" v-model:search-keyword="searchKeyword"
-        v-model:temp-level-filter="tempLevelFilter" v-model:temp-category-filter="tempCategoryFilter"
-        v-model:temp-source-filter="tempSourceFilter" :log-level-options="logLevelOptions"
-        :available-categories="logPanelStore.availableCategories" :available-sources="logPanelStore.availableSources"
-        @apply-filters="handleApplyFilters" @clear-filters="handleClearFilters" />
+      <LogPanelFilter
+        :show-filter-panel="showFilterPanel"
+        v-model:search-keyword="searchKeyword"
+        v-model:temp-level-filter="tempLevelFilter"
+        v-model:temp-category-filter="tempCategoryFilter"
+        v-model:temp-source-filter="tempSourceFilter"
+        :log-level-options="logLevelOptions"
+        :available-categories="logPanelStore.availableCategories"
+        :available-sources="logPanelStore.availableSources"
+        @apply-filters="handleApplyFilters"
+        @clear-filters="handleClearFilters"
+      />
 
       <!-- 日志统计 -->
       <LogPanelStats :log-level-options="logLevelOptions" :log-stats="logPanelStore.logStats" />
 
       <!-- 日志列表 -->
-      <LogPanelList ref="logListRef" :display-logs="displayLogs" :auto-scroll="!!autoScroll"
-        @show-log-detail="handleShowLogDetail" @copy-log-message="handleCopyLogMessage"
-        @add-sample-logs="handleAddSampleLogs" />
+      <LogPanelList
+        ref="logListRef"
+        :display-logs="displayLogs"
+        :auto-scroll="!!autoScroll"
+        @show-log-detail="handleShowLogDetail"
+        @copy-log-message="handleCopyLogMessage"
+        @add-sample-logs="handleAddSampleLogs"
+      />
 
       <!-- 底部快捷操作 -->
       <LogPanelFooter @add-test-log="handleAddTestLog" />
     </v-navigation-drawer>
 
     <!-- 日志详情对话框 -->
-    <LogDetailDialog v-model:show-detail-dialog="showDetailDialog" :selected-log="selectedLog"
-      @copy-log-message="handleCopyLogMessage" />
+    <LogDetailDialog
+      v-model:show-detail-dialog="showDetailDialog"
+      :selected-log="selectedLog"
+      @copy-log-message="handleCopyLogMessage"
+    />
   </div>
 </template>
 
 <style scoped>
-/* 移除 Teleport 后的样式调整 - 保持高 z-index 确保面板层级 */
-:global(.log-panel-drawer) {
-  z-index: 2147483647 !important;
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  height: 100vh !important;
-  transform: none !important;
-  /* 覆盖 Vuetify 的 transform */
+/* 日志面板容器 */
+.log-panel-container {
+  position: relative;
 }
 
-/* 强制覆盖 Vuetify 的内置布局样式 */
+/* 日志面板抽屉样式 */
 :global(.log-panel-drawer.v-navigation-drawer) {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  height: 100vh !important;
   z-index: 2147483647 !important;
-  transform: translateX(0) !important;
-}
-
-/* 当抽屉关闭时的样式 */
-:global(.log-panel-drawer.v-navigation-drawer:not(.v-navigation-drawer--active)) {
-  transform: translateX(100%) !important;
 }
 
 /* 遮罩层模糊效果 */
-:global(.log-panel-drawer .v-overlay__scrim) {
-  backdrop-filter: blur(8px) !important;
-  background: rgba(0, 0, 0, 0.6) !important;
-}
-
-/* 针对整个overlay的模糊效果 */
-:global(.v-overlay--active[data-overlay-component='LogPanel']) {
-  backdrop-filter: blur(8px) !important;
-}
-
-/* 更通用的overlay模糊效果 - 针对temporary drawer的遮罩 */
-:global(.v-overlay--contained .v-overlay__scrim) {
-  backdrop-filter: blur(8px) !important;
-  background: rgba(0, 0, 0, 0.6) !important;
-}
-
-/* 当LogPanel激活时的全局遮罩模糊效果 */
-:global(body:has(.log-panel-drawer.v-navigation-drawer--active) .v-overlay__scrim) {
-  backdrop-filter: blur(8px) !important;
-  background: rgba(0, 0, 0, 0.6) !important;
-}
-
-/* 针对所有drawer的遮罩层 */
 :global(.v-navigation-drawer--temporary + .v-overlay .v-overlay__scrim) {
   backdrop-filter: blur(8px) !important;
   background: rgba(0, 0, 0, 0.6) !important;
 }
 
+/* 日志详情对话框层级 */
 :global(.log-detail-dialog) {
   z-index: 2147483647 !important;
 }
