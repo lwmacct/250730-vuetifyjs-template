@@ -191,6 +191,7 @@ onMounted(() => {
     :color="color"
     dark
     :elevation="elevation"
+    :style="{ zIndex: 99999 }"
     class="log-panel-drawer"
   >
     <!-- 头部工具栏 -->
@@ -426,7 +427,12 @@ onMounted(() => {
   </v-navigation-drawer>
 
   <!-- 日志详情对话框 -->
-  <v-dialog v-model="showDetailDialog" max-width="800">
+  <v-dialog
+    v-model="showDetailDialog"
+    max-width="800"
+    :style="{ zIndex: 999999 }"
+    class="log-detail-dialog"
+  >
     <v-card v-if="selectedLog">
       <v-card-title class="d-flex align-center">
         <v-icon
@@ -499,7 +505,20 @@ onMounted(() => {
 
 <style scoped>
 .log-panel-drawer {
-  z-index: 9999;
+  z-index: 99999 !important;
+}
+
+.log-detail-dialog {
+  z-index: 999999 !important;
+}
+
+/* 确保对话框覆盖层也有足够高的层级 */
+:deep(.v-dialog__content) {
+  z-index: 999999 !important;
+}
+
+:deep(.v-overlay--active) {
+  z-index: 999998 !important;
 }
 
 .log-panel-header {

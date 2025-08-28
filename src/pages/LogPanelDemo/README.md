@@ -55,6 +55,7 @@ pages/LogPanelDemo/
 
 - **作用**: 管理演示页面的状态、配置和业务逻辑
 - **核心功能**:
+
   ```typescript
   export const useLogPanelDemoStore = defineStore('logPanelDemo', () => {
     // 演示模式管理
