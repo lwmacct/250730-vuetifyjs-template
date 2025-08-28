@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   elevation: 2,
   color: 'grey-darken-4',
   height: 50,
+  zIndex: 1000,
   useCustomContent: false,
   customContent: undefined,
 })
@@ -69,7 +70,14 @@ const handleMouseEnter = (itemId: string) => {
 
 <template>
   <!-- 头部导航栏 -->
-  <v-app-bar app :elevation="elevation" :color="color" dark :height="height">
+  <v-app-bar
+    app
+    :elevation="elevation"
+    :color="color"
+    dark
+    :height="height"
+    :style="{ zIndex: zIndex }"
+  >
     <!-- 导航图标 -->
     <v-app-bar-nav-icon
       v-if="showNavIcon"

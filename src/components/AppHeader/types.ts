@@ -41,6 +41,7 @@ export interface Props {
   elevation?: number | string
   color?: string
   height?: number | string
+  zIndex?: number | string
 
   // 自定义内容相关
   useCustomContent?: boolean

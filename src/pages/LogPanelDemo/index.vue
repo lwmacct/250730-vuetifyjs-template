@@ -29,6 +29,7 @@ onUnmounted(() => {
   <AppHeader
     :title="pageTitle"
     :titleIcon="pageIcon"
+    :z-index="1000"
     :actions="[
       {
         icon: demoStore.isLogPanelOpen ? 'mdi-console' : 'mdi-console-line',

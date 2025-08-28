@@ -60,6 +60,7 @@ const generateSlotContent = () => {
     <AppHeader
       :title="pageTitle"
       :titleIcon="pageIcon"
+      :z-index="1000"
       :actions="headerStore.headerActions"
       :color="headerStore.currentStyle.color"
       :elevation="headerStore.currentStyle.elevation"
