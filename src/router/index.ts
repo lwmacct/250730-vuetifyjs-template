@@ -127,6 +127,23 @@ const router = createRouter({
         requireAuth: false,
       },
     },
+
+    // LogPanel 演示页面
+    {
+      path: '/log-panel-demo',
+      name: 'log-panel-demo',
+      component: () => import('@/pages/LogPanelDemo/index.vue'),
+      meta: {
+        title: 'LogPanel 演示',
+        icon: 'mdi-console',
+        description: 'LogPanel日志组件的功能演示和使用示例',
+        keywords: ['log', '日志', '面板', '演示', '组件', 'console'],
+        category: 'Demo',
+        priority: 15,
+        showInMenu: true,
+        requireAuth: false,
+      },
+    },
     // 404 页面重定向到首页
     {
       path: '/:pathMatch(.*)*',
