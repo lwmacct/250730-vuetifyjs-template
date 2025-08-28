@@ -1,17 +1,8 @@
 <template>
   <!-- 简洁版日志面板 -->
   <Teleport to="body">
-    <v-navigation-drawer 
-      v-model="logPanelStore.panelOpen" 
-      location="right" 
-      :width="width" 
-      :color="color"
-      :elevation="elevation" 
-      class="log-drawer" 
-      permanent
-      :rail="!logPanelStore.panelOpen"
-      rail-width="0"
-      hide-overlay
+    <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" :color="color"
+      :elevation="elevation" class="log-drawer" permanent :rail="!logPanelStore.panelOpen" rail-width="0" hide-overlay
       disable-route-watcher>
       <!-- 内容区域 -->
       <div class="log-content">
