@@ -248,66 +248,36 @@ onMounted(() => {
   <!-- 测试：移除 Teleport，看看是否仍能正常工作 -->
   <div class="log-panel-container">
     <!-- 日志面板抽屉 -->
-    <v-navigation-drawer
-      v-model="logPanelStore.panelOpen"
-      location="right"
-      :width="width"
-      temporary
-      :color="color"
-      dark
-      :elevation="elevation"
-      :style="{ zIndex: 2147483647 }"
-      class="log-panel-drawer"
-    >
+    <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" temporary :color="color" dark
+      :elevation="elevation" :style="{ zIndex: 2147483647 }" class="log-panel-drawer">
       <!-- 头部工具栏 -->
-      <LogPanelHeader
-        :display-logs-count="displayLogs.length"
-        :is-filter-active="!!logPanelStore.isFilterActive"
-        :active-filter-count="logPanelStore.activeFilterCount"
-        :log-count="logPanelStore.logCount"
-        @toggle-filter="handleToggleFilter"
-        @export-logs="handleExportLogs"
-        @clear-logs="handleClearLogs"
-        @close-panel="handleClosePanel"
-      />
+      <LogPanelHeader :display-logs-count="displayLogs.length" :is-filter-active="!!logPanelStore.isFilterActive"
+        :active-filter-count="logPanelStore.activeFilterCount" :log-count="logPanelStore.logCount"
+        @toggle-filter="handleToggleFilter" @export-logs="handleExportLogs" @clear-logs="handleClearLogs"
+        @close-panel="handleClosePanel" />
 
       <!-- 过滤器面板 -->
-      <LogPanelFilter
-        :show-filter-panel="showFilterPanel"
-        v-model:search-keyword="searchKeyword"
-        v-model:temp-level-filter="tempLevelFilter"
-        v-model:temp-category-filter="tempCategoryFilter"
-        v-model:temp-source-filter="tempSourceFilter"
-        :log-level-options="logLevelOptions"
-        :available-categories="logPanelStore.availableCategories"
-        :available-sources="logPanelStore.availableSources"
-        @apply-filters="handleApplyFilters"
-        @clear-filters="handleClearFilters"
-      />
+      <LogPanelFilter :show-filter-panel="showFilterPanel" v-model:search-keyword="searchKeyword"
+        v-model:temp-level-filter="tempLevelFilter" v-model:temp-category-filter="tempCategoryFilter"
+        v-model:temp-source-filter="tempSourceFilter" :log-level-options="logLevelOptions"
+        :available-categories="logPanelStore.availableCategories" :available-sources="logPanelStore.availableSources"
+        @apply-filters="handleApplyFilters" @clear-filters="handleClearFilters" />
 
       <!-- 日志统计 -->
       <LogPanelStats :log-level-options="logLevelOptions" :log-stats="logPanelStore.logStats" />
 
       <!-- 日志列表 -->
-      <LogPanelList
-        ref="logListRef"
-        :display-logs="displayLogs"
-        :auto-scroll="!!autoScroll"
-        @show-log-detail="handleShowLogDetail"
-        @copy-log-message="handleCopyLogMessage"
-        @add-sample-logs="handleAddSampleLogs"
-      />
+      <LogPanelList ref="logListRef" :display-logs="displayLogs" :auto-scroll="!!autoScroll"
+        @show-log-detail="handleShowLogDetail" @copy-log-message="handleCopyLogMessage"
+        @add-sample-logs="handleAddSampleLogs" />
 
       <!-- 底部快捷操作 -->
       <LogPanelFooter @add-test-log="handleAddTestLog" />
     </v-navigation-drawer>
 
     <!-- 日志详情对话框 -->
-    <LogDetailDialog
-      v-model:show-detail-dialog="showDetailDialog"
-      :selected-log="selectedLog"
-      @copy-log-message="handleCopyLogMessage"
-    />
+    <LogDetailDialog v-model:show-detail-dialog="showDetailDialog" :selected-log="selectedLog"
+      @copy-log-message="handleCopyLogMessage" />
   </div>
 </template>
 
@@ -317,9 +287,19 @@ onMounted(() => {
   position: relative;
 }
 
-/* 日志面板抽屉样式 */
+/* 日志面板抽屉样式 - 恢复关键定位样式 */
 :global(.log-panel-drawer.v-navigation-drawer) {
   z-index: 2147483647 !important;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  transform: translateX(0) !important;
+}
+
+/* 当抽屉关闭时的样式 - 保持滑动动画 */
+:global(.log-panel-drawer.v-navigation-drawer:not(.v-navigation-drawer--active)) {
+  transform: translateX(100%) !important;
 }
 
 /* 遮罩层模糊效果 */
