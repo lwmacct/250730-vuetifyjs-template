@@ -17,7 +17,7 @@ const routeMeta = routeMenuStore.useRouteMeta()
 <template>
   <v-app>
     <!-- 使用通用头部组件 -->
-    <AppHeader :title="pageTitle" :titleIcon="pageIcon" :z-index="1000" />
+    <AppHeader :title="pageTitle" :titleIcon="pageIcon" />
 
     <!-- 主要内容区域 -->
     <v-main>
