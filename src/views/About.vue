@@ -7,7 +7,7 @@ import AppFooter from '@/components/AppFooter/index.vue'
 <template>
   <v-app>
     <!-- 使用通用头部组件 -->
-    <AppHeader title="Vue + Vuetify 应用" :z-index="1000" />
+    <AppHeader title="Vue + Vuetify 应用" />
 
     <!-- 主要内容区域 -->
     <v-main>

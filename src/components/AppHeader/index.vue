@@ -70,10 +70,22 @@ const handleMouseEnter = (itemId: string) => {
 
 <template>
   <!-- 头部导航栏 -->
-  <v-app-bar app :elevation="elevation" :color="color" dark :height="height" :style="{ zIndex: zIndex }">
+  <v-app-bar
+    app
+    :elevation="elevation"
+    :color="color"
+    dark
+    :height="height"
+    :style="{ zIndex: zIndex }"
+  >
     <!-- 导航图标 -->
-    <v-app-bar-nav-icon v-if="showNavIcon" @click="handleNavIconClick" :color="navIconColor" variant="text"
-      class="mr-2">
+    <v-app-bar-nav-icon
+      v-if="showNavIcon"
+      @click="handleNavIconClick"
+      :color="navIconColor"
+      variant="text"
+      class="mr-2"
+    >
       <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
     </v-app-bar-nav-icon>
     <!-- 菜单按钮分割线 -->
@@ -93,8 +105,16 @@ const handleMouseEnter = (itemId: string) => {
   </v-app-bar>
 
   <!-- 抽屉菜单 -->
-  <v-navigation-drawer v-if="showDrawer" v-model="drawer" app temporary color="grey-darken-4" dark
-    class="drawer-container" :width="drawerWidth">
+  <v-navigation-drawer
+    v-if="showDrawer"
+    v-model="drawer"
+    app
+    temporary
+    color="grey-darken-4"
+    dark
+    class="drawer-container"
+    :width="drawerWidth"
+  >
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面菜单项 -->
       <AllPagesMenuItem :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
@@ -109,14 +129,21 @@ const handleMouseEnter = (itemId: string) => {
     </v-list>
 
     <!-- 悬停显示的二级菜单面板 -->
-    <div v-if="hoveredItem && drawer" class="hover-panel" @mouseenter="handleMouseEnter(hoveredItem)">
+    <div
+      v-if="hoveredItem && drawer"
+      class="hover-panel"
+      @mouseenter="handleMouseEnter(hoveredItem)"
+    >
       <!-- 连接区域 - 确保鼠标可以移动到面板 -->
       <div class="connection-area"></div>
       <!-- 面板内容 -->
       <!-- 所有页面专用组件 -->
       <template v-if="hoveredItem === 'all-products'">
-        <ProductsPanel :on-navigate="navigateTo" :on-add-to-favorites="addToFavorites"
-          :on-remove-from-favorites="removeFromFavorites" />
+        <ProductsPanel
+          :on-navigate="navigateTo"
+          :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites"
+        />
       </template>
     </div>
   </v-navigation-drawer>

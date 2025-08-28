@@ -146,7 +146,6 @@ const handleSystemMonitorAlertDismissed = (alertId: string) => {
   <AppHeader
     :title="pageTitle"
     :titleIcon="pageIcon"
-    :z-index="1000"
     :actions="[
       {
         icon: dashboardStore.isAutoRefresh ? 'mdi-pause' : 'mdi-play',
