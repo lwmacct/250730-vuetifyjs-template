@@ -3,6 +3,7 @@
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppHeaderStore } from '@/components/AppHeader/stores'
+import LogPanel from '@/components/LogPanel/index.vue'
 
 const route = useRoute()
 const routeMenuStore = useAppHeaderStore()
@@ -22,6 +23,9 @@ watch(
   <v-app>
     <!-- 路由视图 -->
     <router-view />
+
+    <!-- 日志面板 -->
+    <LogPanel />
   </v-app>
 </template>
 
