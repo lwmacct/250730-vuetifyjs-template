@@ -240,9 +240,8 @@ const api = {
     const sample = logSamples.value.find((s) => s.id === sampleId)
     if (sample) {
       sample.generateLogs()
-      if (!isLogPanelOpen.value) {
-        toggleLogPanel()
-      }
+      // 移除自动打开面板的逻辑，让用户手动控制面板显示
+      // 只生成日志，不强制打开面板
     }
   }
 

@@ -224,28 +224,11 @@ watch(
 )
 
 onMounted(() => {
-  // 键盘快捷键监听
-  const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key.toLowerCase() === 'l' && !event.ctrlKey && !event.altKey && !event.metaKey) {
-      // 检查当前焦点元素是否是输入框
-      const activeElement = document.activeElement
-      const isInputFocused =
-        activeElement?.tagName === 'INPUT' ||
-        activeElement?.tagName === 'TEXTAREA' ||
-        (activeElement as HTMLElement)?.contentEditable === 'true'
-
-      if (!isInputFocused) {
-        event.preventDefault()
-        logPanelStore.togglePanel()
-      }
-    }
-  }
-
-  document.addEventListener('keydown', handleKeydown)
+  // 键盘快捷键监听 - 移除，由 LogPanel store 统一处理
+  // 避免重复监听导致的冲突
 
   // 清理函数
   const cleanup = () => {
-    document.removeEventListener('keydown', handleKeydown)
     // 确保组件卸载时恢复页面滚动
     unlockBodyScroll()
   }
@@ -258,8 +241,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- 使用 Teleport 将日志面板挂载到 body，确保不受任何父容器层叠上下文影响 -->
-  <Teleport to="body">
+  <!-- 测试：移除 Teleport，看看是否仍能正常工作 -->
+  <div class="log-panel-container">
     <!-- 日志面板抽屉 -->
     <v-navigation-drawer v-model="logPanelStore.panelOpen" location="right" :width="width" temporary :color="color" dark
       :elevation="elevation" :style="{ zIndex: 2147483647 }" class="log-panel-drawer">
@@ -291,11 +274,11 @@ onMounted(() => {
     <!-- 日志详情对话框 -->
     <LogDetailDialog v-model:show-detail-dialog="showDetailDialog" :selected-log="selectedLog"
       @copy-log-message="handleCopyLogMessage" />
-  </Teleport>
+  </div>
 </template>
 
 <style scoped>
-/* 由于使用了 Teleport，确保组件样式在 body 下也能生效 */
+/* 移除 Teleport 后的样式调整 - 保持高 z-index 确保面板层级 */
 :global(.log-panel-drawer) {
   z-index: 2147483647 !important;
   position: fixed !important;
