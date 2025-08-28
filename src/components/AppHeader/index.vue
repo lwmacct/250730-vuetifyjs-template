@@ -70,22 +70,10 @@ const handleMouseEnter = (itemId: string) => {
 
 <template>
   <!-- 头部导航栏 -->
-  <v-app-bar
-    app
-    :elevation="elevation"
-    :color="color"
-    dark
-    :height="height"
-    :style="{ zIndex: zIndex }"
-  >
+  <v-app-bar app :elevation="elevation" :color="color" dark :height="height" :style="{ zIndex: zIndex }">
     <!-- 导航图标 -->
-    <v-app-bar-nav-icon
-      v-if="showNavIcon"
-      @click="handleNavIconClick"
-      :color="navIconColor"
-      variant="text"
-      class="mr-2"
-    >
+    <v-app-bar-nav-icon v-if="showNavIcon" @click="handleNavIconClick" :color="navIconColor" variant="text"
+      class="mr-2">
       <v-icon>{{ drawer ? 'mdi-close' : navIcon }}</v-icon>
     </v-app-bar-nav-icon>
     <!-- 菜单按钮分割线 -->
@@ -105,16 +93,8 @@ const handleMouseEnter = (itemId: string) => {
   </v-app-bar>
 
   <!-- 抽屉菜单 -->
-  <v-navigation-drawer
-    v-if="showDrawer"
-    v-model="drawer"
-    app
-    temporary
-    color="grey-darken-4"
-    dark
-    class="drawer-container"
-    :width="drawerWidth"
-  >
+  <v-navigation-drawer v-if="showDrawer" v-model="drawer" app temporary color="grey-darken-4" dark
+    class="drawer-container" :width="drawerWidth">
     <v-list color="transparent" nav class="drawer-list">
       <!-- 所有页面菜单项 -->
       <AllPagesMenuItem :hovered-item="hoveredItem" :on-mouse-enter="handleMouseEnter" />
@@ -129,21 +109,14 @@ const handleMouseEnter = (itemId: string) => {
     </v-list>
 
     <!-- 悬停显示的二级菜单面板 -->
-    <div
-      v-if="hoveredItem && drawer"
-      class="hover-panel"
-      @mouseenter="handleMouseEnter(hoveredItem)"
-    >
+    <div v-if="hoveredItem && drawer" class="hover-panel" @mouseenter="handleMouseEnter(hoveredItem)">
       <!-- 连接区域 - 确保鼠标可以移动到面板 -->
       <div class="connection-area"></div>
       <!-- 面板内容 -->
       <!-- 所有页面专用组件 -->
       <template v-if="hoveredItem === 'all-products'">
-        <ProductsPanel
-          :on-navigate="navigateTo"
-          :on-add-to-favorites="addToFavorites"
-          :on-remove-from-favorites="removeFromFavorites"
-        />
+        <ProductsPanel :on-navigate="navigateTo" :on-add-to-favorites="addToFavorites"
+          :on-remove-from-favorites="removeFromFavorites" />
       </template>
     </div>
   </v-navigation-drawer>
@@ -205,11 +178,16 @@ const handleMouseEnter = (itemId: string) => {
 /* 悬停面板样式 */
 .hover-panel {
   position: absolute;
-  left: 100%; /* 相对于抽屉的右边缘 */
-  top: 0; /* 相对于抽屉的顶部 */
-  min-width: 300px; /* 最小宽度 */
-  max-width: 800px; /* 进一步增加最大宽度限制 */
-  height: 100%; /* 相对于抽屉的高度 */
+  left: 100%;
+  /* 相对于抽屉的右边缘 */
+  top: 0;
+  /* 相对于抽屉的顶部 */
+  min-width: 300px;
+  /* 最小宽度 */
+  max-width: 800px;
+  /* 进一步增加最大宽度限制 */
+  height: 100%;
+  /* 相对于抽屉的高度 */
   background-color: #424242;
   border-left: 1px solid #616161;
   box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);

@@ -182,6 +182,7 @@ components/AppHeader/
 | `elevation`   | `number\|string` | `2`               | 头部阴影级别     |
 | `color`       | `string`         | `'grey-darken-4'` | 头部背景色       |
 | `height`      | `number\|string` | `50`              | 头部高度         |
+| `zIndex`      | `number\|string` | `1000`            | 组件层级控制     |
 
 ## 🚀 使用方式
 
@@ -203,9 +204,32 @@ components/AppHeader/
     :drawer-width="280"
     color="primary"
     :height="60"
+    :z-index="2000"
   />
 </template>
 ```
+
+### 层级控制
+
+AppHeader 组件默认的 `z-index` 为 `1000`，这确保了它在大多数页面内容之上显示，同时为特殊组件（如调试工具、模态框等）保留了更高的层级空间。
+
+```vue
+<!-- 默认层级 (1000) -->
+<AppHeader title="标准头部" />
+
+<!-- 自定义更高层级 -->
+<AppHeader title="高层级头部" :z-index="5000" />
+
+<!-- 自定义更低层级 -->
+<AppHeader title="低层级头部" :z-index="500" />
+```
+
+**层级参考：**
+
+- 页面内容: `z-index: 1-10`
+- AppHeader 默认: `z-index: 1000`
+- 模态框/对话框: `z-index: 2000-3000`
+- 调试工具/LogPanel: `z-index: 2147483647`（最大值）
 
 ### 自定义内容
 
