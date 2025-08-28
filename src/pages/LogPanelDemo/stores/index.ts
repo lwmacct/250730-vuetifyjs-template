@@ -227,11 +227,8 @@ const api = {
 
   const toggleLogPanel = () => {
     isLogPanelOpen.value = !isLogPanelOpen.value
-    if (isLogPanelOpen.value) {
-      logPanel.openPanel()
-    } else {
-      logPanel.closePanel()
-    }
+    // LogPanel 组件现在会自动同步状态，无需手动管理 logPanel store
+    // v-model:showPanel 会处理内部状态同步
   }
 
   const updatePanelOptions = (newOptions: Partial<LogPanelOptions>) => {
@@ -366,7 +363,7 @@ const api = {
   return {
     // 状态
     currentMode: computed(() => currentMode.value),
-    isLogPanelOpen: computed(() => isLogPanelOpen.value),
+    isLogPanelOpen, // 直接返回 ref，支持 v-model
     panelConfig: computed(() => panelConfig.value),
     apiMockConfig: computed(() => apiMockConfig.value),
     monitoringConfig: computed(() => monitoringConfig.value),
