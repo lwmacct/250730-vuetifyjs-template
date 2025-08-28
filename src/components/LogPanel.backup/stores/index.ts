@@ -1,6 +1,6 @@
 /**
  * LogPanel Stores 主模块
- * 简化版本，组合各功能模块
+ * 组合各功能模块，统一导出
  */
 
 import { defineStore } from 'pinia'
@@ -8,6 +8,8 @@ import { computed, watch } from 'vue'
 import { useLogPanel } from './useLogPanel'
 import { useLogStore } from './useLogStore'
 import { useLogFilter } from './useLogFilter'
+import type { LogExportOptions } from '../types'
+import { LogLevel } from '../types'
 
 // 主 Store - 组合各个功能模块
 export const useLogPanelStore = defineStore('logPanel', () => {
@@ -31,7 +33,7 @@ export const useLogPanelStore = defineStore('logPanel', () => {
           activeElement &&
           (activeElement.tagName === 'INPUT' ||
             activeElement.tagName === 'TEXTAREA' ||
-            (activeElement as HTMLElement).contentEditable === 'true')
+            activeElement.getAttribute('contenteditable') === 'true')
         ) {
           return
         }
