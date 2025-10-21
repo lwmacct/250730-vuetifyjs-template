@@ -3,9 +3,11 @@
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppHeaderStore } from '@/components/AppHeader/stores'
+import { useLoadingBar } from '@/stores'
 
 const route = useRoute()
 const routeMenuStore = useAppHeaderStore()
+const loadingBar = useLoadingBar()
 
 // 监听路由变化，更新页面访问时间
 watch(
@@ -20,6 +22,17 @@ watch(
 
 <template>
   <v-app>
+    <!-- 顶部路由加载进度条 -->
+    <v-progress-linear
+      :active="loadingBar.isLoading"
+      :model-value="loadingBar.progress"
+      :color="loadingBar.color"
+      :height="3"
+      absolute
+      :indeterminate="false"
+      style="z-index: 9999"
+    />
+
     <!-- 路由视图 -->
     <router-view />
   </v-app>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { setPageTitle } from '@/components/AppHeader/utils'
+import { useLoadingBar } from '@/stores'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -136,8 +137,12 @@ const router = createRouter({
   ],
 })
 
-// 全局路由守卫 - 自动更新页面标题
+// 全局路由守卫 - 自动更新页面标题和显示加载进度条
 router.beforeEach((to, from, next) => {
+  // 启动加载进度条
+  const loadingBar = useLoadingBar()
+  loadingBar.start()
+
   // 获取路由的 meta.title
   const title = to.meta?.title as string
 
@@ -146,6 +151,20 @@ router.beforeEach((to, from, next) => {
 
   // 继续路由导航
   next()
+})
+
+// 路由加载完成后的钩子
+router.afterEach(() => {
+  // 完成加载进度条
+  const loadingBar = useLoadingBar()
+  loadingBar.finish()
+})
+
+// 路由错误处理
+router.onError(() => {
+  // 加载失败时显示错误状态
+  const loadingBar = useLoadingBar()
+  loadingBar.fail()
 })
 
 export default router
