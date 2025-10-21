@@ -23,15 +23,8 @@ watch(
 <template>
   <v-app>
     <!-- 顶部路由加载进度条 -->
-    <v-progress-linear
-      :active="loadingBar.isLoading"
-      :model-value="loadingBar.progress"
-      :color="loadingBar.color"
-      :height="3"
-      absolute
-      :indeterminate="false"
-      style="z-index: 9999"
-    />
+    <v-progress-linear :active="loadingBar.isLoading" :model-value="loadingBar.progress" :color="loadingBar.color"
+      :height="3" absolute :indeterminate="false" style="z-index: 9999" />
 
     <!-- 路由视图 -->
     <router-view />
