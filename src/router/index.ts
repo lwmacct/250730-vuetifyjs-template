@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('@/views/About.vue'),
+      component: () => import('@/pages/About/index.vue'),
       meta: {
         title: '关于',
         icon: 'mdi-information',
@@ -37,7 +37,7 @@ const router = createRouter({
     {
       path: '/contact',
       name: 'contact',
-      component: () => import('@/views/Contact.vue'),
+      component: () => import('@/pages/Contact/index.vue'),
       meta: {
         title: '联系我们',
         icon: 'mdi-email',
@@ -52,7 +52,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/Login.vue'),
+      component: () => import('@/pages/Login/index.vue'),
       meta: {
         title: '登录',
         icon: 'mdi-login',
@@ -82,7 +82,7 @@ const router = createRouter({
     {
       path: '/meta-demo',
       name: 'meta-demo',
-      component: () => import('@/views/MetaDemo.vue'),
+      component: () => import('@/pages/MetaDemo/index.vue'),
       meta: {
         title: 'Meta演示',
         icon: 'mdi-information',
@@ -128,22 +128,6 @@ const router = createRouter({
       },
     },
 
-    // LogPanel 演示页面
-    {
-      path: '/log-panel-demo',
-      name: 'log-panel-demo',
-      component: () => import('@/pages/LogPanelDemo/index.vue'),
-      meta: {
-        title: 'LogPanel 演示',
-        icon: 'mdi-console',
-        description: 'LogPanel日志组件的功能演示和使用示例',
-        keywords: ['log', '日志', '面板', '演示', '组件', 'console'],
-        category: 'Demo',
-        priority: 15,
-        showInMenu: true,
-        requireAuth: false,
-      },
-    },
     // 404 页面重定向到首页
     {
       path: '/:pathMatch(.*)*',
