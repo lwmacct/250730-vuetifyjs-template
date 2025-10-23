@@ -7,6 +7,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
+	"github.com/lwmacct/250730-vuetifyjs-template/app/server"
 	"github.com/lwmacct/250730-vuetifyjs-template/app/version"
 )
 
@@ -14,6 +15,7 @@ import (
 func buildCommands() []*cli.Command {
 	commands := []*cli.Command{
 		version.Command,
+		server.Command,
 	}
 
 	if os.Getenv("SHOW_CLI_ITEM") == "1" {

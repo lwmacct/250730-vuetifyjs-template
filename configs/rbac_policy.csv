@@ -1,0 +1,20 @@
+p, admin, /api/*, *
+p, admin, /api/users, GET
+p, admin, /api/users, POST
+p, admin, /api/users, PUT
+p, admin, /api/users, DELETE
+p, admin, /api/roles, GET
+p, admin, /api/roles, POST
+p, admin, /api/roles, PUT
+p, admin, /api/roles, DELETE
+
+p, user, /api/users/profile, GET
+p, user, /api/users/profile, PUT
+p, user, /api/dashboard, GET
+
+p, guest, /api/public, GET
+
+g, alice, admin
+g, bob, user
+g, eve, guest
+
