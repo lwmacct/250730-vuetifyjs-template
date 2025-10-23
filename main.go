@@ -34,15 +34,15 @@ func main() {
 				Usage:   "环境变量前缀，例如: APP_",
 				Value:   "",
 				Sources: cli.EnvVars("ENV_PREFIX"),
+				Action: func(ctx context.Context, c *cli.Command, s string) error {
+					if s != "" {
+						config.SetEnvPrefix(s)
+					}
+					return nil
+				},
 			},
 		},
 		Commands: buildCommands(),
-		Before: func(ctx context.Context, cmd *cli.Command) error {
-			if prefix := cmd.String("env-prefix"); prefix != "" {
-				config.SetEnvPrefix(prefix)
-			}
-			return nil
-		},
 	}
 
 	if err := cmd.Run(context.Background(), os.Args); err != nil {
