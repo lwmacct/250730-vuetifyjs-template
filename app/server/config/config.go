@@ -109,8 +109,20 @@ func (r *RedisConfig) RedisAddr() string {
 	return fmt.Sprintf("%s:%d", r.Host, r.Port)
 }
 
+var EnvPrefix = "" // 环境变量前缀，可通过 SetEnvPrefix 设置
+
+// SetEnvPrefix 设置环境变量前缀
+func SetEnvPrefix(prefix string) {
+	EnvPrefix = prefix
+}
+
 // getEnv 获取环境变量，如果不存在则返回默认值
 func getEnv(key, defaultValue string) string {
+	fullKey := EnvPrefix + key
+	if value := os.Getenv(fullKey); value != "" {
+		return value
+	}
+	// 回退到无前缀的key
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
@@ -119,6 +131,13 @@ func getEnv(key, defaultValue string) string {
 
 // getEnvAsInt 获取整型环境变量，如果不存在则返回默认值
 func getEnvAsInt(key string, defaultValue int) int {
+	fullKey := EnvPrefix + key
+	if value := os.Getenv(fullKey); value != "" {
+		if intValue, err := strconv.Atoi(value); err == nil {
+			return intValue
+		}
+	}
+	// 回退到无前缀的key
 	if value := os.Getenv(key); value != "" {
 		if intValue, err := strconv.Atoi(value); err == nil {
 			return intValue

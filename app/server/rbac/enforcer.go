@@ -137,7 +137,7 @@ func RemovePolicy(role, resource, action string) (bool, error) {
 }
 
 // GetPoliciesForRole 获取角色的所有策略
-func GetPoliciesForRole(role string) [][]string {
+func GetPoliciesForRole(role string) ([][]string, error) {
 	return Enforcer.GetFilteredPolicy(0, role)
 }
 
