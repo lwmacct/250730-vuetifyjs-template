@@ -25,15 +25,20 @@ vars:
 
 tasks:
   env:
-    desc: '显示环境变量'
+    desc: '显示所有定义的变量'
     silent: true
     cmds:
       - |
+        echo "=== 路径相关变量 ==="
+        echo "PATH_LOCAL: {{.PATH_LOCAL}}"
+        echo "PATH_BIN: {{.PATH_BIN}}"
+        echo "PATH_DATA: {{.PATH_DATA}}"
+        echo ""
+        echo "=== Go 模块相关变量 ==="
         echo "GO_MODE_NAME: {{.GO_MODE_NAME}}"
         echo "GO_MODE_PROJ: {{.GO_MODE_PROJ}}"
         echo "GO_MODE_APP: {{.GO_MODE_APP}}"
-        echo "GO_BUILD_LDFLAGS_SW: {{.GO_BUILD_LDFLAGS_SW}}"
-        echo "GO_BUILD_LDFLAGS_X: {{.GO_BUILD_LDFLAGS_X}}"
+        echo "GO_BUILD_PATH: {{.GO_BUILD_PATH}}"
 
   release:
     desc: '发布所有架构'
